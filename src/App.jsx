@@ -8,6 +8,7 @@ import Footer from './views/Footer/Footer';
 import Profile from './views/Profile/Profile';
 import Settings from './views/Settings/Settings';
 import { Route, Routes } from 'react-router-dom';
+import Signin from './components/Signin/Signin.jsx';
 
 function App() {
   return (
@@ -22,6 +23,10 @@ function App() {
         <Route
           path="/home"
           element={<Home />}
+        />
+        <Route
+          path="/signin"
+          element={<Signin/>}
         />
         <Route
           path="/forum"
