@@ -6,6 +6,11 @@ export const getUserByUsername = (username) => {
   return get(ref(db, `users/${username}`));
 };
 
+export const getUserByEmail = (email) => {
+  
+  return get(query(ref(db, 'users'), orderByChild('email'), equalTo(email)));
+};
+
 export const createUserUsername = (username, uid, email, firstName, lastName) => {
 
   return set(ref(db, `users/${username}`), {
