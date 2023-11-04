@@ -6,9 +6,17 @@ export const getUserByUsername = (username) => {
   return get(ref(db, `users/${username}`));
 };
 
-export const createUserUsername = (username, uid, email) => {
+export const createUserUsername = (username, uid, email, firstName, lastName) => {
 
-  return set(ref(db, `users/${username}`), { username, uid, email, createdOn: new Date(), likedPosts: {} })
+  return set(ref(db, `users/${username}`), {
+    firstName,
+    lastName,
+    username,
+    uid,
+    email,
+    createdOn: new Date(),
+    likedPosts: {}
+  })
 };
 
 export const getUserData = (uid) => {

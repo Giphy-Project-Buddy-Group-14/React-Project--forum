@@ -42,10 +42,6 @@ function App() {
           element={<About />}
         />
         <Route
-          path="/login"
-          element={<Login />}
-        />
-        <Route
           path="/profile"
           element={<Profile />}
         />
