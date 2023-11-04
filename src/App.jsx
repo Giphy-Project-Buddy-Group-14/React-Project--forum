@@ -9,6 +9,7 @@ import Profile from './views/Profile/Profile';
 import Settings from './views/Settings/Settings';
 import { Route, Routes } from 'react-router-dom';
 import Signin from './components/Signin/Signin.jsx';
+import Signup from './components/Signup/Signup.jsx';
 
 function App() {
   return (
@@ -27,6 +28,10 @@ function App() {
         <Route
           path="/signin"
           element={<Signin/>}
+        />
+        <Route
+          path="/signup"
+          element={<Signup/>}
         />
         <Route
           path="/forum"
