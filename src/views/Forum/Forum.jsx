@@ -43,7 +43,6 @@ export default function Forum() {
         />
         </div>
       </div>
-      {/* <Title>Holiday at the sea</Title> */}
       
       <div className="mb-8">
         <Title>Holiday at the sea</Title>
@@ -104,7 +103,6 @@ export default function Forum() {
         />
         </div>
       </div>
-
     </div>
     
   );
