@@ -160,7 +160,7 @@ export default function NavBar() {
                 </Menu>
               </div>)
               : (
-                <Button>
+                <Button asChild>
                   <Link to="/sign-in">Login</Link>
                 </Button>
               )}
