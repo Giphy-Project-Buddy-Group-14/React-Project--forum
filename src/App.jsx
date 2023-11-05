@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { getUserData } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
 import { AuthContext } from './context/AuthContext.jsx';
+import { Toaster } from './components/ui/toaster.jsx';
 
 function App() {
 
@@ -42,18 +43,14 @@ function App() {
           ...appState,
           userData: Object.keys(result.val())[0]
         })
-        throw new Error("Test");
       } catch (error) {
         toast({
-          variant: "destructive",
           title: "Error authentication",
           description: error.message,
         })
       }
     })();
   }, [])
-
-
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];
@@ -96,6 +93,7 @@ function App() {
         </Routes>
         <Footer />
       </AuthContext.Provider>
+      <Toaster />
     </>
   );
 }

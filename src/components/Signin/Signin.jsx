@@ -9,8 +9,8 @@ import { Input } from '../ui/input.jsx';
 import { Button } from '../ui/button.jsx';
 import { Link } from 'react-router-dom';
 import Loader from '../Loader/Loader.jsx';
-import { auth } from '@/config/firebase-config.js';
 import { AuthContext } from '@/context/AuthContext.jsx';
+import { loginUser } from '@/services/auth.services.js';
 
 export default function Signin() {
 
@@ -28,16 +28,38 @@ export default function Signin() {
   })
 
   const handleSignin = async (user) => {
-    console.log(user)
+    try {
+      setLoading(true);
+      const result = await loginUser(user.email, user.password);
 
+      setUser({
+        user: result,
+        userIsLoggedIn: true,
+      });
+
+      toast({
+        title: "Successful log in",
+      });
+
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
+
+    } catch (error) {
+        toast({
+          title: "Error log in",
+          description: error.message,
+        })
+    } finally {
+      setLoading(false);
+      form.reset();
+    }
   }
-
-
 
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
-        <img src="/assets/images/logo.svg" alt="logo" />
+        <img src="/src/assets/logo.png" alt="logo" width={60} height={60} />
 
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
           Log in to your account
@@ -77,7 +99,7 @@ export default function Signin() {
           />
 
           <Button type="submit" className="shad-button_primary">
-            {loading  ? (
+            {loading ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
