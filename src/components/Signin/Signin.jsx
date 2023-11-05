@@ -17,7 +17,7 @@ export default function Signin() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { setUser, userIsLoggedIn } = useContext(AuthContext);
+  const { setUser, isLoggedIn } = useContext(AuthContext);
 
   const form = useForm({
     resolver: zodResolver(SigninValidation),
@@ -34,7 +34,7 @@ export default function Signin() {
 
       setUser({
         user: result,
-        userIsLoggedIn: true,
+        isLoggedIn: true,
       });
 
       toast({
@@ -46,10 +46,10 @@ export default function Signin() {
       }, 2000);
 
     } catch (error) {
-        toast({
-          title: "Error log in",
-          description: error.message,
-        })
+      toast({
+        title: "Error log in",
+        description: error.message,
+      })
     } finally {
       setLoading(false);
       form.reset();

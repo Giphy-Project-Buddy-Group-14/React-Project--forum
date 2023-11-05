@@ -1,16 +1,17 @@
 
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { NavLink } from 'react-router-dom';
-
-
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { AuthContext } from '@/context/AuthContext.jsx';
+import { logoutUser } from '@/services/auth.services.js';
+import { useToast } from '@/components/ui/use-toast.js';
+import { Button } from '@/components/ui/button.jsx';
 
 const navigation = [
-  { name: 'Home', href: '/'},
-  { name: 'Forum', href: '/forum'},
-  { name: 'About', href: '/about'},
-  { name: 'Log In', href: '/login'},
+  { name: 'Home', href: '/' },
+  { name: 'Forum', href: '/forum' },
+  { name: 'About', href: '/about' },
 ]
 
 function classNames(...classes) {
@@ -18,6 +19,34 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const { setUser,isLoggedIn } = useContext(AuthContext);
+
+
+  const handleLogOut = async () => {
+    try {
+      await logoutUser();
+      setUser({
+        user: null,
+      })
+      toast({
+        title: "Successful log out",
+      });
+
+      setTimeout(() => {
+        navigate('/home');
+      }, 2000);
+    } catch (error) {
+      toast({
+        title: "Error log out",
+        description: error.message,
+      })
+    }
+  }
+
+
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
       {({ open }) => (
@@ -62,7 +91,7 @@ export default function NavBar() {
                   </div>
                 </div>
               </div>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              {isLoggedIn ? (<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <button
                   type="button"
                   className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
@@ -118,6 +147,7 @@ export default function NavBar() {
                       <Menu.Item>
                         {({ active }) => (
                           <a
+                            onClick={handleLogOut}
                             href="#"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
@@ -128,7 +158,12 @@ export default function NavBar() {
                     </Menu.Items>
                   </Transition>
                 </Menu>
-              </div>
+              </div>)
+              : (
+                <Button>
+                  <Link to="/sign-in">Login</Link>
+                </Button>
+              )}
             </div>
           </div>
 

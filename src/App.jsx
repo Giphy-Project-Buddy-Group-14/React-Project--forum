@@ -13,7 +13,7 @@ import AuthLayout from './views/AuthLayout/AuthLayout.jsx';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config.js';
 import { useEffect, useState } from 'react';
-import { getUserData } from './services/users.services.js';
+import { getUserByEmail, getUserData } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
 import { AuthContext } from './context/AuthContext.jsx';
 import { Toaster } from './components/ui/toaster.jsx';
@@ -34,23 +34,30 @@ function App() {
 
   useEffect(() => {
     if (user === null) {
+      setAppState({
+        ...appState,
+        userData: null,
+        isLoggedIn: false,
+      })
       return;
     }
     (async () => {
       try {
-        const result = await getUserData(user.uid)
+        const result = await getUserByEmail(user.email);
         setAppState({
           ...appState,
-          userData: Object.keys(result.val())[0]
+          userData: Object.values(result.val())[0],
+          isLoggedIn: !!result
         })
       } catch (error) {
         toast({
           title: "Error authentication",
           description: error.message,
         })
+        console.log(error);
       }
     })();
-  }, [])
+  }, [appState, user]);
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];
