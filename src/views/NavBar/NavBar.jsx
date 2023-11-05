@@ -1,30 +1,4 @@
 
-
-// import { NavLink } from 'react-router-dom';
-
-// const NavBar = () => {
-//   return (
-//     <div className="bg-blue-500 p-4">
-//       <NavLink to="/" className="text-white mx-2" activeClassName="font-bold">
-//         Home
-//       </NavLink>
-//       <NavLink to="/forum" className="text-white mx-2" activeClassName="font-bold">
-//         Forum
-//       </NavLink>
-//       <NavLink to="/about" className="text-white mx-2" activeClassName="font-bold">
-//         About
-//       </NavLink>
-//       <NavLink to="/login" className="text-white mx-2" activeClassName="font-bold">
-//         Login
-//       </NavLink>
-//     </div>
-//   );
-// };
-
-// export default NavBar;
-
-
-
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
