@@ -1,4 +1,3 @@
-import Content from '../Content/Content';
 import Title from '../../components/Title/Title';
 import PostBody from '../../components/PostBody/PostBody';
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Content />
     </>
   );
 }
