@@ -20,7 +20,6 @@ import { Toaster } from './components/ui/toaster.jsx';
 import ForumContainer from './views/Forum/ForumContainer/ForumContainer';
 import Post from './views/Forum/Post/Post';
 import SubCategory from './components/SubCategory/SubCategory';
-import WelcomeContainer from './views/Forum/WelcomeContainer/WelcomeContainer';
 
 function App() {
   const { toast } = useToast();
@@ -34,32 +33,32 @@ function App() {
     setAppState({ user });
   }
 
-  useEffect(() => {
-    if (user === null) {
-      setAppState({
-        ...appState,
-        userData: null,
-        isLoggedIn: false,
-      });
-      return;
-    }
-    (async () => {
-      try {
-        const result = await getUserByEmail(user.email);
-        setAppState({
-          ...appState,
-          userData: Object.values(result.val())[0],
-          isLoggedIn: !!result,
-        });
-      } catch (error) {
-        toast({
-          title: 'Error authentication',
-          description: error.message,
-        });
-        console.log(error);
-      }
-    })();
-  }, [appState, user]);
+  // useEffect(() => {
+  //   if (user === null) {
+  //     setAppState({
+  //       ...appState,
+  //       userData: null,
+  //       isLoggedIn: false,
+  //     });
+  //     return;
+  //   }
+  //   (async () => {
+  //     try {
+  //       const result = await getUserByEmail(user.email);
+  //       setAppState({
+  //         ...appState,
+  //         userData: Object.values(result.val())[0],
+  //         isLoggedIn: !!result,
+  //       });
+  //     } catch (error) {
+  //       toast({
+  //         title: 'Error authentication',
+  //         description: error.message,
+  //       });
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [appState, user]);
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];
@@ -89,76 +88,34 @@ function App() {
               element={<Signup />}
             />
           </Route>
+
+
+
           <Route
             path="/forum"
             element={<ForumContainer />}
           >
-
-            {/* <Route
+            <Route
               index
               element={<Forum />}
-            /> */}
-            {/* <Route
-              path="welcome"
-              element={<WelcomeContainer />}
+            />
+            <Route
+              path=":categoryId"
+              element={<ForumContainer />}
             >
               <Route
                 index
-                element={
-                  <SubCategory
-                    title="Welcome"
-                    categoryId="welcome"
-                  />
-                }
+                element={<SubCategory />}
               />
               <Route
                 path=":postId"
                 element={<Post />}
               />
-
-            </Route> */}
-            {/* <Route
-              path="forum_rules"
-              element={
-                <SubCategory
-                  title="Forum rules"
-                  categoryId="forum_rules"
-                />
-              }
-            /> */}
-
-            {/* <Route
-              path="bg_sea"
-              element={
-                <SubCategory
-                  title="Bg Sea"
-                  categoryId="bg_sea"
-                />
-              }
-            />
-            <Route
-              path="world_sea"
-              element={<SubCategory title="World Sea" />}
-            />
-
-            <Route
-              path="bg_mountains"
-              element={<SubCategory title="BG mountains" />}
-            />
-            <Route
-              path="world_mountains"
-              element={<SubCategory title="World mountains" />}
-            />
-
-            <Route
-              path="bg_landmarks"
-              element={<SubCategory title="BG landmarks" />}
-            />
-            <Route
-              path="world_landmarks"
-              element={<SubCategory title="BG landmarks" />}
-            /> */}
+            </Route>
           </Route>
+
+
+
           <Route
             path="/about"
             element={<About />}
