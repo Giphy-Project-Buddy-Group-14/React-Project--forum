@@ -17,16 +17,9 @@ import { getUserByEmail, getUserData } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
 import { AuthContext } from './context/AuthContext.jsx';
 import { Toaster } from './components/ui/toaster.jsx';
-import Welcome from './views/Forum/Welcome/Welcome';
 import ForumContainer from './views/Forum/ForumContainer/ForumContainer';
-import ForumRules from './views/Forum/ForumRules/ForumRules';
-import BgSea from './views/Forum/BgSea/BgSea';
-import WorldSea from './views/Forum/WorldSea/WorldSea';
-import BgMountains from './views/Forum/BgMountains/BgMountains';
-import WorldMountains from './views/Forum/WorldMountains/WorldMountains';
-import BgLandmarks from './views/Forum/BgLandmarks/BgLandmarks';
-import WorldLandmarks from './views/Forum/WorldLandmarks/WorldLandmarks';
 import Post from './views/Forum/Post/Post';
+import SubCategory from './components/SubCategory/SubCategory';
 
 function App() {
   const { toast } = useToast();
@@ -40,32 +33,32 @@ function App() {
     setAppState({ user });
   }
 
-  useEffect(() => {
-    if (user === null) {
-      setAppState({
-        ...appState,
-        userData: null,
-        isLoggedIn: false,
-      });
-      return;
-    }
-    (async () => {
-      try {
-        const result = await getUserByEmail(user.email);
-        setAppState({
-          ...appState,
-          userData: Object.values(result.val())[0],
-          isLoggedIn: !!result,
-        });
-      } catch (error) {
-        toast({
-          title: 'Error authentication',
-          description: error.message,
-        });
-        console.log(error);
-      }
-    })();
-  }, [appState, user]);
+  // useEffect(() => {
+  //   if (user === null) {
+  //     setAppState({
+  //       ...appState,
+  //       userData: null,
+  //       isLoggedIn: false,
+  //     });
+  //     return;
+  //   }
+  //   (async () => {
+  //     try {
+  //       const result = await getUserByEmail(user.email);
+  //       setAppState({
+  //         ...appState,
+  //         userData: Object.values(result.val())[0],
+  //         isLoggedIn: !!result,
+  //       });
+  //     } catch (error) {
+  //       toast({
+  //         title: 'Error authentication',
+  //         description: error.message,
+  //       });
+  //       console.log(error);
+  //     }
+  //   })();
+  // }, [appState, user]);
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];
@@ -95,6 +88,9 @@ function App() {
               element={<Signup />}
             />
           </Route>
+
+
+
           <Route
             path="/forum"
             element={<ForumContainer />}
@@ -104,50 +100,22 @@ function App() {
               element={<Forum />}
             />
             <Route
-              path="welcome"
+              path=":categoryId"
               element={<ForumContainer />}
             >
               <Route
                 index
-                element={<Welcome />}
+                element={<SubCategory />}
               />
               <Route
                 path=":postId"
                 element={<Post />}
               />
             </Route>
-            <Route
-              path="forum_rules"
-              element={<ForumRules />}
-            />
-
-            <Route
-              path="bg_sea"
-              element={<BgSea />}
-            />
-            <Route
-              path="world_sea"
-              element={<WorldSea />}
-            />
-
-            <Route
-              path="bg_mountains"
-              element={<BgMountains />}
-            />
-            <Route
-              path="world_mountains"
-              element={<WorldMountains />}
-            />
-
-            <Route
-              path="bg_landmarks"
-              element={<BgLandmarks />}
-            />
-            <Route
-              path="world_landmarks"
-              element={<WorldLandmarks />}
-            />
           </Route>
+
+
+
           <Route
             path="/about"
             element={<About />}

@@ -1,18 +1,18 @@
-import SubCategory from '../../components/SubCategory/SubCategory';
+import PreviewSubCategory from '../../components/PreviewSubCategory/PreviewSubCategory';
 import Category from '../../components/Category/Category';
 
 export default function Forum() {
   return (
     <div className="container mx-auto p-4">
-
       <Category title="Beginning">
-        <SubCategory
+        <PreviewSubCategory
           title="Welcome"
           link="/forum/welcome"
           postCount="123"
           lastPost="Last post from ..."
         />
-        <SubCategory
+
+        <PreviewSubCategory
           title="Forum rules"
           link="/forum/forum_rules"
           postCount="123"
@@ -21,13 +21,14 @@ export default function Forum() {
       </Category>
 
       <Category title="Holiday at the sea">
-        <SubCategory
+        <PreviewSubCategory
           title="BG sea"
           link="/forum/bg_sea"
           postCount="100"
           lastPost="Last post from ..."
         />
-        <SubCategory
+
+        <PreviewSubCategory
           title="World sea"
           link="/forum/world_sea"
           postCount="222"
@@ -36,13 +37,14 @@ export default function Forum() {
       </Category>
 
       <Category title="Holiday on a mountain">
-        <SubCategory
+        <PreviewSubCategory
           title="BG mountains"
           link="/forum/bg_mountains"
           postCount="33"
           lastPost="Last post from ..."
         />
-        <SubCategory
+
+        <PreviewSubCategory
           title="World mountains"
           link="/forum/world_mountains"
           postCount="13"
@@ -51,13 +53,14 @@ export default function Forum() {
       </Category>
 
       <Category title="Historical landmarks">
-        <SubCategory
+        <PreviewSubCategory
           title="BG landmarks"
           link="/forum/bg_landmarks"
           postCount="413"
           lastPost="Last post from ..."
         />
-        <SubCategory
+
+        <PreviewSubCategory
           title="World landmarks"
           link="/forum/world_landmarks"
           postCount="312"

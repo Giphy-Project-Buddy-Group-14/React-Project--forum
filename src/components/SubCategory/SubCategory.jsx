@@ -1,25 +1,27 @@
+import { POSTS } from '@/assets/posts';
+import Title from '../Title/Title';
 import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { TITLE_MAP } from '@/assets/posts';
+export default function SubCategory() {
+  const { categoryId } = useParams();
 
-export default function SubCategory({ title, link, postCount, lastPost }) {
+  const title = TITLE_MAP[categoryId];
+  const selectedPosts = POSTS.filter((post) => post.categoryId === categoryId);
+
   return (
-    <div className="bg-blue-200 shadow-md p-4 rounded-lg my-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <Link
-          to={link}
-          className="text-blue-500 hover:underline"
-        >
-          {title}
-        </Link>
-      </div>
-      <div className="mt-2 text-gray-600">
-        <div>
-          <span className="font-semibold">Post Count:</span> {postCount}
-        </div>
-        <div>
-          <span className="font-semibold">Last Post:</span> {lastPost}
-        </div>
-      </div>
+    <div>
+      <Title>{title}</Title>
+      {selectedPosts.map((post) => (
+        <li key={post.postId}>
+          <Link
+            to={`${post.postId}`}
+            className="text-blue-500 hover:underline"
+          >
+            {post.title}
+          </Link>
+        </li>
+      ))}
     </div>
   );
 }
