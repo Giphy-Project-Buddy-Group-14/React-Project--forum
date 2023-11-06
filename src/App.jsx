@@ -33,32 +33,32 @@ function App() {
     setAppState({ user });
   }
 
-  // useEffect(() => {
-  //   if (user === null) {
-  //     setAppState({
-  //       ...appState,
-  //       userData: null,
-  //       isLoggedIn: false,
-  //     });
-  //     return;
-  //   }
-  //   (async () => {
-  //     try {
-  //       const result = await getUserByEmail(user.email);
-  //       setAppState({
-  //         ...appState,
-  //         userData: Object.values(result.val())[0],
-  //         isLoggedIn: !!result,
-  //       });
-  //     } catch (error) {
-  //       toast({
-  //         title: 'Error authentication',
-  //         description: error.message,
-  //       });
-  //       console.log(error);
-  //     }
-  //   })();
-  // }, [appState, user]);
+  useEffect(() => {
+    if (user === null) {
+      setAppState({
+        ...appState,
+        userData: null,
+        isLoggedIn: false,
+      });
+      return;
+    }
+    (async () => {
+      try {
+        const result = await getUserByEmail(user.email);
+        setAppState({
+          ...appState,
+          userData: Object.values(result.val())[0],
+          isLoggedIn: !!result,
+        });
+      } catch (error) {
+        toast({
+          title: 'Error authentication',
+          description: error.message,
+        });
+        console.log(error);
+      }
+    })();
+  }, [user]);
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];
