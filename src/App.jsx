@@ -17,16 +17,10 @@ import { getUserByEmail, getUserData } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
 import { AuthContext } from './context/AuthContext.jsx';
 import { Toaster } from './components/ui/toaster.jsx';
-import Welcome from './views/Forum/Welcome/Welcome';
 import ForumContainer from './views/Forum/ForumContainer/ForumContainer';
-import ForumRules from './views/Forum/ForumRules/ForumRules';
-import BgSea from './views/Forum/BgSea/BgSea';
-import WorldSea from './views/Forum/WorldSea/WorldSea';
-import BgMountains from './views/Forum/BgMountains/BgMountains';
-import WorldMountains from './views/Forum/WorldMountains/WorldMountains';
-import BgLandmarks from './views/Forum/BgLandmarks/BgLandmarks';
-import WorldLandmarks from './views/Forum/WorldLandmarks/WorldLandmarks';
 import Post from './views/Forum/Post/Post';
+import SubCategory from './components/SubCategory/SubCategory';
+import WelcomeContainer from './views/Forum/WelcomeContainer/WelcomeContainer';
 
 function App() {
   const { toast } = useToast();
@@ -99,54 +93,71 @@ function App() {
             path="/forum"
             element={<ForumContainer />}
           >
-            <Route
+
+            {/* <Route
               index
               element={<Forum />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="welcome"
-              element={<ForumContainer />}
+              element={<WelcomeContainer />}
             >
               <Route
                 index
-                element={<Welcome />}
+                element={
+                  <SubCategory
+                    title="Welcome"
+                    categoryId="welcome"
+                  />
+                }
               />
               <Route
                 path=":postId"
                 element={<Post />}
               />
-            </Route>
-            <Route
-              path="forum_rules"
-              element={<ForumRules />}
-            />
 
-            <Route
+            </Route> */}
+            {/* <Route
+              path="forum_rules"
+              element={
+                <SubCategory
+                  title="Forum rules"
+                  categoryId="forum_rules"
+                />
+              }
+            /> */}
+
+            {/* <Route
               path="bg_sea"
-              element={<BgSea />}
+              element={
+                <SubCategory
+                  title="Bg Sea"
+                  categoryId="bg_sea"
+                />
+              }
             />
             <Route
               path="world_sea"
-              element={<WorldSea />}
+              element={<SubCategory title="World Sea" />}
             />
 
             <Route
               path="bg_mountains"
-              element={<BgMountains />}
+              element={<SubCategory title="BG mountains" />}
             />
             <Route
               path="world_mountains"
-              element={<WorldMountains />}
+              element={<SubCategory title="World mountains" />}
             />
 
             <Route
               path="bg_landmarks"
-              element={<BgLandmarks />}
+              element={<SubCategory title="BG landmarks" />}
             />
             <Route
               path="world_landmarks"
-              element={<WorldLandmarks />}
-            />
+              element={<SubCategory title="BG landmarks" />}
+            /> */}
           </Route>
           <Route
             path="/about"
