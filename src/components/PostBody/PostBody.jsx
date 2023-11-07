@@ -1,5 +1,9 @@
-export default function PostBody(props) {
+import Title from '../Title/Title';
+
+export default function PostBody() {
   return (
-    <p className="mt-2 text-lg leading-8 text-gray-600">{props.children}</p>
+    <div>
+      <Title></Title>
+    </div>
   );
 }

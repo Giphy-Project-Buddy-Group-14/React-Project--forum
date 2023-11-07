@@ -1,8 +1,5 @@
-// import PostBody from '../../../components/PostBody/PostBody';
 import Title from '../../../components/Title/Title';
-
 import { useParams } from 'react-router-dom';
-
 import { POSTS } from '../../../assets/posts';
 export default function Post() {
   const { postId } = useParams();
