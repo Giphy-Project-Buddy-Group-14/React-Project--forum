@@ -20,12 +20,13 @@ const fromPostsDocument = async snapshot => {
     }
 };
 
-export const addPost = async (content, handle) => {
+export const addPost = async (title, description, handle) => {
     try {
         const result = await push(
             ref(db, 'posts'),
             {
-                content,
+                title: title,
+                description: description,
                 author: handle,
                 createdOn: Date.now(),
             },
