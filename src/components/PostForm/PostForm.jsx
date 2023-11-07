@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function PostForm() {
+export default function PostForm() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
@@ -47,5 +47,3 @@ function PostForm() {
     </div>
   );
 }
-
-export default PostForm;

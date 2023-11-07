@@ -20,7 +20,8 @@ import { Toaster } from './components/ui/toaster.jsx';
 import ForumContainer from './views/Forum/ForumContainer/ForumContainer';
 import Post from './views/Forum/Post/Post';
 import SubCategory from './components/SubCategory/SubCategory';
-
+import NewPost from './views/Forum/Post/NewPost/NewPost';
+import ContentWrapper from '@/components/ContentWrapper/ContentWrapper';
 function App() {
   const { toast } = useToast();
   const [user] = useAuthState(auth);
@@ -68,67 +69,72 @@ function App() {
     <>
       <AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
         {showNavBar && <NavBar />}
-        <Routes>
-          <Route
-            exact
-            path="/"
-            element={<Home />}
-          />
-          <Route
-            path="/home"
-            element={<Home />}
-          />
-          <Route element={<AuthLayout />}>
+        <ContentWrapper>
+          <Routes>
             <Route
-              path="/sign-in"
-              element={<Signin />}
+              exact
+              path="/"
+              element={<Home />}
             />
             <Route
-              path="/sign-up"
-              element={<Signup />}
+              path="/home"
+              element={<Home />}
             />
-          </Route>
+            <Route element={<AuthLayout />}>
+              <Route
+                path="/sign-in"
+                element={<Signin />}
+              />
+              <Route
+                path="/sign-up"
+                element={<Signup />}
+              />
+            </Route>
 
-
-
-          <Route
-            path="/forum"
-            element={<ForumContainer />}
-          >
             <Route
-              index
-              element={<Forum />}
-            />
-            <Route
-              path=":categoryId"
+              path="/forum"
               element={<ForumContainer />}
             >
               <Route
                 index
-                element={<SubCategory />}
+                element={<Forum />}
               />
               <Route
-                path=":postId"
-                element={<Post />}
-              />
+                path=":categoryId"
+                element={<ForumContainer />}
+              >
+                <Route
+                  index
+                  element={<SubCategory />}
+                />
+                <Route path="posts">
+                  <Route
+                    path=":postId"
+                    element={<Post />}
+                  />
+                  <Route
+                    path="new"
+                    element={<NewPost />}
+                  />
+                </Route>
+              </Route>
             </Route>
-          </Route>
 
+            <Route
+              path="/about"
+              element={<About />}
+            />
+            <Route
+              path="/profile"
+              element={<Profile />}
+            />
+            <Route
+              path="/settings"
+              element={<Settings />}
+            />
+          </Routes>
+        </ContentWrapper>
 
-
-          <Route
-            path="/about"
-            element={<About />}
-          />
-          <Route
-            path="/profile"
-            element={<Profile />}
-          />
-          <Route
-            path="/settings"
-            element={<Settings />}
-          />
-        </Routes>
         <Footer />
       </AuthContext.Provider>
       <Toaster />
