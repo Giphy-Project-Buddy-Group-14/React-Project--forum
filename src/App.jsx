@@ -22,6 +22,7 @@ import Post from './views/Forum/Post/Post';
 import SubCategory from './components/SubCategory/SubCategory';
 import NewPost from './views/Forum/Post/NewPost/NewPost';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper';
+import AccountSettings from './components/AccountSettings/AccountSettings.jsx';
 function App() {
   const { toast } = useToast();
   const [user] = useAuthState(auth);
@@ -130,7 +131,7 @@ function App() {
             />
             <Route
               path="/settings"
-              element={<Settings />}
+              element={<AccountSettings />}
             />
           </Routes>
         </ContentWrapper>
