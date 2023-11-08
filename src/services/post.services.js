@@ -20,13 +20,13 @@ const fromPostsDocument = async snapshot => {
     }
 };
 
-export const addPost = async (title, description, handle) => {
+export const addPost = async (content, handle) => {
     try {
+
         const result = await push(
             ref(db, 'posts'),
             {
-                title: title,
-                description: description,
+                ...content,
                 author: handle,
                 createdOn: Date.now(),
             },
@@ -67,7 +67,6 @@ export const getLikedPosts = async (handle) => {
 
         const user = snapshot.val();
         if (!user.likedPosts) return [];
-
         const posts = await Promise.all(Object.keys(user.likedPosts).map(async key => {
             const snapshot = await get(ref(db, `posts/${key}`));
             const post = snapshot.val();
@@ -81,6 +80,20 @@ export const getLikedPosts = async (handle) => {
         }));
 
         return posts;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const getPostsByCategoryId = async (categoryId) => {
+    try {
+        const snapshot = await get(query(ref(db, 'posts'), orderByChild('categoryId'), equalTo(categoryId)));
+
+        if (!snapshot.exists()) {
+            return [];
+        }
+
+        return fromPostsDocument(snapshot);
     } catch (error) {
         console.error(error);
     }

@@ -1,14 +1,33 @@
 import Title from '../../../components/Title/Title';
 import { useParams } from 'react-router-dom';
-import { POSTS } from '../../../assets/posts';
+
+import { getPostById } from '@/services/post.services';
+import { useEffect, useState } from 'react';
+
+
 export default function Post() {
   const { postId } = useParams();
+  const [post, setPost] = useState({})
 
-  const post = POSTS.find((post) => post.postId === postId);
+
+  useEffect(() => {
+    const fetchPost = async (postId) => {
+      const post = await getPostById(postId);
+      setPost(post)
+    }
+    fetchPost(postId)
+  }, [])
+
+    const convertDate = (date) => {
+      const createdDate = new Date(date);
+      const formattedDate = createdDate.toDateString() + ' ' + createdDate.toLocaleTimeString();
+      return formattedDate;
+    }
 
   return (
     <div>
       <Title>{post.title}</Title>
+      <div id={postId}></div>
       <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         <article
           // key={post.id}
@@ -16,28 +35,20 @@ export default function Post() {
         >
           <div className="flex items-center gap-x-4 text-xs">
             <time
-              dateTime={new Date()
-                .toISOString()
-                .slice(0, 10)
-                .split('-')
-                .reverse()
-                .join('/')}
+              dateTime={post.createdOn}
               className="text-gray-500"
             >
-              {new Date()
-                .toISOString()
-                .slice(0, 10)
-                .split('-')
-                .reverse()
-                .join('/')}
+              {convertDate(post.createdOn)}
             </time>
+
             <Title>Count view</Title>
+
           </div>
           <div className="group relative">
             <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
               <p>
                 <span className="absolute inset-0" />
-                Post Title
+                {post.title}
               </p>
             </h3>
             <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">

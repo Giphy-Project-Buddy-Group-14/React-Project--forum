@@ -2,12 +2,35 @@ import Title from '@/components/Title/Title';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 import { addPost } from '@/services/post.services';
+import { useParams, useNavigate } from 'react-router-dom';
 export default function NewPost() {
-  const createPostHandler = (event) => {
+  const { categoryId } = useParams();
+  const navigate = useNavigate();
+  function titleToPermalink(title) {
+    const permalink = title.toLowerCase().replace(/ /g, '-');
+    const cleanedPermalink = permalink
+      .replace(/[^a-z0-9-]/g, '')
+      .replace(/-+/g, '-');
+
+    return cleanedPermalink;
+  }
+
+  const createPostHandler = async (event) => {
     event.preventDefault();
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
-    addPost(title, description, 'nick');
+
+    const content = {
+      permalink: titleToPermalink(title),
+      categoryId: categoryId,
+      title: title,
+      description: description,
+    };
+    const post = await addPost(content, 'nick');
+
+    if (post) {
+      navigate(`../${post.id}`);
+    }
   };
 
   return (
