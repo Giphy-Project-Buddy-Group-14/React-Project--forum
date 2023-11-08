@@ -5,6 +5,14 @@ import { getDatabase } from "firebase/database";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
+// getAuth().projectConfigManager().updateProjectConfig(
+//   {
+//     emailPrivacyConfig: {
+//       enableImprovedEmailPrivacy: false,
+//     },
+//   }
+// );
+
 // Your web app's Firebase configuration
 export const firebaseConfig = {
   apiKey: "AIzaSyBel8sDIqzDvtCi4jBVYJC86kXvzpme8OM",

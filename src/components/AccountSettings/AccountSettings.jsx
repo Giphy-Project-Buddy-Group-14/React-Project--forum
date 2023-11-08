@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { EmailAuthProvider, updateCurrentUser, updatePassword } from 'firebase/auth';
+import { EmailAuthProvider, getAuth, updateCurrentUser, updatePassword } from 'firebase/auth';
 import { updateEmail, reauthenticateWithCredential } from 'firebase/auth';
 import { AuthContext } from '@/context/AuthContext.jsx';
 import { getAllUsers, updateProfileEmail } from '@/services/users.services.js';
@@ -11,8 +11,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AccountSettingsValidation } from './accountSettings.validation.js';
 import { Separator } from '../ui/separator.jsx';
 import { useToast } from '../ui/use-toast.js';
-import { useUpdateEmail } from 'react-firebase-hooks/auth';
-import { update } from 'firebase/database';
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 
 export default function AccountSettings() {
@@ -25,8 +23,8 @@ export default function AccountSettings() {
     const form = useForm({
         resolver: zodResolver(AccountSettingsValidation),
         defaultValues: {
-            email: user.email,
-            password: '************'
+            email: '',
+            password: ''
         },
         mode: "onChange",
     })
@@ -36,26 +34,31 @@ export default function AccountSettings() {
      * @async
      */
     const changeEmail = async (email) => {
-        const password = prompt("Please enter your password to confirm email change:");
-        if (!password) return;
-
-        const credentials = EmailAuthProvider.credential(userData.email, password);
-        try {
+        const password = prompt(
+          "Please enter your password to confirm email change:"
+        );
+        if (password) {
+          const credentials = EmailAuthProvider.credential(
+            userData.email,
+            password
+          );
+          try {
             await reauthenticateWithCredential(user, credentials);
-            if (!email) return;
-
-            await updateEmail(user, email);
-            alert("Congratulations! You successfully changed your email!");
-
-            const allUsers = await getAllUsers();
-            setUser((prev) => ({ ...prev, allUsers }));
-
-            await updateProfileEmail(email, userData.username);
-            resetEmailState();
-        } catch (error) {
-            handleEmailError(error);
+            if (email) {
+              await updateEmail(user, email);
+              alert("Congratulations! You successfully changed your email!");
+              const allUsers = await getAllUsers();
+              setUser((prev) => ({ ...prev, allUsers }));
+              await updateProfileEmail(email, userData.username);
+            //   setEmail("");
+            //   setEmailError("");
+            }
+          } catch (error) {
+            // setEmailError("Invalid email or password! Please try again.");
+            console.error(error);
+          }
         }
-    };
+      };
 
     const resetEmailState = () => {
         // setEmail("");
@@ -68,17 +71,21 @@ export default function AccountSettings() {
     };
 
     const onSubmit = async (data) => {
-
-        console.log(data.email, userData.email);
         try {
-            if (data.email !== userData.email) {
+            if (data.email && (data.email !== userData.email)) {
                 await changeEmail(data.email);
+                toast({
+                    title: 'You have updated your email successfully',
+                })
             }
 
-            await updatePassword(user, data.password);
-            toast({
-                title: 'You have updated your profile successfully',
-            })
+            if (data.password) {
+                await updatePassword(user, data.password);
+                toast({
+                    title: 'You have updated your password successfully',
+                })
+
+            }
 
         } catch (error) {
             toast({
@@ -125,7 +132,7 @@ export default function AccountSettings() {
                             <FormItem>
                                 <FormLabel className='shad-form-light_label'>Password</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Type new password" className='shad-input-light' {...field} />
+                                    <Input placeholder="Type new password" type="password" className='shad-input-light' {...field} />
                                 </FormControl>
                                 <FormDescription className='shad-textarea-light'>
                                     Change your password. Min 8 characters long.
