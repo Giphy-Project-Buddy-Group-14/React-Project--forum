@@ -13,6 +13,7 @@ import { Separator } from '../ui/separator.jsx';
 import { useToast } from '../ui/use-toast.js';
 import { useUpdateEmail } from 'react-firebase-hooks/auth';
 import { update } from 'firebase/database';
+import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 
 export default function AccountSettings() {
 
@@ -89,8 +90,8 @@ export default function AccountSettings() {
 
 
     return (
-        <>
-            <div className="space-y-6 shad-form-light_label">
+        <ContentWrapper>
+            <div className="space-y-6 shad-form-light_label mt-100">
                 <div>
                     <h3 className="text-lg font-medium">Profile</h3>
                     <p className="text-sm text-muted-foreground">
@@ -136,6 +137,6 @@ export default function AccountSettings() {
                     <Button type="submit">Update profile</Button>
                 </form>
             </Form>
-        </>
+        </ContentWrapper>
     )
 }

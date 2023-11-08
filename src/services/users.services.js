@@ -33,7 +33,7 @@ export const createUserUsername = (username, uid, email, firstName, lastName) =>
     username,
     uid,
     email,
-    createdOn: new Date(),
+    createdOn: Date.now(),
     role: 'user',
     likedPosts: {}
   })
@@ -69,10 +69,18 @@ export const makeAdminUser = (username) => {
   return update(ref(db), updateAdminStatus);
 };
 
+export const removeAdminUser = (username) => {
+  const updateAdminStatus = {};
+
+  updateAdminStatus[`/users/${username}/role`] = "user";
+
+  return update(ref(db), updateAdminStatus);
+};
+
 export const blockUser = (username) => {
   const updateBlockedStatus = {};
 
-  updateBlockedStatus[`/users/${username}/blockedStatus`] = true;
+  updateBlockedStatus[`/users/${username}/isBlocked`] = true;
 
   return update(ref(db), updateBlockedStatus);
 };
@@ -80,7 +88,7 @@ export const blockUser = (username) => {
 export const unblockUser = (username) => {
   const updateBlockedStatus = {};
 
-  updateBlockedStatus[`/users/${username}/blockedStatus`] = false;
+  updateBlockedStatus[`/users/${username}/isBlocked`] = false;
 
   return update(ref(db), updateBlockedStatus);
 };
