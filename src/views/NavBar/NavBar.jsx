@@ -21,7 +21,7 @@ function classNames(...classes) {
 export default function NavBar() {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { setUser,isLoggedIn } = useContext(AuthContext);
+  const { setUser, isLoggedIn, userData } = useContext(AuthContext);
 
 
   const handleLogOut = async () => {
@@ -132,6 +132,16 @@ export default function NavBar() {
                           </NavLink>
                         )}
                       </Menu.Item>
+                      {userData.role === 'admin' && (<Menu.Item>
+                        {({ active }) => (
+                          <NavLink
+                            to="/manage-users"
+                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                          >
+                            Manage users
+                          </NavLink>
+                        )}
+                      </Menu.Item>)}
                       <Menu.Item>
                         {({ active }) => (
                           <NavLink
@@ -157,11 +167,11 @@ export default function NavBar() {
                   </Transition>
                 </Menu>
               </div>)
-              : (
-                <Button asChild>
-                  <Link to="/sign-in">Login</Link>
-                </Button>
-              )}
+                : (
+                  <Button asChild>
+                    <Link to="/sign-in">Login</Link>
+                  </Button>
+                )}
             </div>
           </div>
 

@@ -2,6 +2,7 @@ import Title from '@/components/Title/Title';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
 import { addPost } from '@/services/post.services';
+import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 export default function NewPost() {
   const createPostHandler = (event) => {
     event.preventDefault();
@@ -11,7 +12,7 @@ export default function NewPost() {
   };
 
   return (
-    <>
+    <ContentWrapper>
       <Title>New Post</Title>
       <form>
         <div className="space-y-12">
@@ -123,6 +124,6 @@ export default function NewPost() {
           </div>
         </div>
       </form>
-    </>
+    </ ContentWrapper >
   );
 }

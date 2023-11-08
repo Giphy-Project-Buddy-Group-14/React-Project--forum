@@ -61,10 +61,26 @@ export const updateProfileEmail = async (email, currentUser) => {
   return update(ref(db), updateEmail);
 };
 
-export const makeAdminUser = (handle) => {
+export const makeAdminUser = (username) => {
   const updateAdminStatus = {};
 
-  updateAdminStatus[`/users/${handle}/role`] = "admin";
+  updateAdminStatus[`/users/${username}/role`] = "admin";
 
   return update(ref(db), updateAdminStatus);
+};
+
+export const blockUser = (username) => {
+  const updateBlockedStatus = {};
+
+  updateBlockedStatus[`/users/${username}/blockedStatus`] = true;
+
+  return update(ref(db), updateBlockedStatus);
+};
+
+export const unblockUser = (username) => {
+  const updateBlockedStatus = {};
+
+  updateBlockedStatus[`/users/${username}/blockedStatus`] = false;
+
+  return update(ref(db), updateBlockedStatus);
 };

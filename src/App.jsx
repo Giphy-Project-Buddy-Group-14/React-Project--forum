@@ -5,7 +5,6 @@ import Forum from './views/Forum/Forum';
 import About from './views/About/About';
 import Footer from './views/Footer/Footer';
 import Profile from './views/Profile/Profile';
-import Settings from './views/Settings/Settings';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Signin from './components/Signin/Signin.jsx';
 import Signup from './components/Signup/Signup.jsx';
@@ -21,8 +20,8 @@ import ForumContainer from './views/Forum/ForumContainer/ForumContainer';
 import Post from './views/Forum/Post/Post';
 import SubCategory from './components/SubCategory/SubCategory';
 import NewPost from './views/Forum/Post/NewPost/NewPost';
-import ContentWrapper from '@/components/ContentWrapper/ContentWrapper';
 import AccountSettings from './components/AccountSettings/AccountSettings.jsx';
+import ManageUsers from './components/ManageUsers/ManageUsers.jsx';
 function App() {
   const { toast } = useToast();
   const [user] = useAuthState(auth);
@@ -70,71 +69,71 @@ function App() {
     <>
       <AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
         {showNavBar && <NavBar />}
-        <ContentWrapper>
-          <Routes>
+        <Routes>
+          <Route element={<AuthLayout />}>
             <Route
-              exact
-              path="/"
-              element={<Home />}
+              path="/sign-in"
+              element={<Signin />}
             />
             <Route
-              path="/home"
-              element={<Home />}
+              path="/sign-up"
+              element={<Signup />}
             />
-            <Route element={<AuthLayout />}>
-              <Route
-                path="/sign-in"
-                element={<Signin />}
-              />
-              <Route
-                path="/sign-up"
-                element={<Signup />}
-              />
-            </Route>
-
+          </Route>
+          <Route
+            exact
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/home"
+            element={<Home />}
+          />
+          <Route
+            path="/forum"
+            element={<ForumContainer />}
+          >
             <Route
-              path="/forum"
+              index
+              element={<Forum />}
+            />
+            <Route
+              path=":categoryId"
               element={<ForumContainer />}
             >
               <Route
                 index
-                element={<Forum />}
+                element={<SubCategory />}
               />
-              <Route
-                path=":categoryId"
-                element={<ForumContainer />}
-              >
+              <Route path="posts">
                 <Route
-                  index
-                  element={<SubCategory />}
+                  path=":postId"
+                  element={<Post />}
                 />
-                <Route path="posts">
-                  <Route
-                    path=":postId"
-                    element={<Post />}
-                  />
-                  <Route
-                    path="new"
-                    element={<NewPost />}
-                  />
-                </Route>
+                <Route
+                  path="new"
+                  element={<NewPost />}
+                />
               </Route>
             </Route>
-
-            <Route
-              path="/about"
-              element={<About />}
-            />
-            <Route
-              path="/profile"
-              element={<Profile />}
-            />
-            <Route
-              path="/settings"
-              element={<AccountSettings />}
-            />
-          </Routes>
-        </ContentWrapper>
+          </Route>
+          <Route
+            path="/about"
+            element={<About />}
+          />
+          <Route
+            path="/profile"
+            element={<Profile />}
+          />
+          <Route
+            path="/settings"
+            element={<AccountSettings />}
+          />
+          <Route
+            path="/manage-users"
+            element={<ManageUsers />}
+          />
+        </Routes>
 
         <Footer />
       </AuthContext.Provider>
