@@ -6,8 +6,8 @@ import { AuthContext } from '@/context/AuthContext';
 
 export default function Forum() {
 
-  const { isUserLoggedIn } = useContext(AuthContext);
-  if (!isUserLoggedIn) {
+  const { isLoggedIn } = useContext(AuthContext);
+  if (!isLoggedIn) {
     return (
       <ContentWrapper>
         <div className="container mx-auto p-4">

@@ -4,6 +4,7 @@ import Title from "../../components/Title/Title";
 import { Button } from '@/components/ui/button';
 import { AuthContext } from '@/context/AuthContext';
 import { useContext } from 'react';
+import ContentWrapper from '@/components/ContentWrapper/ContentWrapper';
 
 export default function Profile() {
   const { userData } = useContext(AuthContext);
@@ -17,7 +18,7 @@ export default function Profile() {
   }
 
   return (
-    <div className='p-6'>
+    <ContentWrapper>
       <Title>Profile</Title>
       <div className='flex p-6'>
         <div className="flex -space-x-2 overflow-hidden mr-4">
@@ -36,6 +37,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-    </div>
+    </ContentWrapper>
   )
 }
