@@ -1,4 +1,4 @@
-import PreviewSubCategory from '../../components/PreviewSubCategory/PreviewSubCategory';
+import PreviewSubCategory from '../../components/PostForm/PreviewSubCategory/PreviewSubCategory';
 import Category from '../../components/Category/Category';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 

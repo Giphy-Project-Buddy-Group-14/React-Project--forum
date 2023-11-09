@@ -1,4 +1,4 @@
-import { ref, push, get, query, equalTo, orderByChild, update } from 'firebase/database';
+import { ref, push, get, set, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 const fromPostsDocument = async snapshot => {
@@ -19,6 +19,22 @@ const fromPostsDocument = async snapshot => {
         console.error(error);
     }
 };
+
+export const updatePost = async (id, content, handle) => {
+    try {
+        const postRef = ref(db, `posts/${id}`);
+        await set(postRef, {
+            ...content,
+            author: handle,
+            createdOn: Date.now(),
+        });
+        const result = await getPostById(id);
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 
 export const addPost = async (content, handle) => {
     try {

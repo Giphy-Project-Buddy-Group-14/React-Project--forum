@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <>
-      <footer className="bg-gray-800 py-4 text-white">
+      <footer className="fixed bottom-0 w-full bg-gray-800 py-4 text-white">
         <div className="flex justify-center space-x-6">
           <Link
             to="https://www.facebook.com/your-facebook-page"

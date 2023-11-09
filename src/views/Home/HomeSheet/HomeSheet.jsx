@@ -54,9 +54,6 @@ const posts = [
 ];
 
 export default function HomeSheet() {
-
-
-
   
   return (
     <div>

@@ -15,9 +15,7 @@ export default function SubCategory() {
       setPosts(posts)
     }
     fetchPosts(categoryId)
-  }, [])
-
-
+  }, [categoryId])
 
   const navigate = useNavigate()
 

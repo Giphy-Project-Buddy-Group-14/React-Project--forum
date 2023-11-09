@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 
-export default function PreviewSubCategory({ title, link, postCount, lastPost }) {
+export default function PreviewSubCategory({
+  title,
+  link,
+  postCount,
+  lastPost,
+}) {
   return (
     <div className="bg-blue-200 shadow-md p-4 rounded-lg my-4">
       <div className="flex justify-between items-center">

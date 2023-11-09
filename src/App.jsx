@@ -22,6 +22,7 @@ import SubCategory from './components/SubCategory/SubCategory';
 import NewPost from './views/Forum/Post/NewPost/NewPost';
 import AccountSettings from './components/AccountSettings/AccountSettings.jsx';
 import ManageUsers from './components/ManageUsers/ManageUsers.jsx';
+import EditPost from './views/EditPost/EditPost';
 function App() {
   const { toast } = useToast();
   const [user] = useAuthState(auth);
@@ -114,6 +115,27 @@ function App() {
                   path="new"
                   element={<NewPost />}
                 />
+
+                <Route path="posts">
+                  <Route
+                    path=":postId"
+                    element={<ForumContainer />}
+                  >
+                    <Route
+                      index
+                      element={<Post />}
+                    />
+                    <Route
+                      path="edit"
+                      element={<EditPost />}
+                    />
+                  </Route>
+
+                  <Route
+                    path="new"
+                    element={<NewPost />}
+                  />
+                </Route>
               </Route>
             </Route>
           </Route>
