@@ -12,7 +12,7 @@ import AuthLayout from './views/AuthLayout/AuthLayout.jsx';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config.js';
 import { useEffect, useState } from 'react';
-import { getUserByEmail, getUserData } from './services/users.services.js';
+import { getUserByEmail } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
 import { AuthContext } from './context/AuthContext.jsx';
 import { Toaster } from './components/ui/toaster.jsx';
@@ -67,7 +67,7 @@ function App() {
   const showNavBar = !authRoutes.includes(location.pathname);
 
   return (
-    <>
+    <div className='flex flex-col min-h-screen'>
       <AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
         {showNavBar && <NavBar />}
         <Routes>
@@ -160,7 +160,7 @@ function App() {
         <Footer />
       </AuthContext.Provider>
       <Toaster />
-    </>
+      </div>
   );
 }
 
