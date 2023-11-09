@@ -168,9 +168,14 @@ export default function NavBar() {
                 </Menu>
               </div>)
                 : (
-                  <Button asChild>
-                    <Link to="/sign-in">Login</Link>
-                  </Button>
+                  <>
+                    <Button className="mr-5" asChild>
+                      <Link to="/sign-in">Login</Link>
+                    </Button>
+                    <Button asChild>
+                      <Link to="/sign-up">Register</Link>
+                    </Button>
+                  </>
                 )}
             </div>
           </div>

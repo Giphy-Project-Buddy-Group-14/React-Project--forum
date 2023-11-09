@@ -12,7 +12,7 @@ import AuthLayout from './views/AuthLayout/AuthLayout.jsx';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config.js';
 import { useEffect, useState } from 'react';
-import { getUserByEmail, getUserData } from './services/users.services.js';
+import { getUserByEmail } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
 import { AuthContext } from './context/AuthContext.jsx';
 import { Toaster } from './components/ui/toaster.jsx';
@@ -28,7 +28,8 @@ function App() {
   const [user] = useAuthState(auth);
   const [appState, setAppState] = useState({
     user,
-    userData: false,
+    userData: {},
+    isLoggedIn: false,
   });
 
   if (appState.user !== user) {
@@ -39,7 +40,7 @@ function App() {
     if (user === null) {
       setAppState({
         ...appState,
-        userData: null,
+        userData: {},
         isLoggedIn: false,
       });
       return;
@@ -67,7 +68,7 @@ function App() {
   const showNavBar = !authRoutes.includes(location.pathname);
 
   return (
-    <>
+    <div className='flex flex-col min-h-screen'>
       <AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
         {showNavBar && <NavBar />}
         <Routes>
@@ -106,36 +107,25 @@ function App() {
                 index
                 element={<SubCategory />}
               />
+
               <Route path="posts">
                 <Route
                   path=":postId"
-                  element={<Post />}
-                />
+                  element={<ForumContainer />}
+                >
+                  <Route
+                    index
+                    element={<Post />}
+                  />
+                  <Route
+                    path="edit"
+                    element={<EditPost />}
+                  />
+                </Route>
                 <Route
                   path="new"
                   element={<NewPost />}
                 />
-
-                <Route path="posts">
-                  <Route
-                    path=":postId"
-                    element={<ForumContainer />}
-                  >
-                    <Route
-                      index
-                      element={<Post />}
-                    />
-                    <Route
-                      path="edit"
-                      element={<EditPost />}
-                    />
-                  </Route>
-
-                  <Route
-                    path="new"
-                    element={<NewPost />}
-                  />
-                </Route>
               </Route>
             </Route>
           </Route>
@@ -160,7 +150,7 @@ function App() {
         <Footer />
       </AuthContext.Provider>
       <Toaster />
-    </>
+      </div>
   );
 }
 
