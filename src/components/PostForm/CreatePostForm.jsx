@@ -1,13 +1,13 @@
-
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { addPost } from '@/services/post.services';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-
+import { useState, useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 export default function CreatePostForm() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
-
+  const { userData } = useContext(AuthContext);
+  const username = userData.username;
   const createPostHandler = async (event) => {
     event.preventDefault();
     const title = document.getElementById('title').value;
@@ -18,13 +18,13 @@ export default function CreatePostForm() {
       title: title,
       description: description,
     };
-    const post = await addPost(content, 'nick');
+    const post = await addPost(content, username);
 
     if (post) {
       navigate(`../${post.id}`);
     }
   };
-  
+
   const [localTitle, setLocalTitle] = useState('');
   const [localDescription, setLocalDescription] = useState('');
 

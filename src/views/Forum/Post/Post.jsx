@@ -4,26 +4,30 @@ import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState } from 'react';
 import Heart from '@/components/ui/Heart';
 import CountView from '@/components/ui/CountView';
-
+import LoadingIndicator from '@/components/ui/Loading';
+import convertDate from '@/helpers/dateFormat';
+import TimeStamp from '@/components/ui/TimeStamp';
+import Author from '@/components/Author/Author';
 export default function Post() {
   const { postId } = useParams();
   const [post, setPost] = useState({});
+  const [createdOnDate, setCreatedOnDate] = useState();
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
+
     const fetchPost = async (postId) => {
       const post = await getPostById(postId);
       setPost(post);
+      const date = convertDate(post.createdOn);
+      setCreatedOnDate(date);
     };
     fetchPost(postId);
-  }, [postId]);
 
-  const convertDate = (date) => {
-    const createdDate = new Date(date);
-    const formattedDate =
-      createdDate.toDateString() + ' ' + createdDate.toLocaleTimeString();
-    return formattedDate;
-  };
+    setLoading(false);
+  }, [postId]);
 
   const editPost = () => {
     navigate(`edit`);
@@ -31,17 +35,13 @@ export default function Post() {
 
   return (
     <ContentWrapper>
+      {loading && <LoadingIndicator />}
       <div>
         <div id={postId}></div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           <article className="flex max-w-xl flex-col items-start justify-between">
             <div className="flex items-center gap-x-4 text-xs">
-              <time
-                dateTime={post.createdOn}
-                className="text-gray-500"
-              >
-                {convertDate(post.createdOn)}
-              </time>
+              {createdOnDate && <TimeStamp date={createdOnDate}></TimeStamp>}
 
               <div className="bg-gray-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                 <Heart />
@@ -69,14 +69,11 @@ export default function Post() {
                 alt=""
                 className="h-10 w-10 rounded-full bg-gray-50"
               />
-              <div className="text-sm leading-6">
-                <p className="font-semibold text-gray-900">
-                  <span className="absolute inset-0" />
-                </p>
-                <p className="text-gray-600">FirstName LastName</p>
-              </div>
+
+              <Author />
             </div>
           </article>
+
           <div>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
