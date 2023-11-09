@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SignupValidation } from './signup.validation.js'
 import { registerUser } from '@/services/auth.services.js';
 import { createUserUsername } from '@/services/users.services.js';
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import Loader from '../Loader/Loader.jsx';
 import { Button } from '../ui/button.jsx';
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useToast } from '../ui/use-toast.js';
+import { AuthContext } from '@/context/AuthContext.jsx';
 
 export default function Signup() {
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { setUser } = useContext(AuthContext);
 
   const form = useForm({
     resolver: zodResolver(SignupValidation),
@@ -31,9 +35,18 @@ export default function Signup() {
       setLoading(true);
       const response = await registerUser(values.email, values.password);
       await createUserUsername(values.username, response.user.uid, response.user.email, values.firstName, values.lastName);
-
+      setUser({ user: response });
+      toast({
+        title: "Your account was created successfully"
+      });
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
     } catch (error) {
-      setError(error.message);
+      toast({
+        title: "Error creating your Account",
+        description: error.message
+      });
     } finally {
       setLoading(false);
     }
@@ -43,8 +56,9 @@ export default function Signup() {
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
-
-        <img src="src/assets/logo.png" alt="logo" width={60} height={60} />
+        <Link to='/'>
+          <img src="src/assets/logo.png" alt="logo" width={60} height={60} />
+        </Link>
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create a new account</h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">To use Forum, please enter your details</p>
 
