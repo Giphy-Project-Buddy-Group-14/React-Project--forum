@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { getPostById } from '@/services/post.services';
+import { getPostById, deletePostById } from '@/services/post.services';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Heart from '@/components/ui/Heart';
 import CountView from '@/components/ui/CountView';
 import LoadingIndicator from '@/components/ui/Loading';
@@ -31,6 +31,11 @@ export default function Post() {
 
   const editPost = () => {
     navigate(`edit`);
+  };
+
+  const deletePost = async () => {
+    await deletePostById(postId);
+    navigate(`../..`);
   };
 
   return (
@@ -80,6 +85,14 @@ export default function Post() {
               onClick={editPost}
             >
               Edit Post
+            </button>
+          </div>
+          <div>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={deletePost}
+            >
+              Delete Post
             </button>
           </div>
         </div>

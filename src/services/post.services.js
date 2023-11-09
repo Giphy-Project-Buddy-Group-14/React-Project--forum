@@ -1,4 +1,4 @@
-import { ref, push, get, set, query, equalTo, orderByChild, update } from 'firebase/database';
+import { ref, push, get, set, remove, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 const fromPostsDocument = async snapshot => {
@@ -38,7 +38,6 @@ export const updatePost = async (id, content, username) => {
 
 export const addPost = async (content, username) => {
     try {
-
         const result = await push(
             ref(db, 'posts'),
             {
@@ -68,6 +67,14 @@ export const getPostById = async (id) => {
         if (!post.likedBy) post.likedBy = [];
 
         return post;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const deletePostById = async (id) => {
+    try {
+        await remove(ref(db, `posts/${id}`));
     } catch (error) {
         console.error(error);
     }
