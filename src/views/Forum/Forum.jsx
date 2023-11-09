@@ -1,8 +1,22 @@
 import PreviewSubCategory from '../../components/PostForm/PreviewSubCategory/PreviewSubCategory';
 import Category from '../../components/Category/Category';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
+import { useContext } from 'react';
+import { AuthContext } from '@/context/AuthContext';
 
 export default function Forum() {
+
+  const { isUserLoggedIn } = useContext(AuthContext);
+  if (!isUserLoggedIn) {
+    return (
+      <ContentWrapper>
+        <div className="container mx-auto p-4">
+          Please login to see the forum!
+        </div>
+      </ContentWrapper>
+    );
+  }
+
   return (
     <ContentWrapper>
       <div className="container mx-auto p-4">
