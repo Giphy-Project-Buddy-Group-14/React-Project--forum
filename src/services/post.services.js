@@ -20,12 +20,12 @@ const fromPostsDocument = async snapshot => {
     }
 };
 
-export const updatePost = async (id, content, handle) => {
+export const updatePost = async (id, content, username) => {
     try {
         const postRef = ref(db, `posts/${id}`);
         await set(postRef, {
             ...content,
-            author: handle,
+            author: username,
             createdOn: Date.now(),
         });
         const result = await getPostById(id);
@@ -36,14 +36,14 @@ export const updatePost = async (id, content, handle) => {
 };
 
 
-export const addPost = async (content, handle) => {
+export const addPost = async (content, username) => {
     try {
 
         const result = await push(
             ref(db, 'posts'),
             {
                 ...content,
-                author: handle,
+                author: username,
                 createdOn: Date.now(),
             },
         );

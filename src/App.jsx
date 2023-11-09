@@ -28,7 +28,8 @@ function App() {
   const [user] = useAuthState(auth);
   const [appState, setAppState] = useState({
     user,
-    userData: false,
+    userData: {},
+    isLoggedIn: false,
   });
 
   if (appState.user !== user) {
@@ -39,7 +40,7 @@ function App() {
     if (user === null) {
       setAppState({
         ...appState,
-        userData: null,
+        userData: {},
         isLoggedIn: false,
       });
       return;
@@ -106,36 +107,25 @@ function App() {
                 index
                 element={<SubCategory />}
               />
+
               <Route path="posts">
                 <Route
                   path=":postId"
-                  element={<Post />}
-                />
+                  element={<ForumContainer />}
+                >
+                  <Route
+                    index
+                    element={<Post />}
+                  />
+                  <Route
+                    path="edit"
+                    element={<EditPost />}
+                  />
+                </Route>
                 <Route
                   path="new"
                   element={<NewPost />}
                 />
-
-                <Route path="posts">
-                  <Route
-                    path=":postId"
-                    element={<ForumContainer />}
-                  >
-                    <Route
-                      index
-                      element={<Post />}
-                    />
-                    <Route
-                      path="edit"
-                      element={<EditPost />}
-                    />
-                  </Route>
-
-                  <Route
-                    path="new"
-                    element={<NewPost />}
-                  />
-                </Route>
               </Route>
             </Route>
           </Route>
