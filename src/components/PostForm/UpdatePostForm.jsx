@@ -18,7 +18,7 @@ export default function UpdatePostForm({ post }) {
       title: title,
       description: description,
     };
-    const updatedPost = await updatePost(post?.id, content, 'nick');
+    const updatedPost = await updatePost(post?.id, content, post?.author);
 
     if (updatedPost) {
       navigate(`..`);
