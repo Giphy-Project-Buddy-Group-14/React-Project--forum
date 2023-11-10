@@ -59,7 +59,7 @@ export default function Signin() {
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
-      <Link to='/'>
+        <Link to='/'>
           <img src="src/assets/logo.png" alt="logo" width={60} height={60} />
         </Link>
 
@@ -79,7 +79,7 @@ export default function Signin() {
               <FormItem>
                 <FormLabel className="shad-form_label">Email</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input type="text" placeHolder="Type your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,7 +93,7 @@ export default function Signin() {
               <FormItem>
                 <FormLabel className="shad-form_label">Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
+                  <Input type="password" placeHolder="Type your password"{...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
