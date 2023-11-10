@@ -3,24 +3,45 @@ import { addPost } from '@/services/post.services';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
+import { useToast } from '../ui/use-toast';
+
 export default function CreatePostForm() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
   const username = userData.username;
+
+  const { toast } = useToast();
+
   const createPostHandler = async (event) => {
     event.preventDefault();
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
+
+    if (title.length < 16 || title.length > 64) {
+      toast(
+        { title: 'Title must be between 16 and 64 characters', type: 'UPDATE_TOAST' },
+        { appearance: 'error' }
+      );
+      return;
+    }
+    if (description.length < 32 || description.length > 8192) {
+      toast(
+        { title: 'Content must be between 32 and 8192 characters' },
+        { appearance: 'error' }
+      );
+      return;
+    }
 
     const content = {
       categoryId: categoryId,
       title: title,
       description: description,
     };
-    const post = await addPost(content, username);
 
+    const post = await addPost(content, username);
     if (post) {
+      toast({ title: 'Post created successfully!' }, { appearance: 'success' });
       navigate(`../${post.id}`);
     }
   };
