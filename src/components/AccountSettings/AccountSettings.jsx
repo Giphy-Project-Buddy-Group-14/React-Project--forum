@@ -17,7 +17,7 @@ export default function AccountSettings() {
 
     // const [email, setEmail] = useState("");
     // const [emailError, setEmailError] = useState("");
-    const { isLoggedInUser, user, userData, setUser } = useContext(AuthContext);
+    const { user, userData, setUser } = useContext(AuthContext);
     const { toast } = useToast();
 
     const form = useForm({
