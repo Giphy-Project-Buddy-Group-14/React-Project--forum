@@ -7,14 +7,14 @@ export default function PreviewSubCategory({
   lastPost,
 }) {
   return (
-    <div className="bg-blue-200 shadow-md p-4 rounded-lg my-4">
-      <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg my-4 hover:bg-gray-200 transition-colors duration-200">
+      <div>
         <h2 className="text-lg font-semibold">{title}</h2>
         <Link
           to={link}
           className="text-blue-500 hover:underline"
         >
-          {title}
+          View Posts
         </Link>
       </div>
       <div className="mt-2 text-gray-600">
