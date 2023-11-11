@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import Title from "../../components/Title/Title";
 import { Button } from '@/components/ui/button';
