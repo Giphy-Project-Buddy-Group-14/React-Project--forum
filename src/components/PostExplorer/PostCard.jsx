@@ -29,7 +29,7 @@ export default function PostCard(post) {
                             </Link>
                         </div>
                         <div className="text-gray-900 font-bold text-xl mb-2">{post.title}</div>
-                        <p className="text-gray-700 text-base">{post.description.slice(0, 150)}</p>
+                        <p className="text-gray-700 text-base">{post.description.slice(0, 150) + '...'}</p>
                     </div>
                     <div className="flex items-center">
                         <img className="w-10 h-10 rounded-full mr-4" src="/ben.png" alt="Avatar of Writer" />
