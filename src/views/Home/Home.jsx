@@ -1,6 +1,4 @@
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
-import Title from '../../components/Title/Title';
-import HomeSheet from './HomeSheet/HomeSheet';
 import PostList from '@/components/PostExplorer/PostList.jsx';
 
 export default function Home() {
