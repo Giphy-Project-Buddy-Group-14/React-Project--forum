@@ -1,5 +1,6 @@
 import { get, set, ref, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import { setFileToStorage } from './storage.services.js';
 
 export const fromUsersDocument = (snapshot) => {
   const usersDocument = snapshot.val();
@@ -91,4 +92,14 @@ export const unblockUser = (username) => {
   updateBlockedStatus[`/users/${username}/isBlocked`] = false;
 
   return update(ref(db), updateBlockedStatus);
+};
+
+export const updateProfilePic = async (file, currentUser) => {
+  const url = await setFileToStorage(file);
+
+  const updateProfilePic = {};
+  updateProfilePic[`/users/${currentUser}/profilePictureURL`] = url;
+
+  update(ref(db), updateProfilePic);
+  return url;
 };

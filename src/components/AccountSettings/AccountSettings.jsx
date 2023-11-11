@@ -1,8 +1,9 @@
-import { useState, useContext } from 'react'
+import { useContext, useState } from 'react'
+import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { EmailAuthProvider, getAuth, updateCurrentUser, updatePassword } from 'firebase/auth';
 import { updateEmail, reauthenticateWithCredential } from 'firebase/auth';
 import { AuthContext } from '@/context/AuthContext.jsx';
-import { getAllUsers, updateProfileEmail } from '@/services/users.services.js';
+import { getAllUsers, updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
 import { Button } from '../ui/button.jsx';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form.jsx';
 import { Input } from '../ui/input.jsx';
@@ -15,10 +16,9 @@ import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 
 export default function AccountSettings() {
 
-    // const [email, setEmail] = useState("");
-    // const [emailError, setEmailError] = useState("");
     const { user, userData, setUser } = useContext(AuthContext);
     const { toast } = useToast();
+    const [picture, setPicture] = useState();
 
     const form = useForm({
         resolver: zodResolver(AccountSettingsValidation),
@@ -35,39 +35,26 @@ export default function AccountSettings() {
      */
     const changeEmail = async (email) => {
         const password = prompt(
-          "Please enter your password to confirm email change:"
+            "Please enter your password to confirm email change:"
         );
         if (password) {
-          const credentials = EmailAuthProvider.credential(
-            userData.email,
-            password
-          );
-          try {
-            await reauthenticateWithCredential(user, credentials);
-            if (email) {
-              await updateEmail(user, email);
-              alert("Congratulations! You successfully changed your email!");
-              const allUsers = await getAllUsers();
-              setUser((prev) => ({ ...prev, allUsers }));
-              await updateProfileEmail(email, userData.username);
-            //   setEmail("");
-            //   setEmailError("");
+            const credentials = EmailAuthProvider.credential(
+                userData.email,
+                password
+            );
+            try {
+                await reauthenticateWithCredential(user, credentials);
+                if (email) {
+                    await updateEmail(user, email);
+                    alert("Congratulations! You successfully changed your email!");
+                    const allUsers = await getAllUsers();
+                    setUser((prev) => ({ ...prev, allUsers }));
+                    await updateProfileEmail(email, userData.username);
+                }
+            } catch (error) {
+                console.error(error);
             }
-          } catch (error) {
-            // setEmailError("Invalid email or password! Please try again.");
-            console.error(error);
-          }
         }
-      };
-
-    const resetEmailState = () => {
-        // setEmail("");
-        // setEmailError("");
-    };
-
-    const handleEmailError = (error) => {
-        // setEmailError("Invalid email or password! Please try again.");
-        console.error(error);
     };
 
     const onSubmit = async (data) => {
@@ -95,6 +82,21 @@ export default function AccountSettings() {
         }
     }
 
+    const handleFileChange = async (event) => {
+        const file = event.target.files[0];
+        try {
+            const data = await updateProfilePic(file, userData.username);
+            setPicture(data);
+            toast({
+                title: 'Successfully uploaded profile picture'
+            })
+        } catch (error) {
+            toast({
+                title: error.message
+            })
+        }
+    }
+
 
     return (
         <ContentWrapper>
@@ -108,6 +110,37 @@ export default function AccountSettings() {
             </div>
             <Separator />
             <Form {...form}>
+                <div className="col-span-full mt-10">
+                    <label
+                        htmlFor="photo"
+                        className="block text-sm font-medium leading-6 text-gray-900"
+                    >
+                        Photo
+                    </label>
+                    <div className="mt-2 flex items-center gap-x-3">
+                        {!userData?.profilePictureURL && picture ? (<UserCircleIcon
+                            className="h-12 w-12 text-gray-300"
+                        />) : (<img src={picture || userData.profilePictureURL} alt="profile-img" style={{
+                            width: '50px', 
+                            height: '50px', 
+                            borderRadius: '50%',
+                            objectFit: 'cover'
+                        }}/>)}
+                        <input
+                            type="file"
+                            id="fileInput"
+                            style={{ display: 'none' }}
+                            onChange={handleFileChange}
+                        />
+                        <button
+                            type="button"
+                            className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                            onClick={() => document.getElementById('fileInput').click()}
+                        >
+                            Change
+                        </button>
+                    </div>
+                </div>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <FormField
                         control={form.control}
@@ -144,6 +177,6 @@ export default function AccountSettings() {
                     <Button type="submit">Update profile</Button>
                 </form>
             </Form>
-        </ContentWrapper>
+        </ContentWrapper >
     )
 }
