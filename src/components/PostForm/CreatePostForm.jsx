@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useToast } from '../ui/use-toast';
-
+import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH, MAX_DESCRIPTION_LENGTH } from '@/helpers/consts';
 export default function CreatePostForm() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
@@ -18,14 +18,14 @@ export default function CreatePostForm() {
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
 
-    if (title.length < 16 || title.length > 64) {
+    if (title.length < MIN_TITLE_LENGTH || title.length > MAX_TITLE_LENGTH) {
       toast(
         { title: 'Title must be between 16 and 64 characters', type: 'UPDATE_TOAST' },
         { appearance: 'error' }
       );
       return;
     }
-    if (description.length < 32 || description.length > 8192) {
+    if (description.length < MIN_DESCRIPTION_LENGTH || description.length > MAX_DESCRIPTION_LENGTH) {
       toast(
         { title: 'Content must be between 32 and 8192 characters' },
         { appearance: 'error' }

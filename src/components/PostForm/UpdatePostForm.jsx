@@ -3,15 +3,36 @@ import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { updatePost } from '@/services/post.services';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH, MAX_DESCRIPTION_LENGTH } from '@/helpers/consts';
+import { useToast } from '../ui/use-toast';
+
 
 export default function UpdatePostForm({ post }) {
   const { categoryId } = useParams();
   const navigate = useNavigate();
 
+  const { toast } = useToast();
+
   const updatePostHandler = async (event) => {
     event.preventDefault();
     const title = document.getElementById('title').value;
     const description = document.getElementById('description').value;
+
+
+    if (title.length < MIN_TITLE_LENGTH || title.length > MAX_TITLE_LENGTH) {
+      toast(
+        { title: 'Title must be between 16 and 64 characters', type: 'UPDATE_TOAST' },
+        { appearance: 'error' }
+      );
+      return;
+    }
+    if (description.length < MIN_DESCRIPTION_LENGTH || description.length > MAX_DESCRIPTION_LENGTH) {
+      toast(
+        { title: 'Content must be between 32 and 8192 characters' },
+        { appearance: 'error' }
+      );
+      return;
+    }
 
     const content = {
       categoryId: categoryId,

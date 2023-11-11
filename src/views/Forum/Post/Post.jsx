@@ -9,7 +9,7 @@ import TimeStamp from '@/components/ui/TimeStamp';
 import Author from '@/components/Author/Author';
 import { AuthContext } from '@/context/AuthContext';
 
-import CommentForm from '@/components/CommentsForm/CommentForm';
+import CommentSection from '@/components/CommentsForm/CommentSection';
 
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
@@ -55,14 +55,14 @@ export default function Post() {
   return (
     <ContentWrapper>
       {loading && <LoadingIndicator />}
-      <div>
+      <div> 
         <div id={postId}></div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-1 ">
-          <article className="flex max-w-xl flex-col items-start justify-between ">
+          <article className="flex max-w-xl flex-col items-start justify-between">
             <div className="flex items-center gap-x-2 text-xs">
               {createdOnDate && <TimeStamp date={createdOnDate}></TimeStamp>}
 
-              <div className="bg-gray-300 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
+              <div className="bg-gray-300 hover:bg-red text-white font-bold py-2 px-2 rounded">
                 <Heart />
               </div>
 
@@ -72,7 +72,7 @@ export default function Post() {
               <div>
                 <Menu
                   as="div"
-                  className="relative ml-3 "
+                  className="relative ml-3"
                 >
                   <div>
                     <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
@@ -92,7 +92,7 @@ export default function Post() {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <Link
@@ -151,7 +151,7 @@ export default function Post() {
         </div>
       </div>
 
-      <CommentForm postId={postId} />
+      <CommentSection postId={postId} />
     </ContentWrapper>
   );
 }
