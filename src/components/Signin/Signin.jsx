@@ -43,7 +43,7 @@ export default function Signin() {
 
       setTimeout(() => {
         navigate('/home');
-      }, 2000);
+      }, 500);
 
     } catch (error) {
       toast({

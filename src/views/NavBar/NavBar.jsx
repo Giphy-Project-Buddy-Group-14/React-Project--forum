@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button.jsx';
 
 const navigation = [
   { name: 'Home', href: '/' },
-  { name: 'Forum', href: '/forum' },
+  { name: 'Categories', href: '/forum' },
   { name: 'About', href: '/about' },
 ]
 
@@ -36,7 +36,7 @@ export default function NavBar() {
 
       setTimeout(() => {
         navigate('/home');
-      }, 2000);
+      }, 500);
     } catch (error) {
       toast({
         title: "Error log out",

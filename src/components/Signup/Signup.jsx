@@ -41,7 +41,7 @@ export default function Signup() {
       });
       setTimeout(() => {
         navigate('/');
-      }, 1000);
+      }, 500);
     } catch (error) {
       toast({
         title: "Error creating your Account",
