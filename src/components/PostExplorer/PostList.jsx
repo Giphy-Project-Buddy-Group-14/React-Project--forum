@@ -1,4 +1,4 @@
-import { getPosts } from '@/services/post.services.js';
+import { getAllPosts } from '@/services/post.services.js';
 import { useContext, useEffect, useState } from 'react'
 import { useToast } from '../ui/use-toast.js';
 import PostCard from './PostCard.jsx';
@@ -15,7 +15,7 @@ export default function PostList() {
     useEffect(() => {
         (async () => {
             try {
-                const response = await getPosts()
+                const response = await getAllPosts()
                 setPosts(response)
             } catch (error) {
                 toast({
