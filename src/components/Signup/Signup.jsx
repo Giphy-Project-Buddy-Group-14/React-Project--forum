@@ -59,7 +59,7 @@ export default function Signup() {
         <Link to='/'>
           <img src="src/assets/logo.png" alt="logo" width={60} height={60} />
         </Link>
-        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create a new account</h2>
+        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12 shad-form_label">Create a new account</h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">To use Forum, please enter your details</p>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
@@ -68,9 +68,9 @@ export default function Signup() {
             name="firstName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First name</FormLabel>
+                <FormLabel className="shad-form_label">First name</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input type="text" placeHolder="Type your first name"{...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,9 +81,9 @@ export default function Signup() {
             name="lastName"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Last name</FormLabel>
+                <FormLabel className="shad-form_label">Last name</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input type="text" placeHolder="Type your last name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -94,9 +94,9 @@ export default function Signup() {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Username</FormLabel>
+                <FormLabel className="shad-form_label">Username</FormLabel>
                 <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
+                  <Input type="text" placeHolder="Type your username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -107,9 +107,9 @@ export default function Signup() {
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel className="shad-form_label">Email</FormLabel>
                 <FormControl>
-                  <Input type="email" className="shad-input" {...field} />
+                  <Input type="email" placeHolder="Type your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -120,9 +120,9 @@ export default function Signup() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel className="shad-form_label">Password</FormLabel>
                 <FormControl>
-                  <Input type="password" className="shad-input" {...field} />
+                  <Input type="password" placeHolder="Type your password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -130,7 +130,7 @@ export default function Signup() {
           />
           <Button type="submit" className="shad-button_primary">
             {loading ? (
-              <div className="flex-center gap-2">
+              <div className="flex-center gap-2 shad-form_label" >
                 <Loader />  ...Loading
               </div>
             ) : "Sign up"}
