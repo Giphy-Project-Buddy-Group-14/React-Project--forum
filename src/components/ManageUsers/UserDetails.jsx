@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '../ui/use-toast.js';
+import { UserCircleIcon } from '@heroicons/react/24/solid';
 import _ from "lodash";
 import moment from 'moment';
 import { blockUser, makeAdminUser, removeAdminUser, unblockUser } from '@/services/users.services.js';
+import { AuthContext } from '@/context/AuthContext.jsx';
 
 export default function UserDetails(user) {
 
@@ -13,6 +15,7 @@ export default function UserDetails(user) {
     const [isAdmin, setIsAdmin] = useState(user.role === 'admin');
     const navigate = useNavigate();
     const { toast } = useToast();
+    const { userData } = useContext(AuthContext);
 
     useEffect(() => {
 
@@ -72,11 +75,14 @@ export default function UserDetails(user) {
 
     return (
         <div className="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg"
-        style={{width: '300px'}}>
+            style={{ width: '300px' }}>
             <div className="border-b px-4 pb-6">
                 <div className="text-center my-4">
-                    <img className="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4"
-                        src="https://randomuser.me/api/portraits/women/21.jpg" alt="" />
+                    {!user?.profilePictureURL ? (<UserCircleIcon
+                        className="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4 text-gray-300" />
+                    ) : (
+                        <img src={user.profilePictureURL} alt="profile-img"
+                            className="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4" />)}
                     <div className="py-2">
                         <h3 className="font-bold text-2xl text-gray-800 dark:text-white mb-1">{user.firstName + ' ' + user.lastName}</h3>
                         <div className="inline-flex text-gray-700 dark:text-gray-300 items-center">
@@ -98,15 +104,15 @@ export default function UserDetails(user) {
                             className="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2">
                             Block
                         </button>)}
-                    {isAdmin  ? ( 
-                    <button onClick={handleRemoveAdmin}
-                        className="flex-1 rounded-full border-2 border-gray-400 dark:border-gray-700 font-semibold text-black dark:text-white px-4 py-2">
-                        Demote
-                    </button>) : ( 
-                    <button onClick={handleMakeAdmin}
-                        className="flex-1 rounded-full border-2 border-gray-400 dark:border-gray-700 font-semibold text-black dark:text-white px-4 py-2">
-                        Admin
-                    </button>)}
+                    {isAdmin ? (
+                        <button onClick={handleRemoveAdmin}
+                            className="flex-1 rounded-full border-2 border-gray-400 dark:border-gray-700 font-semibold text-black dark:text-white px-4 py-2">
+                            Demote
+                        </button>) : (
+                        <button onClick={handleMakeAdmin}
+                            className="flex-1 rounded-full border-2 border-gray-400 dark:border-gray-700 font-semibold text-black dark:text-white px-4 py-2">
+                            Admin
+                        </button>)}
                 </div>
             </div>
             <div className="px-4 py-4">

@@ -1,5 +1,6 @@
 
 import { Fragment, useContext } from 'react'
+import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -99,11 +100,10 @@ export default function NavBar() {
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="/src/assets/blank-profile.png"
-                        alt=""
-                      />
+                      {!userData?.profilePictureURL? (<UserCircleIcon
+                            className="h-8 w-8 rounded-full text-gray-300"
+                        />) : (<img src={userData.profilePictureURL} alt="profile-img" 
+                        className="h-8 w-8 rounded-full"/>)}
                     </Menu.Button>
                   </div>
                   <Transition

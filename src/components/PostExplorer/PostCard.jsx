@@ -1,12 +1,22 @@
 import { categories } from '@/common/common.js';
 import { AuthContext } from '@/context/AuthContext.jsx'
+import { getUserByUsername } from '@/services/users.services.js';
 import moment from 'moment'
-import { useContext } from 'react'
+import { UserCircleIcon } from '@heroicons/react/24/solid';
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 export default function PostCard(post) {
 
-    const { isLoggedIn } = useContext(AuthContext);
+    const { isLoggedIn, userData } = useContext(AuthContext);
+    const [author, setAuthor] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            const result = await getUserByUsername(post.author);
+            setAuthor(result.val());
+        })();
+    }, [userData]);
 
     return (
         <div className="mb-5 mt-5">
@@ -29,12 +39,15 @@ export default function PostCard(post) {
                             </Link>
                         </div>
                         <Link to={`/forum/${post.categoryId}/posts/${post.id}`}>
-                        <div className="text-gray-900 font-bold text-xl mb-2">{post.title}</div>
-                        <p className="text-gray-700 text-base">{post.description.slice(0, 150) + '...'}</p>
+                            <div className="text-gray-900 font-bold text-xl mb-2">{post.title}</div>
+                            <p className="text-gray-700 text-base">{post.description.slice(0, 150) + '...'}</p>
                         </Link>
                     </div>
                     <div className="flex items-center">
-                        <img className="w-10 h-10 rounded-full mr-4" src="/ben.png" alt="Avatar of Writer" />
+                        {!author?.profilePictureURL ? (<UserCircleIcon
+                            className="w-10 h-10 rounded-full mr-4 text-gray-300"
+                        />) : (<img src={author.profilePictureURL} alt="profile-img"
+                            className="w-10 h-10 rounded-full mr-4" />)}
                         <div className="text-sm">
                             <p className="text-gray-900 leading-none">{post.author}</p>
                             <p className="text-gray-600">{moment(post.createdOn).format('DD-MM-YYYY')}</p>

@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { UserCircleIcon } from '@heroicons/react/24/solid';
-import { EmailAuthProvider, getAuth, updateCurrentUser, updatePassword } from 'firebase/auth';
+import { EmailAuthProvider, updatePassword } from 'firebase/auth';
 import { updateEmail, reauthenticateWithCredential } from 'firebase/auth';
 import { AuthContext } from '@/context/AuthContext.jsx';
 import { getAllUsers, updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
