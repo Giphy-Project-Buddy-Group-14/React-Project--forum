@@ -1,7 +1,6 @@
-import { PostContext } from '@/context/PostContext.jsx';
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { toast, useToast } from '../ui/use-toast.js';
+import { useToast } from '../ui/use-toast.js';
 import _ from "lodash";
 import moment from 'moment';
 import { blockUser, makeAdminUser, removeAdminUser, unblockUser } from '@/services/users.services.js';
@@ -18,10 +17,6 @@ export default function UserDetails(user) {
     useEffect(() => {
 
     }, [user]);
-
-    const handleGoToDetails = () => {
-        navigate(`/account/${user.uid}`);
-    };
 
     const handleBlock = async () => {
         try {
@@ -76,7 +71,8 @@ export default function UserDetails(user) {
 
 
     return (
-        <div className="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg">
+        <div className="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg"
+        style={{width: '300px'}}>
             <div className="border-b px-4 pb-6">
                 <div className="text-center my-4">
                     <img className="h-32 w-32 rounded-full border-4 border-white dark:border-gray-800 mx-auto my-4"
