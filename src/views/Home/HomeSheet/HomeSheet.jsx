@@ -1,4 +1,3 @@
-import Title from '@/components/Title/Title';
 import { getPosts } from '@/services/post.services';
 import { useEffect, useState } from 'react';
 

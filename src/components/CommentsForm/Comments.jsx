@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
-import { getCommentsByPostId } from '@/services/comments.service';
+import { getCommentsByPostId, deleteCommentById } from '@/services/comments.service';
 import Comment from './Comment';
+
 export default function Comments({ postId }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    getCommentsByPostId(postId).then((data) => {
-      setComments(data);
-    });
     const fetchComments = async () => {
       const comments = await getCommentsByPostId(postId);
       setComments(comments);
     };
     fetchComments();
   }, [postId]);
+
+  const deleteCommentHandler = (id) => {
+    deleteCommentById(id)
+    const remainingComments = comments.filter((comment) => comment.id !== id)
+    setComments(remainingComments);
+  }
 
   return (
     <div>
@@ -22,6 +26,7 @@ export default function Comments({ postId }) {
           <Comment
             key={comment.id}
             comment={comment}
+            onDelete={deleteCommentHandler}
           />
         ))}
     </div>
