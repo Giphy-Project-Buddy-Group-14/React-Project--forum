@@ -23,14 +23,16 @@ import NewPost from './views/Forum/Post/NewPost/NewPost';
 import AccountSettings from './components/AccountSettings/AccountSettings.jsx';
 import ManageUsers from './components/ManageUsers/ManageUsers.jsx';
 import EditPost from './views/EditPost/EditPost';
+import AuthenticatedRoute from './hoc/AuthenticatedRoute.jsx';
+import _ from 'lodash';
 
 function App() {
   const { toast } = useToast();
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [appState, setAppState] = useState({
-    user,
     userData: {},
-    isLoggedIn: false,
+    isLoggedIn: undefined,
+    user,
   });
 
   if (appState.user !== user) {
@@ -38,7 +40,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (user === null) {
+    if (user === null && !loading) {
       setAppState({
         ...appState,
         userData: {},
@@ -46,7 +48,7 @@ function App() {
       });
       return;
     }
-    (async () => {
+    !loading && (async () => {
       try {
         const result = await getUserByEmail(user.email);
         setAppState({
@@ -62,7 +64,7 @@ function App() {
         console.log(error);
       }
     })();
-  }, [user]);
+  }, [user, loading]);
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];
@@ -70,7 +72,7 @@ function App() {
 
   return (
     <div className='flex flex-col min-h-screen'>
-      <AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
+      {((!loading && user && !_.isEmpty(appState.userData)) || (!loading && !user)) && (<AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
         {showNavBar && <NavBar />}
         <div className='flex-1'>
           <Routes>
@@ -94,63 +96,63 @@ function App() {
               element={<Home />}
             />
             <Route
+              path="/about"
+              element={<About />}
+            />
+            <Route
               path="/forum"
-              element={<ForumContainer />}
+              element={<AuthenticatedRoute><ForumContainer /></AuthenticatedRoute>}
             >
               <Route
                 index
-                element={<Forum />}
+                element={<AuthenticatedRoute><Forum /></AuthenticatedRoute>}
               />
               <Route
                 path=":categoryId"
-                element={<ForumContainer />}
+                element={<AuthenticatedRoute><ForumContainer /></AuthenticatedRoute>}
               >
                 <Route
                   index
-                  element={<SubCategory />}
+                  element={<AuthenticatedRoute><SubCategory /></AuthenticatedRoute>}
                 />
 
                 <Route path="posts">
                   <Route
                     path=":postId"
-                    element={<ForumContainer />}
+                    element={<AuthenticatedRoute><ForumContainer /></AuthenticatedRoute>}
                   >
                     <Route
                       index
-                      element={<Post />}
+                      element={<AuthenticatedRoute><Post /></AuthenticatedRoute>}
                     />
                     <Route
                       path="edit"
-                      element={<EditPost />}
+                      element={<AuthenticatedRoute><EditPost /></AuthenticatedRoute>}
                     />
                   </Route>
                   <Route
                     path="new"
-                    element={<NewPost />}
+                    element={<AuthenticatedRoute><NewPost /></AuthenticatedRoute>}
                   />
                 </Route>
               </Route>
             </Route>
             <Route
-              path="/about"
-              element={<About />}
-            />
-            <Route
               path="/profile"
-              element={<Profile />}
+              element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>}
             />
             <Route
               path="/settings"
-              element={<AccountSettings />}
+              element={<AuthenticatedRoute><AccountSettings /></AuthenticatedRoute>}
             />
             <Route
               path="/manage-users"
-              element={<ManageUsers />}
+              element={<AuthenticatedRoute><ManageUsers /></AuthenticatedRoute>}
             />
           </Routes>
         </div>
         <Footer />
-      </AuthContext.Provider>
+      </AuthContext.Provider>)}
       <Toaster />
     </div>
   );
