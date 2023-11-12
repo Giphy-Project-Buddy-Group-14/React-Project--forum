@@ -10,7 +10,7 @@ export default function Author() {
         <span className="absolute inset-0" />
       </p>
       <p className="text-gray-600">
-       Author: {userData?.firstName} {userData?.lastName}
+        {userData?.firstName} {userData?.lastName}
       </p>
     </div>
   );

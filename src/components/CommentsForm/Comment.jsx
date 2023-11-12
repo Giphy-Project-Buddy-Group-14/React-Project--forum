@@ -5,7 +5,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment, useEffect } from 'react';
 import EditCommentForm from './EditCommentForm';
-import { updateComment, } from '@/services/comments.service';
+import { updateComment } from '@/services/comments.service';
 export default function Comment({ comment, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [currentComment, setCurrentComment] = useState(comment);
@@ -115,41 +115,6 @@ export default function Comment({ comment, onDelete }) {
                   </Menu.Items>
                 </Transition>
               </Menu>
-
-              {/* <div
-            id="dropdownComment3"
-            className="hidden z-10 w-36 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
-          >
-            <ul
-              className="py-1 text-sm text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownMenuIconHorizontalButton"
-            >
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Edit
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Remove
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="#"
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                  Report
-                </Link>
-              </li>
-            </ul>
-          </div> */}
             </footer>
             <p className="text-gray-500 dark:text-gray-400">
               {currentComment.content}
