@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getPostById, deletePostById } from '@/services/post.services';
+import { getPostById, deletePostById, incrementPostCount } from '@/services/post.services';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState, useContext } from 'react';
 import Heart from '@/components/ui/Heart';
@@ -21,6 +21,7 @@ export default function Post() {
   const [post, setPost] = useState({});
   const [createdOnDate, setCreatedOnDate] = useState();
   const [loading, setLoading] = useState(true);
+  const [postCount, setPostCount] = useState();
   const navigate = useNavigate();
 
   const { userData } = useContext(AuthContext);
@@ -36,6 +37,8 @@ export default function Post() {
       const post = await getPostById(postId);
       setPost(post);
       setCreatedOnDate(post.createdOn);
+      const count = await incrementPostCount(postId, post.count);
+      setPostCount(count);
     };
     fetchPost(postId);
 
@@ -60,14 +63,14 @@ export default function Post() {
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-1 ">
           <article className="flex max-w-xl flex-col   justify-between">
             <div className="flex items-center gap-x-6 text-l">
-              {userData.username}
+              {userData?.username}
 
               <div className="bg-gray-300 hover:bg-red text-white font-bold py-2 px-2 rounded">
                 <Heart />
               </div>
 
               <div className="bg-gray-300 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
-                <CountView />
+                <CountView />{postCount}
               </div>
               <div className="ml-auto">
                 <Menu

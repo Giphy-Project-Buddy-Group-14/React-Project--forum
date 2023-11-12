@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 
 export default function Forum() {
-
   const { isLoggedIn } = useContext(AuthContext);
   if (!isLoggedIn) {
     return (
@@ -24,14 +23,14 @@ export default function Forum() {
           <PreviewSubCategory
             title="Welcome"
             link="/forum/welcome"
-            postCount="123"
+            categoryId="welcome"
             lastPost="Last post from ..."
           />
 
           <PreviewSubCategory
             title="Forum rules"
             link="/forum/forum_rules"
-            postCount="123"
+            categoryId="forum_rules"
             lastPost="Last post from ..."
           />
         </Category>
@@ -40,14 +39,14 @@ export default function Forum() {
           <PreviewSubCategory
             title="BG sea"
             link="/forum/bg_sea"
-            postCount="100"
+            categoryId="bg_sea"
             lastPost="Last post from ..."
           />
 
           <PreviewSubCategory
             title="World sea"
             link="/forum/world_sea"
-            postCount="222"
+            categoryId="world_sea"
             lastPost="Last post from ..."
           />
         </Category>
@@ -56,14 +55,14 @@ export default function Forum() {
           <PreviewSubCategory
             title="BG mountains"
             link="/forum/bg_mountains"
-            postCount="33"
+            categoryId="bg_mountains"
             lastPost="Last post from ..."
           />
 
           <PreviewSubCategory
             title="World mountains"
             link="/forum/world_mountains"
-            postCount="13"
+            categoryId="world_mountains"
             lastPost="Last post from ..."
           />
         </Category>
@@ -72,14 +71,14 @@ export default function Forum() {
           <PreviewSubCategory
             title="BG landmarks"
             link="/forum/bg_landmarks"
-            postCount="413"
+            categoryId="world_mountains"
             lastPost="Last post from ..."
           />
 
           <PreviewSubCategory
             title="World landmarks"
             link="/forum/world_landmarks"
-            postCount="312"
+            categoryId="world_landmarks"
             lastPost="Last post from ..."
           />
         </Category>
