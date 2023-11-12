@@ -12,6 +12,7 @@ import CommentSection from '@/components/CommentsForm/CommentSection';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+import { getUserByUsername } from '@/services/users.services';
 
 export default function Post() {
   const { postId } = useParams();
@@ -20,6 +21,8 @@ export default function Post() {
   const [loading, setLoading] = useState(true);
   const [postCount, setPostCount] = useState();
   const navigate = useNavigate();
+  const [author, setAuthor] = useState({});
+
 
   const { userData } = useContext(AuthContext);
 
@@ -29,10 +32,12 @@ export default function Post() {
 
   useEffect(() => {
     setLoading(true);
-
     const fetchPost = async (postId) => {
       const post = await getPostById(postId);
       setPost(post);
+
+      const user = await getUserByUsername(post.author)
+      setAuthor(user.val())
       setCreatedOnDate(post.createdOn);
       const count = await incrementPostCount(postId, post.count || 0);
       setPostCount(count);
@@ -41,6 +46,8 @@ export default function Post() {
 
     setLoading(false);
   }, [postId]);
+
+
 
   const editPost = (event) => {
     event.preventDefault();
@@ -60,7 +67,7 @@ export default function Post() {
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-1 ">
           <article className="flex max-w-xl flex-col   justify-between">
             <div className="flex items-center gap-x-6 text-l">
-              {userData?.username}
+              {author?.username}
 
               <div className="bg-gray-300 hover:bg-red text-white font-bold py-2 px-2 rounded">
                 <Heart />
@@ -140,12 +147,12 @@ export default function Post() {
             </div>
             <div className="relative mt-8 flex items-center gap-x-4">
               <img
-                src="https://marketplace.canva.com/EAFOWUXOOvs/1/0/1600w/canva-green-gradient-minimalist-simple-instagram-profile-picture-tBlf3wVYGhg.jpg"
+                src={author.profilePictureURL}
                 alt=""
                 className="h-10 w-10 rounded-full bg-gray-50"
               />
 
-              <Author />
+              {author && <Author author={author} />}
               <div className="ml-auto flex items-center gap-x-6 text-xs">
                 {createdOnDate && <TimeStamp date={createdOnDate}></TimeStamp>}
               </div>

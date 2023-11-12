@@ -32,7 +32,7 @@ export default function SubCategory() {
   }
   const title = TITLE_MAP[categoryId];
 
-  console.log('posts', posts);
+  console.log('posts', posts)
 
   return (
     <ContentWrapper>

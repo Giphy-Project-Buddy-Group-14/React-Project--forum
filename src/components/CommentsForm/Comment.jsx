@@ -6,9 +6,13 @@ import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment, useEffect } from 'react';
 import EditCommentForm from './EditCommentForm';
 import { updateComment } from '@/services/comments.service';
+import { getUserByUsername } from '@/services/users.services';
+
 export default function Comment({ comment, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [currentComment, setCurrentComment] = useState(comment);
+  const [author, setAuthor] = useState({});
+
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -34,6 +38,14 @@ export default function Comment({ comment, onDelete }) {
     setIsEditing(false);
   };
 
+  useEffect(() => {
+    (async () => {
+        const result = await getUserByUsername(comment.username);
+        setAuthor(result.val());
+    })();
+}, [comment.username]);
+
+
   return (
     <>
       {isEditing && (
@@ -51,8 +63,8 @@ export default function Comment({ comment, onDelete }) {
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                   <img
                     className="mr-2 w-6 h-6 rounded-full"
-                    src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                    alt="Bonnie Green"
+                    src={author.profilePictureURL}
+                    alt={author.username}
                   />
                   {currentComment.username}
                 </p>

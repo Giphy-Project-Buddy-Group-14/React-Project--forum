@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 
-export default function Author() {
-  const { userData } = useContext(AuthContext);
+export default function Author({author}) {
+
 
   return (
     <div className="text-sm leading-6">
@@ -10,7 +10,7 @@ export default function Author() {
         <span className="absolute inset-0" />
       </p>
       <p className="text-gray-600">
-        {userData?.firstName} {userData?.lastName}
+        {author.firstName} {author.lastName}
       </p>
     </div>
   );
