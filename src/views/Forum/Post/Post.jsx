@@ -8,11 +8,8 @@ import LoadingIndicator from '@/components/ui/Loading';
 import TimeStamp from '@/components/ui/TimeStamp';
 import Author from '@/components/Author/Author';
 import { AuthContext } from '@/context/AuthContext';
-
 import CommentSection from '@/components/CommentsForm/CommentSection';
-
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
-
 import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 
@@ -73,7 +70,7 @@ export default function Post() {
                 <CountView />{postCount}
               </div>
               <div className="ml-auto">
-                {(userData.username === post.author || !userData.isBlocked) && (<Menu
+              {(userData.username === post.author && !userData.isBlocked) && (<Menu
                   as="div"
                   className="relative ml-1"
                 >

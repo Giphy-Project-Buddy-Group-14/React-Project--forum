@@ -1,17 +1,21 @@
 import Title from '../Title/Title';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TITLE_MAP } from '@/assets/posts';
 import { getPostsByCategoryId } from '@/services/post.services';
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 import { Button } from '../ui/button';
 import PostListItem from '@/views/Forum/SubCategory/PostListItem/PostListItem';
 import DropDown from '@/views/sharedComponents/DropDown/DropDown';
-export default function SubCategory() {
-  const { categoryId } = useParams();
+import { AuthContext } from '@/context/AuthContext.jsx';
 
+
+export default function SubCategory() {
+
+  const { categoryId } = useParams();
   const [posts, setPosts] = useState([])
   const [sort, setSort] = useState('createdOn');
+  const { userData } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPosts = async (categoryId, sortKey) => {
@@ -49,9 +53,9 @@ export default function SubCategory() {
           {(posts || []).map((post) => <PostListItem key={post.id} post={post} />)}
         </ul>
 
-        <Button onClick={newPostNavigation}>
+        {!userData.isBlocked && (<Button onClick={newPostNavigation}>
           New Post
-        </Button>
+        </Button>)}
       </div>
     </ContentWrapper>
   );

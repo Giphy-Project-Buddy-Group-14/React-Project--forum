@@ -94,10 +94,13 @@ export default function NavBar() {
                     ))}
                   </div>
                 </div>
-                {isLoggedIn && <Button className='ml-5' asChild>
+                {(isLoggedIn && !userData.isBlocked) && <Button className='ml-5' asChild>
                   <Link to='/forum/new/posts/new'>Create Post</Link>
                 </Button>}
               </div>
+              {userData.isBlocked && (<Button className='bg-red' asChild>
+                <Link to='/about'>You are currently blocked. Contact admin for info.</Link>
+              </Button>)}
               {isLoggedIn ? (<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
@@ -106,9 +109,9 @@ export default function NavBar() {
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
                       {!picture ? (<UserCircleIcon
-                            className="h-8 w-8 rounded-full text-gray-300"
-                        />) : (<img src={picture} alt="profile-img" 
-                        className="h-8 w-8 rounded-full"/>)}
+                        className="h-8 w-8 rounded-full text-gray-300"
+                      />) : (<img src={picture} alt="profile-img"
+                        className="h-8 w-8 rounded-full" />)}
                     </Menu.Button>
                   </div>
                   <Transition
