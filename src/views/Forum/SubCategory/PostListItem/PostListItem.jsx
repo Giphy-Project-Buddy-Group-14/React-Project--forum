@@ -13,7 +13,7 @@ export default function PostListItem({ post }) {
         <div className="min-w-0 flex-auto">
           <p className="text-sm font-semibold leading-6 text-gray-900">
             <Link
-              to={`posts/${post.key}`}
+              to={`posts/${post.id}`}
               className="text-blue-500 hover:underline"
             >
               {post.title} ({post.count || 0} likes)
@@ -35,7 +35,7 @@ export default function PostListItem({ post }) {
 
 PostListItem.propTypes = {
   post: PropTypes.shape({
-    key: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
