@@ -10,7 +10,7 @@ import Signin from './components/Signin/Signin.jsx';
 import Signup from './components/Signup/Signup.jsx';
 import AuthLayout from './views/AuthLayout/AuthLayout.jsx';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from './config/firebase-config.js';
+import { auth, db } from './config/firebase-config.js';
 import { useEffect, useState } from 'react';
 import { getUserByEmail } from './services/users.services.js';
 import { useToast } from './components/ui/use-toast.js';
@@ -25,6 +25,7 @@ import ManageUsers from './components/ManageUsers/ManageUsers.jsx';
 import EditPost from './views/EditPost/EditPost';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute.jsx';
 import _ from 'lodash';
+import { onValue, ref } from 'firebase/database';
 
 function App() {
   const { toast } = useToast();
@@ -51,11 +52,11 @@ function App() {
     !loading && (async () => {
       try {
         const result = await getUserByEmail(user.email);
-        setAppState({
-          ...appState,
+        setAppState((prev) => ({
+          ...prev,
           userData: Object.values(result.val())[0],
           isLoggedIn: !!result,
-        });
+        }));
       } catch (error) {
         toast({
           title: 'Error authentication',
@@ -65,6 +66,19 @@ function App() {
       }
     })();
   }, [user, loading]);
+
+  useEffect(() => {
+    if (appState.userData && user) {
+      const userRef = ref(db, `users/${appState.userData.username}`);
+  
+      const userListener = onValue(userRef, (snapshot) => {
+        setAppState((prev) => ({...prev, userData: snapshot.val()}))
+      });
+      return () => {
+        userListener();
+      };
+    }
+  }, [appState.userData?.profilePictureURL]);
 
   const location = useLocation();
   const authRoutes = ['/sign-in', '/sign-up'];

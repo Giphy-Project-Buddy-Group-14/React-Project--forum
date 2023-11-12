@@ -78,7 +78,7 @@ export default function Signin() {
               <FormItem>
                 <FormLabel className="shad-form_label">Email</FormLabel>
                 <FormControl>
-                  <Input type="text" placeHolder="Type your email" {...field} />
+                  <Input type="text" placeholder="Type your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -92,7 +92,7 @@ export default function Signin() {
               <FormItem>
                 <FormLabel className="shad-form_label">Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeHolder="Type your password"{...field} />
+                  <Input type="password" placeholder="Type your password"{...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

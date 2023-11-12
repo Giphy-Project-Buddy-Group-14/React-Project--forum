@@ -35,6 +35,7 @@ export default function NavBar() {
       await logoutUser();
       setUser({
         user: null,
+        userData: {}
       })
       toast({
         title: "Successful log out",

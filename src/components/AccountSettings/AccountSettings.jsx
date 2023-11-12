@@ -60,6 +60,7 @@ export default function AccountSettings() {
             if (data.email && (data.email !== userData.email)) {
                 await changeEmail(data.email);
                 await logoutUser();
+                setUser({user: null, userData: {}})
                 toast({
                     title: 'You have successfully requested email change',
                     description: 'To finalize the change, verify your email by clicking on the link we sent to your new email address. You are now logged out.'

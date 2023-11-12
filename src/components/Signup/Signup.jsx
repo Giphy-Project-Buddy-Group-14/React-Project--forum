@@ -70,7 +70,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel className="shad-form_label">First name</FormLabel>
                 <FormControl>
-                  <Input type="text" placeHolder="Type your first name"{...field} />
+                  <Input type="text" placeholder="Type your first name"{...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -83,7 +83,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel className="shad-form_label">Last name</FormLabel>
                 <FormControl>
-                  <Input type="text" placeHolder="Type your last name" {...field} />
+                  <Input type="text" placeholder="Type your last name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -96,7 +96,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel className="shad-form_label">Username</FormLabel>
                 <FormControl>
-                  <Input type="text" placeHolder="Type your username" {...field} />
+                  <Input type="text" placeholder="Type your username" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -109,7 +109,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel className="shad-form_label">Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeHolder="Type your email" {...field} />
+                  <Input type="email" placeholder="Type your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,7 +122,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel className="shad-form_label">Password</FormLabel>
                 <FormControl>
-                  <Input type="password" placeHolder="Type your password" {...field} />
+                  <Input type="password" placeholder="Type your password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
