@@ -8,6 +8,8 @@ import {
   equalTo,
   orderByChild,
   update,
+  orderByKey,
+  orderByValue,
 } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
@@ -131,17 +133,37 @@ export const getLikedPosts = async (handle) => {
   }
 };
 
-export const getPostsByCategoryId = async (categoryId) => {
+export const getPostsByCategoryId = async (categoryId, sortKey) => {
+
+  const q = query(ref(db, 'posts'), orderByChild('categoryId'), equalTo(categoryId));
+
   try {
-    const snapshot = await get(
-      query(ref(db, 'posts'), orderByChild('categoryId'), equalTo(categoryId))
-    );
+    const snapshot = await get(q);
 
     if (!snapshot.exists()) {
       return [];
     }
 
-    return fromPostsDocument(snapshot);
+    // Convert snapshot to an array of items
+    const items = [];
+    snapshot.forEach((childSnapshot) => {
+      const item = childSnapshot.val();
+      item.key = childSnapshot.key;
+      items.push(item);
+    });
+
+    // Sort items by sortKey
+    items.sort((a, b) => {
+      const titleA = a[sortKey];
+      const titleB = b[sortKey];
+      if (titleA < titleB) return -1;
+      if (titleA > titleB) return 1;
+      return 0;
+    });
+
+    return items;
+
+    // return fromPostsDocument(snapshot);
   } catch (error) {
     console.error(error);
   }

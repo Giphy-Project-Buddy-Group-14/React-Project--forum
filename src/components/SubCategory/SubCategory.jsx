@@ -6,18 +6,20 @@ import { getPostsByCategoryId } from '@/services/post.services';
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 import { Button } from '../ui/button';
 import PostListItem from '@/views/Forum/SubCategory/PostListItem/PostListItem';
+import DropDown from '@/views/sharedComponents/DropDown/DropDown';
 export default function SubCategory() {
   const { categoryId } = useParams();
 
   const [posts, setPosts] = useState([])
+  const [sort, setSort] = useState('createdOn');
 
   useEffect(() => {
-    const fetchPosts = async (categoryId) => {
-      const posts = await getPostsByCategoryId(categoryId);
+    const fetchPosts = async (categoryId, sortKey) => {
+      const posts = await getPostsByCategoryId(categoryId, sortKey);
       setPosts(posts)
     }
-    fetchPosts(categoryId)
-  }, [categoryId])
+    fetchPosts(categoryId, sort)
+  }, [categoryId, sort])
 
   const navigate = useNavigate()
 
@@ -32,8 +34,19 @@ export default function SubCategory() {
     <ContentWrapper>
       <div>
         <Title>{title}</Title>
+
+        <div className='flex items-center gap-2'>
+          Sorted by:
+          <DropDown
+            items={['author', 'title', 'createdOn', 'count']}
+            onChange={(selectedItem) => { setSort(selectedItem) }}
+            selected={sort}
+            placeholder="Select a sort option"
+          />
+        </div>
+
         <ul role="list" className="divide-y divide-gray-100">
-          {posts.map((post) => <PostListItem key={post.id} post={post} />)}
+          {(posts || []).map((post) => <PostListItem key={post.id} post={post} />)}
         </ul>
 
         <Button onClick={newPostNavigation}>

@@ -16,7 +16,7 @@ export default function PostListItem({ post }) {
               to={`posts/${post.id}`}
               className="text-blue-500 hover:underline"
             >
-              {post.title}
+              {post.title} ({post.count || 0} likes)
             </Link>
           </p>
           <p className="mt-1 truncate text-xs leading-5 text-gray-500">{post.description}</p>
@@ -35,11 +35,12 @@ export default function PostListItem({ post }) {
 
 PostListItem.propTypes = {
   post: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
     createdOn: PropTypes.string.isRequired,
+    count: PropTypes.number.isRequired,
   }).isRequired,
 };
 
