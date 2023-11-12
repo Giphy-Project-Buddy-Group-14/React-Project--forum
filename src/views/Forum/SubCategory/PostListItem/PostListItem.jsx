@@ -39,8 +39,7 @@ PostListItem.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
-    createdOn: PropTypes.string.isRequired,
-    count: PropTypes.number.isRequired,
-  }).isRequired,
+    createdOn: PropTypes.number.isRequired,
+    count: PropTypes.number
+  })
 };
-

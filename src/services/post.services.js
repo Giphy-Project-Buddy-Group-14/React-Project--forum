@@ -160,6 +160,7 @@ export const getPostsByCategoryId = async (categoryId, sortKey) => {
     snapshot.forEach((childSnapshot) => {
       const item = childSnapshot.val();
       item.id = childSnapshot.key;
+      item.count = childSnapshot.count || 0;
       items.push(item);
     });
 

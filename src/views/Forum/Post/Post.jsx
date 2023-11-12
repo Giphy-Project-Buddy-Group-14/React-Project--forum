@@ -37,7 +37,7 @@ export default function Post() {
       const post = await getPostById(postId);
       setPost(post);
       setCreatedOnDate(post.createdOn);
-      const count = await incrementPostCount(postId, post.count);
+      const count = await incrementPostCount(postId, post.count || 0);
       setPostCount(count);
     };
     fetchPost(postId);
@@ -73,7 +73,7 @@ export default function Post() {
                 <CountView />{postCount}
               </div>
               <div className="ml-auto">
-              {(userData.username === post.author || !userData.isBlocked) && (<Menu
+                {(userData.username === post.author || !userData.isBlocked) && (<Menu
                   as="div"
                   className="relative ml-1"
                 >
