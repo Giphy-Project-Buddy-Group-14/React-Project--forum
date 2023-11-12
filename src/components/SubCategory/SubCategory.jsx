@@ -54,7 +54,7 @@ export default function SubCategory() {
         </ul>
 
         {!userData.isBlocked && (<Button onClick={newPostNavigation}>
-          New Post
+          Create Post
         </Button>)}
       </div>
     </ContentWrapper>

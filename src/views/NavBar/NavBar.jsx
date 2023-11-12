@@ -96,7 +96,7 @@ export default function NavBar() {
                   </div>
                 </div>
                 {(isLoggedIn && !userData.isBlocked) && <Button className='ml-5' asChild>
-                  <Link to='/forum/new/posts/new'>Create Post</Link>
+                  <Link to='forum/welcome/posts/new'>Create Post</Link>
                 </Button>}
               </div>
               {userData.isBlocked && (<Button className='bg-red' asChild>
