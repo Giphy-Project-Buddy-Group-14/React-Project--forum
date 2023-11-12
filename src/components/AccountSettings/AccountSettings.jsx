@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import { UserCircleIcon } from '@heroicons/react/24/solid';
-import { EmailAuthProvider, updatePassword } from 'firebase/auth';
+import { EmailAuthProvider, updatePassword, verifyBeforeUpdateEmail } from 'firebase/auth';
 import { updateEmail, reauthenticateWithCredential } from 'firebase/auth';
 import { AuthContext } from '@/context/AuthContext.jsx';
-import { getAllUsers, updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
+import { getAllUsers, getUserByUsername, updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
 import { Button } from '../ui/button.jsx';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form.jsx';
 import { Input } from '../ui/input.jsx';
@@ -13,6 +13,7 @@ import { AccountSettingsValidation } from './accountSettings.validation.js';
 import { Separator } from '../ui/separator.jsx';
 import { useToast } from '../ui/use-toast.js';
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
+import { logoutUser } from '@/services/auth.services.js';
 
 export default function AccountSettings() {
 
@@ -45,10 +46,7 @@ export default function AccountSettings() {
             try {
                 await reauthenticateWithCredential(user, credentials);
                 if (email) {
-                    await updateEmail(user, email);
-                    alert("Congratulations! You successfully changed your email!");
-                    const allUsers = await getAllUsers();
-                    setUser((prev) => ({ ...prev, allUsers }));
+                    await verifyBeforeUpdateEmail(user, email);
                     await updateProfileEmail(email, userData.username);
                 }
             } catch (error) {
@@ -61,8 +59,10 @@ export default function AccountSettings() {
         try {
             if (data.email && (data.email !== userData.email)) {
                 await changeEmail(data.email);
+                await logoutUser();
                 toast({
-                    title: 'You have updated your email successfully',
+                    title: 'You have successfully requested email change',
+                    description: 'To finalize the change, verify your email by clicking on the link we sent to your new email address. You are now logged out.'
                 })
             }
 
@@ -118,14 +118,18 @@ export default function AccountSettings() {
                         Photo
                     </label>
                     <div className="mt-2 flex items-center gap-x-3">
-                        {!userData?.profilePictureURL && picture ? (<UserCircleIcon
-                            className="h-12 w-12 text-gray-300"
-                        />) : (<img src={picture || userData.profilePictureURL} alt="profile-img" style={{
-                            width: '50px', 
-                            height: '50px', 
-                            borderRadius: '50%',
-                            objectFit: 'cover'
-                        }}/>)}
+                        {!userData?.profilePictureURL && !picture ? (
+                            <UserCircleIcon
+                                className="h-12 w-12 text-gray-300"
+                            />
+                        ) : (
+                            <img src={picture || userData.profilePictureURL} alt="profile-img" style={{
+                                width: '50px',
+                                height: '50px',
+                                borderRadius: '50%',
+                                objectFit: 'cover'
+                            }} />
+                        )}
                         <input
                             type="file"
                             id="fileInput"
@@ -152,7 +156,7 @@ export default function AccountSettings() {
                                     <Input placeholder='Type new email' className='shad-input-light' {...field} />
                                 </FormControl>
                                 <FormDescription className='shad-textarea-light'>
-                                    Enter a valid unique email.
+                                    Enter a valid unique email. To change your email, we will send you an email with verification link. After confirmation the change will take effect.
                                 </FormDescription>
                                 <FormMessage className='shad-form-light_message' />
                             </FormItem>

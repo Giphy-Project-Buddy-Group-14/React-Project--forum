@@ -48,7 +48,7 @@ export default function Signup() {
         description: error.message
       });
     } finally {
-      setLoading(false);
+      setLoading(false);  
     }
   }
 

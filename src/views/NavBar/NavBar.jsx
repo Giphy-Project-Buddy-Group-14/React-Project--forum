@@ -1,5 +1,5 @@
 
-import { Fragment, useContext } from 'react'
+import { Fragment, useContext, useEffect, useState } from 'react'
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -23,7 +23,12 @@ export default function NavBar() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { setUser, isLoggedIn, userData } = useContext(AuthContext);
+  const [picture, setPicture] = useState(userData?.profilePictureURL);
 
+  useEffect(() => {
+
+    userData && setPicture(userData?.profilePictureURL);
+  }, [userData])
 
   const handleLogOut = async () => {
     try {
@@ -100,9 +105,9 @@ export default function NavBar() {
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
-                      {!userData?.profilePictureURL? (<UserCircleIcon
+                      {!picture ? (<UserCircleIcon
                             className="h-8 w-8 rounded-full text-gray-300"
-                        />) : (<img src={userData.profilePictureURL} alt="profile-img" 
+                        />) : (<img src={picture} alt="profile-img" 
                         className="h-8 w-8 rounded-full"/>)}
                     </Menu.Button>
                   </div>

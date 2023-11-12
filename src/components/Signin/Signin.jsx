@@ -33,8 +33,7 @@ export default function Signin() {
       const result = await loginUser(user.email, user.password);
 
       setUser({
-        user: result,
-        isLoggedIn: true,
+        user: result
       });
 
       toast({
