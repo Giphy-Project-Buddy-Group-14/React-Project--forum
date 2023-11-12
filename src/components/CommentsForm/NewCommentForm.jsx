@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { EMPTY_STRING } from '@/helpers/consts';
+import { AuthContext } from '@/context/AuthContext.jsx';
+
+
 export default function NewCommentForm({ comment, onSubmit }) {
   const [content, setContent] = useState(EMPTY_STRING);
   const isContentDisable = content.length === 0;
+  const { userData } = useContext(AuthContext);
 
   const changeCommentHandler = async (event) => {
     event.preventDefault();
@@ -37,13 +41,13 @@ export default function NewCommentForm({ comment, onSubmit }) {
           </div>
         </div>
         <div className="col-span-full flex justify-center py-4">
-          <button
+          {!userData.isBlocked && (<button
             type="submit"
             className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
             disabled={isContentDisable}
           >
             Add Comment
-          </button>
+          </button>)}
         </div>
       </form>
     </>

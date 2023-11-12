@@ -29,7 +29,7 @@ export default function CommentSection({ postId }) {
 
   return (
     <>
-      <NewCommentForm onSubmit={addCommentHandler} />
+      {!userData.isBlocked && (<NewCommentForm onSubmit={addCommentHandler} />)}
       {shouldLoadComments ? <Comments postId={postId} /> : <LoadingIndicator />}
     </>
   );
