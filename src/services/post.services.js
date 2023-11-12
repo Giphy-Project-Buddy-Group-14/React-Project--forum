@@ -12,6 +12,7 @@ import {
   orderByValue,
 } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import { INITIAL_POST_COUNT } from '@/helpers/consts';
 
 const fromPostsDocument = async (snapshot) => {
   try {
@@ -32,16 +33,28 @@ const fromPostsDocument = async (snapshot) => {
   }
 };
 
-export const updatePost = async (id, content, username) => {
+export const updatePost = async (id, content) => {
   try {
     const postRef = ref(db, `posts/${id}`);
-    await set(postRef, {
+    await update(postRef, {
       ...content,
-      author: username,
-      createdOn: Date.now(),
+      updatedOn: Date.now(),
     });
     const result = await getPostById(id);
     return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const incrementPostCount = async (id, currentCount) => {
+  try {
+    const postRef = ref(db, `posts/${id}`);
+    const count = currentCount + 1;
+    await update(postRef, {
+      count: count,
+    });
+    return count;
   } catch (error) {
     console.error(error);
   }
@@ -53,6 +66,7 @@ export const addPost = async (content, username) => {
       ...content,
       author: username,
       createdOn: Date.now(),
+      count: INITIAL_POST_COUNT,
     });
 
     return getPostById(result.key);
