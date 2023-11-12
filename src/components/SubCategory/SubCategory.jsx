@@ -50,7 +50,7 @@ export default function SubCategory() {
         </div>
 
         <ul role="list" className="divide-y divide-gray-100">
-          {(posts || []).map((post) => <PostListItem key={post.key} post={post} />)}
+          {(posts || []).map((post) => <PostListItem key={post.id} post={post} />)}
         </ul>
 
         {!userData.isBlocked && (<Button onClick={newPostNavigation}>

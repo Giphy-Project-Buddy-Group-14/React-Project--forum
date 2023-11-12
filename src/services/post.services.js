@@ -2,14 +2,11 @@ import {
   ref,
   push,
   get,
-  set,
   remove,
   query,
   equalTo,
   orderByChild,
-  update,
-  orderByKey,
-  orderByValue,
+  update
 } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { INITIAL_POST_COUNT } from '@/helpers/consts';
@@ -162,7 +159,7 @@ export const getPostsByCategoryId = async (categoryId, sortKey) => {
     const items = [];
     snapshot.forEach((childSnapshot) => {
       const item = childSnapshot.val();
-      item.key = childSnapshot.key;
+      item.id = childSnapshot.key;
       items.push(item);
     });
 
