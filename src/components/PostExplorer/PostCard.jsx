@@ -37,6 +37,9 @@ export default function PostCard(post) {
                                     {categories[post.categoryId]}
                                 </div>
                             </Link>
+                            <div className='inline-block bg-blue-50 px-2 py-0.5 rounded-full text-sm text-gray-500 hover:bg-teal-100 hover:text-teal-700 transition-colors duration-200'>
+                                    Post views: {post.count}
+                                </div>
                         </div>
                         <Link to={`/forum/${post.categoryId}/posts/${post.id}`}>
                             <div className="text-gray-900 font-bold text-xl mb-2">{post.title}</div>

@@ -35,11 +35,10 @@ export default function UpdatePostForm({ post }) {
     }
 
     const content = {
-      categoryId: categoryId,
       title: title,
       description: description,
     };
-    const updatedPost = await updatePost(post?.id, content, post?.author);
+    const updatedPost = await updatePost(post?.id, content);
 
     if (updatedPost) {
       navigate(`..`);

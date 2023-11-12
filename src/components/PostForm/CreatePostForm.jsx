@@ -9,7 +9,7 @@ export default function CreatePostForm() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
-  const username = userData.username;
+  const username = userData?.username;
 
   const { toast } = useToast();
 

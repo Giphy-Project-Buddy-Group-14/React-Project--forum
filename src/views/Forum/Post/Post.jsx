@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { getPostById, deletePostById } from '@/services/post.services';
+import { getPostById, deletePostById, incrementPostCount } from '@/services/post.services';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState, useContext } from 'react';
 import Heart from '@/components/ui/Heart';
@@ -21,6 +21,7 @@ export default function Post() {
   const [post, setPost] = useState({});
   const [createdOnDate, setCreatedOnDate] = useState();
   const [loading, setLoading] = useState(true);
+  const [postCount, setPostCount] = useState();
   const navigate = useNavigate();
 
   const { userData } = useContext(AuthContext);
@@ -36,6 +37,8 @@ export default function Post() {
       const post = await getPostById(postId);
       setPost(post);
       setCreatedOnDate(post.createdOn);
+      const count = await incrementPostCount(postId, post.count);
+      setPostCount(count);
     };
     fetchPost(postId);
 
@@ -58,21 +61,21 @@ export default function Post() {
       <div>
         <div id={postId}></div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-1 ">
-          <article className="flex max-w-xl flex-col items-start justify-between">
-            <div className="flex items-center gap-x-2 text-xs">
-              {createdOnDate && <TimeStamp date={createdOnDate}></TimeStamp>}
+          <article className="flex max-w-xl flex-col   justify-between">
+            <div className="flex items-center gap-x-6 text-l">
+              {userData?.username}
 
               <div className="bg-gray-300 hover:bg-red text-white font-bold py-2 px-2 rounded">
                 <Heart />
               </div>
 
               <div className="bg-gray-300 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
-                <CountView />
+                <CountView />{postCount}
               </div>
-              <div>
-                {(userData.username === post.author || !userData.isBlocked) && (<Menu
+              <div className="ml-auto">
+              {(userData.username === post.author || !userData.isBlocked) && (<Menu
                   as="div"
-                  className="relative ml-3"
+                  className="relative ml-1"
                 >
                   <div>
                     <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
@@ -146,6 +149,9 @@ export default function Post() {
               />
 
               <Author />
+              <div className="ml-auto flex items-center gap-x-6 text-xs">
+                {createdOnDate && <TimeStamp date={createdOnDate}></TimeStamp>}
+              </div>
             </div>
           </article>
         </div>

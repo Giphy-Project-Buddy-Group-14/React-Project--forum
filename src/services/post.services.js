@@ -8,8 +8,11 @@ import {
   equalTo,
   orderByChild,
   update,
+  orderByKey,
+  orderByValue,
 } from 'firebase/database';
 import { db } from '../config/firebase-config';
+import { INITIAL_POST_COUNT } from '@/helpers/consts';
 
 const fromPostsDocument = async (snapshot) => {
   try {
@@ -30,16 +33,28 @@ const fromPostsDocument = async (snapshot) => {
   }
 };
 
-export const updatePost = async (id, content, username) => {
+export const updatePost = async (id, content) => {
   try {
     const postRef = ref(db, `posts/${id}`);
-    await set(postRef, {
+    await update(postRef, {
       ...content,
-      author: username,
-      createdOn: Date.now(),
+      updatedOn: Date.now(),
     });
     const result = await getPostById(id);
     return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const incrementPostCount = async (id, currentCount) => {
+  try {
+    const postRef = ref(db, `posts/${id}`);
+    const count = currentCount + 1;
+    await update(postRef, {
+      count: count,
+    });
+    return count;
   } catch (error) {
     console.error(error);
   }
@@ -51,6 +66,7 @@ export const addPost = async (content, username) => {
       ...content,
       author: username,
       createdOn: Date.now(),
+      count: INITIAL_POST_COUNT,
     });
 
     return getPostById(result.key);
@@ -131,17 +147,37 @@ export const getLikedPosts = async (handle) => {
   }
 };
 
-export const getPostsByCategoryId = async (categoryId) => {
+export const getPostsByCategoryId = async (categoryId, sortKey) => {
+
+  const q = query(ref(db, 'posts'), orderByChild('categoryId'), equalTo(categoryId));
+
   try {
-    const snapshot = await get(
-      query(ref(db, 'posts'), orderByChild('categoryId'), equalTo(categoryId))
-    );
+    const snapshot = await get(q);
 
     if (!snapshot.exists()) {
       return [];
     }
 
-    return fromPostsDocument(snapshot);
+    // Convert snapshot to an array of items
+    const items = [];
+    snapshot.forEach((childSnapshot) => {
+      const item = childSnapshot.val();
+      item.key = childSnapshot.key;
+      items.push(item);
+    });
+
+    // Sort items by sortKey
+    items.sort((a, b) => {
+      const titleA = a[sortKey];
+      const titleB = b[sortKey];
+      if (titleA < titleB) return -1;
+      if (titleA > titleB) return 1;
+      return 0;
+    });
+
+    return items;
+
+    // return fromPostsDocument(snapshot);
   } catch (error) {
     console.error(error);
   }
