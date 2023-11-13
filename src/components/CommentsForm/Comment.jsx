@@ -67,8 +67,8 @@ export default function Comment({ comment, onDelete }) {
                 <p className="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">
                   <img
                     className="mr-2 w-6 h-6 rounded-full"
-                    src={author.profilePictureURL}
-                    alt={author.username}
+                    src={author ? author.profilePictureURL : ''}
+                    alt={author ? author.username : '-'}
                   />
                   {currentComment.username}
                 </p>
