@@ -7,8 +7,6 @@ import { useState, Fragment, useEffect, useContext } from 'react';
 import EditCommentForm from './EditCommentForm';
 import { updateComment } from '@/services/comments.service';
 import { getUserByUsername } from '@/services/users.services';
-import { AuthContext } from '@/context/AuthContext.jsx';
-
 import { AuthContext } from '@/context/AuthContext';
 export default function Comment({ comment, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -42,11 +40,6 @@ export default function Comment({ comment, onDelete }) {
 
   const cancelCommentHandler = () => {
     setIsEditing(false);
-  };
-
-  const authorizedToEditComment = () => {
-    const authorized = author.username === loggedInUsername;
-    return authorized;
   };
 
   useEffect(() => {
@@ -83,10 +76,10 @@ export default function Comment({ comment, onDelete }) {
                   <TimeStamp date={currentComment.createdOn} />
                 </p>
               </div>
-              {(isAuthorLoaded &&
-                authorizedToEditComment() &&
-                !userData.isBlocked) ||
-                (userData.role === 'admin' && (
+              {isAuthorLoaded &&
+                ((currentComment.username === userData.username &&
+                  !userData.isBlocked) ||
+                  userData.role === 'admin') && (
                   <Menu
                     as="div"
                     className="relative ml-3"
@@ -141,7 +134,7 @@ export default function Comment({ comment, onDelete }) {
                       </Menu.Items>
                     </Transition>
                   </Menu>
-                ))}
+                )}
             </footer>
             <p className="text-gray-500 dark:text-gray-400">
               {currentComment.content}
