@@ -23,7 +23,6 @@ export default function PostCard(post) {
     })();
   }, [userData]);
 
-console.log(post.images && post.images[0]);
   return (
     <div className="mb-5 mt-5">
   <div className="w-full lg:max-w-full lg:flex justify-start bg-white shadow-lg rounded-lg overflow-hidden">

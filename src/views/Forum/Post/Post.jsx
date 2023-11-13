@@ -18,6 +18,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { getUserByUsername } from '@/services/users.services';
 import { INITIAL_POST_COUNT } from '@/helpers/consts';
+import Slider from 'react-slick';
 
 export default function Post() {
   const { postId } = useParams();
@@ -64,6 +65,16 @@ export default function Post() {
   const deletePost = async () => {
     await deletePostById(postId);
     navigate(`../..`);
+  };
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+    autoplay: true
   };
 
   return (
@@ -148,6 +159,11 @@ export default function Post() {
                     {post.title}
                   </p>
                 </h3>
+                {post.images && (<Slider {...settings}>
+                    {post.images.map(img => {
+                      return (<img src={img} key={img} />)
+                    })}
+                </Slider>)}
                 <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
                   {post.description}
                 </p>
