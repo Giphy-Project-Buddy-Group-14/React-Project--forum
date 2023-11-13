@@ -42,6 +42,8 @@ export default function Heart({ post }) {
   const togglePostLikeHandler = async () => {
     setLoading(true);
 
+    console.log('sss');
+
     if (likedPost) {
       await updatePostLike(post.id, username, false);
       setLikedPost(false);
@@ -58,11 +60,10 @@ export default function Heart({ post }) {
   return (
     <>
       {loading && <LoadingIndicator />}
+
       {!loading && (
         <div
-          className={`${
-            likedPost ? 'bg-red' : 'bg-gray-300'
-          } text-white font-bold py-2 px-2 rounded`}
+          className={likedPost ? 'text-red flex gap-1 cursor-pointer' : 'bg-gray flex gap-1 cursor-pointer'}
           onClick={togglePostLikeHandler}
         >
           <svg

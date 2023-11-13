@@ -34,8 +34,8 @@ const fromPostsDocument = async (snapshot) => {
 export const updatePost = async (id, content) => {
   try {
     if (content.images) {
-    const images = await Promise.all(content.images.map(img => setFileToStorage(img)));
-    content.images = images;
+      const images = await Promise.all(content.images.map(img => setFileToStorage(img)));
+      content.images = images;
     }
     const postRef = ref(db, `posts/${id}`);
     await update(postRef, {
@@ -196,6 +196,46 @@ export const getLikedPosts = async (handle) => {
     return posts;
   } catch (error) {
     console.error(error);
+  }
+};
+
+
+export const getMostCommentedPosts = async () => {
+  try {
+    // Reference to the "posts" node in your Firebase Realtime Database
+    const postsRef = ref(db, 'posts');
+
+    // Retrieve all posts from the database
+    const snapshot = await get(postsRef);
+
+    if (!snapshot.exists()) {
+      console.log('No posts found');
+      return [];
+    }
+
+    const allPosts = snapshot.val();
+    console.log('allPosts', allPosts);
+
+    // Create an array to hold post objects with comment counts
+    const postsWithCommentCounts = [];
+
+    // Calculate comment counts for each post
+    for (const postId in allPosts) {
+      const post = allPosts[postId];
+      const commentCount = post.comments ? Object.keys(post.comments).length : 0;
+      postsWithCommentCounts.push({ postId, commentCount, ...post });
+    }
+
+    // Sort the posts by comment count in descending order
+    postsWithCommentCounts.sort((a, b) => b.commentCount - a.commentCount);
+
+    // Get the top 10 posts with the most comments
+    const top10Posts = postsWithCommentCounts.slice(0, 10);
+
+    console.log('Top 10 posts with the most comments:', top10Posts);
+    return top10Posts
+  } catch (error) {
+    console.error('Error fetching top 10 posts:', error);
   }
 };
 

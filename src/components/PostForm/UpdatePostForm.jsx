@@ -48,7 +48,7 @@ export default function UpdatePostForm({ post }) {
       navigate(`..`);
     }
   };
-  
+
   const [localTitle, setLocalTitle] = useState(post?.title);
   const [localDescription, setLocalDescription] = useState(post?.description);
 
@@ -137,7 +137,7 @@ export default function UpdatePostForm({ post }) {
                 </div>
               </div>
 
-              <FileUploader setImages={setImages} mediaUrl={post.images[0]}/>
+              <FileUploader setImages={setImages} mediaUrl={post.images[0]} />
 
               <div className="col-span-full">
                 <label

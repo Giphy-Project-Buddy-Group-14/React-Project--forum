@@ -1,4 +1,4 @@
-import { getAllPosts } from '@/services/post.services.js';
+import { getAllPosts, getMostCommentedPosts } from '@/services/post.services.js';
 import { useContext, useEffect, useState } from 'react'
 import { useToast } from '../ui/use-toast.js';
 import PostCard from './PostCard.jsx';
@@ -16,6 +16,17 @@ export default function PostList() {
         (async () => {
             try {
                 const response = await getAllPosts()
+                setPosts(response)
+            } catch (error) {
+                toast({
+                    title: error.message
+                })
+            }
+        })();
+
+        (async () => {
+            try {
+                const response = await getMostCommentedPosts()
                 setPosts(response)
             } catch (error) {
                 toast({

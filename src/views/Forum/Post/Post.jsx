@@ -77,148 +77,136 @@ export default function Post() {
     autoplay: true
   };
 
+  const EditOptions = () => {
+
+    if (!userData || userData.username != post.author) {
+      return null;
+    }
+
+    return (
+      <Menu
+        as="div"
+        className="relative ml-1"
+      >
+        <div>
+          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            Options
+            <ChevronDownIcon
+              className="-mr-1 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </Menu.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className="absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="#"
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'block px-4 py-2 text-sm text-gray-700'
+                  )}
+                  onClick={editPost}
+                >
+                  Edit
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to="#"
+                  className={classNames(
+                    active ? 'bg-gray-100' : '',
+                    'block px-4 py-2 text-sm text-gray-700'
+                  )}
+                  onClick={deletePost}
+                >
+                  Delete
+                </Link>
+              )}
+            </Menu.Item>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+    )
+  }
+
   return (
     <ContentWrapper>
       {loading && <LoadingIndicator />}
 
-      <div className="leading-6">
-        <figure className="relative flex flex-col-reverse bg-slate-100 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
-          <blockquote className="mt-6 text-slate-700 dark:text-slate-300">
-
-            <p>
-              {post.description}
-            </p>
-
-            {post.images && !!post.images.length && (
-              <div className="mt-6">
-                <Slider {...settings}>
-                  {post.images.map(img => {
-                    return (<img src={img} key={img} />)
-                  })}
-                </Slider>
-              </div>
-            )}
-
-          </blockquote>
-          <figcaption className="flex items-center space-x-4">
-            <img
-              src={author.profilePictureURL}
-              alt=""
-              className="flex-none w-14 h-14 rounded-full object-cover"
-              loading="lazy" decoding="async"
-            />
-            <div className="flex-auto">
-              <div className="text-base text-slate-900 font-semibold dark:text-slate-300">
-                <a href="https://twitter.com/ryanflorence/status/1187951799442886656">
-                  <span className="absolute inset-0"></span>
-
-                  <div className='flex'>
-                    <div className='flex-1'>{post.title}</div>
-
-                    {createdOnDate && (
-                      <TimeStamp date={createdOnDate}></TimeStamp>
-                    )}
-                  </div>
-                </a>
-              </div>
-              <div className="mt-0.5">
-                {!!author && <Author author={author} />}
-              </div>
-            </div>
-          </figcaption>
-        </figure>
-      </div>
-
-
       {
         !loading && (
-          <div>
-            <div id={postId}></div>
-            <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 lg:mx-0 lg:max-w-none lg:grid-cols-1 ">
-              <article className="flex max-w-xl flex-col   justify-between">
-                <div className="flex items-center gap-x-6 text-xl font-bold">
-                  {author?.username}
-                  {showHeart && <Heart post={post} />}
-                  <div className="bg-gray-300 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
-                    <CountView />
-                    {postCount}
+          <div className="leading-6">
+            <figure className="relative flex flex-col-reverse bg-slate-100 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
+              <blockquote className="mt-6 text-slate-700 dark:text-slate-300">
+
+                <p>
+                  {post.description}
+                </p>
+
+                {post.images && !!post.images.length && (
+                  <div className="mt-6">
+                    <Slider {...settings}>
+                      {post.images.map(img => {
+                        return (<img src={img} key={img} />)
+                      })}
+                    </Slider>
                   </div>
-                  <div className="ml-auto">
-                    {userData.username === post.author && !userData.isBlocked && (
-                      <Menu
-                        as="div"
-                        className="relative ml-1"
-                      >
+                )}
+
+              </blockquote>
+              <figcaption className="flex items-center space-x-4">
+                <img
+                  src={author.profilePictureURL}
+                  alt=""
+                  className="flex-none w-14 h-14 rounded-full object-cover"
+                  loading="lazy" decoding="async"
+                />
+                <div className="flex-auto">
+                  <div className="text-base text-slate-900 font-semibold dark:text-slate-300">
+
+                    <div className='flex'>
+                      <div className='flex-1 text-lg flex'>
+                        {post.title}
+                      </div>
+
+                      <div className='flex gap-4'>
+                        {createdOnDate && (
+                          <TimeStamp date={createdOnDate}></TimeStamp>
+                        )}
+
                         <div>
-                          <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                            Options
-                            <ChevronDownIcon
-                              className="-mr-1 h-5 w-5 text-gray-400"
-                              aria-hidden="true"
-                            />
-                          </Menu.Button>
+                          {showHeart && <Heart post={post} />}
                         </div>
-                        <Transition
-                          as={Fragment}
-                          enter="transition ease-out duration-100"
-                          enterFrom="transform opacity-0 scale-95"
-                          enterTo="transform opacity-100 scale-100"
-                          leave="transition ease-in duration-75"
-                          leaveFrom="transform opacity-100 scale-100"
-                          leaveTo="transform opacity-0 scale-95"
-                        >
-                          <Menu.Items className="absolute right-0 z-10 mt-2 w-24 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <Menu.Item>
-                              {({ active }) => (
-                                <Link
-                                  to="#"
-                                  className={classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                  )}
-                                  onClick={editPost}
-                                >
-                                  Edit
-                                </Link>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <Link
-                                  to="#"
-                                  className={classNames(
-                                    active ? 'bg-gray-100' : '',
-                                    'block px-4 py-2 text-sm text-gray-700'
-                                  )}
-                                  onClick={deletePost}
-                                >
-                                  Delete
-                                </Link>
-                              )}
-                            </Menu.Item>
-                          </Menu.Items>
-                        </Transition>
-                      </Menu>
-                    )}
+
+                        <div className='flex gap-1'>
+                          <CountView /> {postCount}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-0.5 flex">
+                    <div className='flex-1'>
+                      {!!author && <Author author={author} />}
+                    </div>
+                    <div>
+                      <EditOptions />
+                    </div>
                   </div>
                 </div>
-
-                <div className="group relative">
-                  <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                    <p>
-                      <span className="absolute inset-0" />
-                    </p>
-                  </h3>
-
-                  <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
-
-                  </p>
-                </div>
-                <div className="relative mt-8 flex items-center gap-x-4">
-
-                </div>
-              </article>
-            </div>
+              </figcaption>
+            </figure>
           </div>
         )
       }
