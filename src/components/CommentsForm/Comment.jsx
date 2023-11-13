@@ -3,16 +3,17 @@ import TimeStamp from '../ui/TimeStamp';
 import { ChevronDownIcon } from '@heroicons/react/20/solid';
 
 import { Menu, Transition } from '@headlessui/react';
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment, useEffect, useContext } from 'react';
 import EditCommentForm from './EditCommentForm';
 import { updateComment } from '@/services/comments.service';
 import { getUserByUsername } from '@/services/users.services';
+import { AuthContext } from '@/context/AuthContext.jsx';
 
 export default function Comment({ comment, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [currentComment, setCurrentComment] = useState(comment);
   const [author, setAuthor] = useState({});
-
+  const {userData} = useContext(AuthContext);
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -73,7 +74,7 @@ export default function Comment({ comment, onDelete }) {
                 </p>
               </div>
 
-              <Menu
+              {((currentComment.username === userData.username && !userData.isBlocked) || userData.role === 'admin') && (<Menu
                 as="div"
                 className="relative ml-3"
               >
@@ -126,7 +127,7 @@ export default function Comment({ comment, onDelete }) {
                     </Menu.Item>
                   </Menu.Items>
                 </Transition>
-              </Menu>
+              </Menu>)}
             </footer>
             <p className="text-gray-500 dark:text-gray-400">
               {currentComment.content}
