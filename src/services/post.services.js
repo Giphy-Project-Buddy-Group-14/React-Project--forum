@@ -10,6 +10,7 @@ import {
 } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { INITIAL_POST_COUNT } from '@/helpers/consts';
+import { setFileToStorage } from './storage.services.js';
 
 const fromPostsDocument = async (snapshot) => {
   try {
@@ -32,6 +33,10 @@ const fromPostsDocument = async (snapshot) => {
 
 export const updatePost = async (id, content) => {
   try {
+    if (content.images) {
+    const images = await Promise.all(content.images.map(img => setFileToStorage(img)));
+    content.images = images;
+    }
     const postRef = ref(db, `posts/${id}`);
     await update(postRef, {
       ...content,
@@ -59,11 +64,13 @@ export const incrementPostCount = async (id, currentCount) => {
 
 export const addPost = async (content, username) => {
   try {
+    const images = content.images ? await Promise.all(content.images.map(img => setFileToStorage(img))) : null;
     const result = await push(ref(db, 'posts'), {
       ...content,
       author: username,
       createdOn: Date.now(),
       count: INITIAL_POST_COUNT,
+      images,
     });
 
     return getPostById(result.key);
