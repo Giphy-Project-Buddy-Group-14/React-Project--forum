@@ -1,18 +1,19 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import { addPost } from '@/services/post.services';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 import { useToast } from '../ui/use-toast';
 import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH, MAX_DESCRIPTION_LENGTH } from '@/helpers/consts';
+import FileUploader from '../FileUploader/FileUploader.jsx';
+
 export default function CreatePostForm() {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const { userData } = useContext(AuthContext);
-  const username = userData?.username;
-
+  const [images, setImages] = useState();
   const { toast } = useToast();
-
+  
+  const username = userData?.username;
   const createPostHandler = async (event) => {
     event.preventDefault();
     const title = document.getElementById('title').value;
@@ -37,6 +38,7 @@ export default function CreatePostForm() {
       categoryId: categoryId,
       title: title,
       description: description,
+      images,
     };
 
     const post = await addPost(content, username);
@@ -104,6 +106,9 @@ export default function CreatePostForm() {
                 </div>
               </div>
 
+                <FileUploader setImages={setImages} /> 
+
+
               <div className="col-span-full">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -111,62 +116,6 @@ export default function CreatePostForm() {
                 >
                   Create Post
                 </button>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Photo
-                </label>
-                <div className="mt-2 flex items-center gap-x-3">
-                  <UserCircleIcon
-                    className="h-12 w-12 text-gray-300"
-                    aria-hidden="true"
-                  />
-                  <button
-                    type="button"
-                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Change
-                  </button>
-                </div>
-              </div>
-
-              <div className="col-span-full">
-                <label
-                  htmlFor="cover-photo"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Cover photo
-                </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                  <div className="text-center">
-                    <PhotoIcon
-                      className="mx-auto h-12 w-12 text-gray-300"
-                      aria-hidden="true"
-                    />
-                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                      <label
-                        htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                      >
-                        <span>Upload a file</span>
-                        <input
-                          id="file-upload"
-                          name="file-upload"
-                          type="file"
-                          className="sr-only"
-                        />
-                      </label>
-                      <p className="pl-1">or drag and drop</p>
-                    </div>
-                    <p className="text-xs leading-5 text-gray-600">
-                      PNG, JPG, GIF up to 10MB
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

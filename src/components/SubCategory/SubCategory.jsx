@@ -13,9 +13,8 @@ import { getAllUsers } from '@/services/users.services';
 
 
 export default function SubCategory() {
-
   const { categoryId } = useParams();
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState('createdOn');
   const [filters, setFilters] = useState({ author: '' });
   const { userData } = useContext(AuthContext);
@@ -43,14 +42,12 @@ export default function SubCategory() {
     })();
   }, []);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const newPostNavigation = () => {
-    navigate('posts/new')
-  }
+    navigate('posts/new');
+  };
   const title = TITLE_MAP[categoryId];
-
-  console.log('posts', posts)
 
   return (
     <ContentWrapper>
@@ -64,21 +61,30 @@ export default function SubCategory() {
           Sorted by:
           <DropDown
             items={['author', 'title', 'createdOn', 'count']}
-            onChange={(selectedItem) => { setSort(selectedItem) }}
+            onChange={(selectedItem) => {
+              setSort(selectedItem);
+            }}
             selected={sort}
             placeholder="Select a sort option"
           />
         </div>
 
-        <ul role="list" className="divide-y divide-gray-100">
-          {(posts || []).map((post) => <PostListItem key={post.id} post={post} />)}
+        <ul
+          role="list"
+          className="divide-y divide-gray-100"
+        >
+          {(posts || []).map((post) => (
+            <PostListItem
+              key={post.id}
+              post={post}
+            />
+          ))}
         </ul>
 
-        {!userData.isBlocked && (<Button onClick={newPostNavigation}>
-          Create Post
-        </Button>)}
+        {!userData.isBlocked && (
+          <Button onClick={newPostNavigation}>Create Post</Button>
+        )}
       </div>
     </ContentWrapper>
   );
 }
-

@@ -5,12 +5,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { MIN_TITLE_LENGTH, MAX_TITLE_LENGTH, MIN_DESCRIPTION_LENGTH, MAX_DESCRIPTION_LENGTH } from '@/helpers/consts';
 import { useToast } from '../ui/use-toast';
-
+import FileUploader from '../FileUploader/FileUploader.jsx';
+import _ from 'lodash';
 
 export default function UpdatePostForm({ post }) {
   const { categoryId } = useParams();
   const navigate = useNavigate();
-
+  const [images, setImages] = useState(post.images);
   const { toast } = useToast();
 
   const updatePostHandler = async (event) => {
@@ -38,6 +39,9 @@ export default function UpdatePostForm({ post }) {
       title: title,
       description: description,
     };
+    if (!_.isEqual(post.images, images)) {
+      content.images = images;
+    }
     const updatedPost = await updatePost(post?.id, content);
 
     if (updatedPost) {
@@ -132,6 +136,8 @@ export default function UpdatePostForm({ post }) {
                   </button>
                 </div>
               </div>
+
+              <FileUploader setImages={setImages} mediaUrl={post.images[0]}/>
 
               <div className="col-span-full">
                 <label
