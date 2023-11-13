@@ -6,10 +6,10 @@ import {
   query,
   equalTo,
   orderByChild,
-  update
+  update,
 } from 'firebase/database';
 import { db } from '../config/firebase-config';
-import { INITIAL_POST_COUNT } from '@/helpers/consts';
+import { INITIAL_POST_COUNT, INITIAL_LIKES_OBJECT } from '@/helpers/consts';
 
 const fromPostsDocument = async (snapshot) => {
   try {
@@ -44,6 +44,44 @@ export const updatePost = async (id, content) => {
   }
 };
 
+export const updatePostLike = async (id, username, likedPost) => {
+  try {
+    const postRef = ref(db, `posts/${id}/likes`);
+    const updates = {};
+    updates[username] = likedPost;
+    await update(postRef, updates);
+    const result = await getPostById(id);
+    return result;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getPostLikeByUsername = async (id, username) => {
+  try {
+    const usernameLikeRef = `posts/${id}/likes/${username}`;
+    const result = await get(ref(db, usernameLikeRef));
+    return !!result.val();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getLikes = async (id, username) => {
+  try {
+    const result = await get(ref(db, `posts/${id}/likes/${username}`));
+
+    if (result.exists()) {
+      const postsArray = Object.values(result.val());
+      return postsArray;
+    }
+
+    return [];
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const incrementPostCount = async (id, currentCount) => {
   try {
     const postRef = ref(db, `posts/${id}`);
@@ -64,6 +102,7 @@ export const addPost = async (content, username) => {
       author: username,
       createdOn: Date.now(),
       count: INITIAL_POST_COUNT,
+      likes: INITIAL_LIKES_OBJECT,
     });
 
     return getPostById(result.key);
@@ -145,8 +184,11 @@ export const getLikedPosts = async (handle) => {
 };
 
 export const getPostsByCategoryId = async (categoryId, sortKey) => {
-
-  const q = query(ref(db, 'posts'), orderByChild('categoryId'), equalTo(categoryId));
+  const q = query(
+    ref(db, 'posts'),
+    orderByChild('categoryId'),
+    equalTo(categoryId)
+  );
 
   try {
     const snapshot = await get(q);
