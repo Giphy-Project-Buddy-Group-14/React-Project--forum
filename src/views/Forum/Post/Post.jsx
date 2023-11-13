@@ -27,7 +27,7 @@ export default function Post() {
   const [postCount, setPostCount] = useState();
   const navigate = useNavigate();
   const [author, setAuthor] = useState({});
-  const [likedPost, setLikedPost] = useState(false);
+  const [showHeart, setShowHeart] = useState(false);
 
   const { userData } = useContext(AuthContext);
 
@@ -37,9 +37,11 @@ export default function Post() {
 
   useEffect(() => {
     setLoading(true);
+
     const fetchPost = async (postId) => {
       const post = await getPostById(postId);
       setPost(post);
+      setShowHeart(true);
       const user = await getUserByUsername(post.author);
       setAuthor(user.val());
       setCreatedOnDate(post.createdOn);
@@ -74,7 +76,7 @@ export default function Post() {
             <article className="flex max-w-xl flex-col   justify-between">
               <div className="flex items-center gap-x-6 text-xl font-bold">
                 {author?.username}
-                {post && <Heart postId={postId} />}
+                {showHeart && <Heart post={post} />}
                 <div className="bg-gray-300 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                   <CountView />
                   {postCount}

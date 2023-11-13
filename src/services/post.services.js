@@ -67,6 +67,15 @@ export const getPostLikeByUsername = async (id, username) => {
   }
 };
 
+export const getLikesCountByPost = async (id) => {
+  const post = await getPostById(id);
+  const filteredLikes = Object.entries(post.likes)
+    .filter(([_username, value]) => value === true)
+    .map(([user]) => user);
+
+  return filteredLikes.length;
+};
+
 export const getLikes = async (id, username) => {
   try {
     const result = await get(ref(db, `posts/${id}/likes/${username}`));
@@ -137,7 +146,7 @@ export const getPostById = async (id) => {
     const post = result.val();
     post.id = id;
     post.createdOn = new Date(post.createdOn);
-    if (!post.likedBy) post.likedBy = [];
+    if (!post.likes) post.likes = {};
 
     return post;
   } catch (error) {
