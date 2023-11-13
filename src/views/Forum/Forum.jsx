@@ -71,7 +71,7 @@ export default function Forum() {
           <PreviewSubCategory
             title="BG landmarks"
             link="/forum/bg_landmarks"
-            categoryId="world_mountains"
+            categoryId="bg_landmarks"
             lastPost="Last post from ..."
           />
 

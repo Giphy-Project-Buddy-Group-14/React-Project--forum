@@ -13,7 +13,6 @@ export default function CreatePostForm() {
   const [images, setImages] = useState();
   const { toast } = useToast();
   
-  console.log(images);
   const username = userData?.username;
   const createPostHandler = async (event) => {
     event.preventDefault();
