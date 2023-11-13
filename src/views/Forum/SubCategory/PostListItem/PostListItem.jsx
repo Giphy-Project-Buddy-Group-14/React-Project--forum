@@ -19,7 +19,7 @@ export default function PostListItem({ post }) {
               {post.title} ({post.count || 0} likes)
             </Link>
           </p>
-          <p className="mt-1 truncate text-xs leading-5 text-gray-500">{post.description}</p>
+          <p className="mt-1 text-xs leading-5 text-gray-500">{post.description}</p>
         </div>
       </div>
       <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">

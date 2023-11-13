@@ -7,7 +7,7 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-gray-800 py-4 text-white w-full ">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
           <div className="flex justify-center text-center m-2 pr-6 text-xs">
             <div>
               <a className="-db" href="/">

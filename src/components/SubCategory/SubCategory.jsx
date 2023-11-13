@@ -6,17 +6,17 @@ import { getPostsByCategoryId } from '@/services/post.services';
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 import { Button } from '../ui/button';
 import PostListItem from '@/views/Forum/SubCategory/PostListItem/PostListItem';
-import DropDown from '@/views/sharedComponents/DropDown/DropDown';
 import { AuthContext } from '@/context/AuthContext.jsx';
-import Filter from '@/views/sharedComponents/DropDown/Filter/Filter';
 import { getAllUsers } from '@/services/users.services';
+import Filter from '@/views/Filter/Filter';
+import DropDown from '@/views/DropDown/DropDown';
 
 
 export default function SubCategory() {
   const { categoryId } = useParams();
   const [posts, setPosts] = useState([]);
   const [sort, setSort] = useState('createdOn');
-  const [filters, setFilters] = useState({ author: '' });
+  const [filters, setFilters] = useState({ Author: '' });
   const { userData } = useContext(AuthContext);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function SubCategory() {
         const names = data.map(user => user.firstName);
         console.log(names);
 
-        setFilters({ authors: names });
+        setFilters({ Authors: names });
 
       } catch (error) {
         console.log(error);
@@ -51,40 +51,52 @@ export default function SubCategory() {
 
   return (
     <ContentWrapper>
-      <div>
-        <Title>{title}</Title>
-        <Filter
-          filters={filters}
-          onChange={(selectedFilters) => { setFilters(selectedFilters) }}
-        />
-        <div className='flex items-center gap-2'>
-          Sorted by:
-          <DropDown
-            items={['author', 'title', 'createdOn', 'count']}
-            onChange={(selectedItem) => {
-              setSort(selectedItem);
-            }}
-            selected={sort}
-            placeholder="Select a sort option"
+      <div className='flex gap-8'>
+        <div>
+          <Filter
+            filters={filters}
+            onChange={(selectedFilters) => { setFilters(selectedFilters) }}
           />
         </div>
+        <div className='flex-1'>
+          <div className='flex items-center gap-4 pb-4 text-sm justify-end'>
+            <div className='flex-1'>
+              <Title>{title}</Title>
+            </div>
 
-        <ul
-          role="list"
-          className="divide-y divide-gray-100"
-        >
-          {(posts || []).map((post) => (
-            <PostListItem
-              key={post.id}
-              post={post}
+
+            Sorted by:
+            <DropDown
+              items={['author', 'title', 'createdOn', 'count']}
+              onChange={(selectedItem) => {
+                setSort(selectedItem);
+              }}
+              selected={sort}
+              placeholder="Select a sort option"
             />
-          ))}
-        </ul>
+          </div>
 
-        {!userData.isBlocked && (
-          <Button onClick={newPostNavigation}>Create Post</Button>
-        )}
+
+
+          <ul
+            role="list"
+            className="divide-y divide-gray-100"
+          >
+            {(posts || []).map((post) => (
+              <PostListItem
+                key={post.id}
+                post={post}
+              />
+            ))}
+          </ul>
+
+          {!userData.isBlocked && (
+            <Button onClick={newPostNavigation}>Create Post</Button>
+          )}
+        </div>
       </div>
-    </ContentWrapper>
+
+
+    </ContentWrapper >
   );
 }
