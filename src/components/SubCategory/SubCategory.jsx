@@ -8,6 +8,8 @@ import { Button } from '../ui/button';
 import PostListItem from '@/views/Forum/SubCategory/PostListItem/PostListItem';
 import DropDown from '@/views/sharedComponents/DropDown/DropDown';
 import { AuthContext } from '@/context/AuthContext.jsx';
+import Filter from '@/views/sharedComponents/DropDown/Filter/Filter';
+import { getAllUsers } from '@/services/users.services';
 
 
 export default function SubCategory() {
@@ -15,6 +17,7 @@ export default function SubCategory() {
   const { categoryId } = useParams();
   const [posts, setPosts] = useState([])
   const [sort, setSort] = useState('createdOn');
+  const [filters, setFilters] = useState({ author: '' });
   const { userData } = useContext(AuthContext);
 
   useEffect(() => {
@@ -24,6 +27,21 @@ export default function SubCategory() {
     }
     fetchPosts(categoryId, sort)
   }, [categoryId, sort])
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const data = await getAllUsers();
+        const names = data.map(user => user.firstName);
+        console.log(names);
+
+        setFilters({ authors: names });
+
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   const navigate = useNavigate()
 
@@ -38,7 +56,10 @@ export default function SubCategory() {
     <ContentWrapper>
       <div>
         <Title>{title}</Title>
-
+        <Filter
+          filters={filters}
+          onChange={(selectedFilters) => { setFilters(selectedFilters) }}
+        />
         <div className='flex items-center gap-2'>
           Sorted by:
           <DropDown

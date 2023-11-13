@@ -23,10 +23,14 @@ export default function PostListItem({ post }) {
         </div>
       </div>
       <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-        <p className="text-sm leading-6 text-gray-900">{post.author}</p>
+        <p className="text-sm leading-6 text-gray-900">
+          {post.author}
+        </p>
 
         <p className="mt-1 text-xs leading-5 text-gray-500">
-          <time dateTime={dayjs(post.createdOn).fromNow()}>{dayjs(post.createdOn).fromNow()}</time>
+          <time dateTime={dayjs(post.createdOn).fromNow()}>
+            {dayjs(post.createdOn).fromNow()}
+          </time>
         </p>
       </div>
     </li>
@@ -43,3 +47,4 @@ PostListItem.propTypes = {
     count: PropTypes.number
   })
 };
+
