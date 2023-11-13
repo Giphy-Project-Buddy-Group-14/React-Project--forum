@@ -15,14 +15,6 @@ export default function Heart({ post }) {
   const { userData } = useContext(AuthContext);
   const { username } = userData;
 
-  // const getLikesCountByPost = (post) => {
-  //   const filteredLikes = Object.entries(post.likes)
-  //     .filter(([_username, value]) => value === true)
-  //     .map(([user]) => user);
-
-  //   return filteredLikes.length;
-  // };
-
   useEffect(() => {
     const fetchUserPostLike = async (postId) => {
       const userHasLikedPost = await getPostLikeByUsername(
