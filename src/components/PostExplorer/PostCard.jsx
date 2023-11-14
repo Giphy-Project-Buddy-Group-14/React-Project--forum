@@ -16,23 +16,22 @@ export default function PostCard(post) {
     (async () => {
       const result = await getUserByUsername(post.author);
       setAuthor(result);
-      console.log('post -->', post)
       const likesCount = await getLikesCountByPost(post.id);
       setPostLikesCount(likesCount);
       setShowPostLikes(true);
     })();
-  }, [userData]);
+  }, [post.author, post.id, userData]);
 
   return (
     <div className="mb-5 mt-5">
-      <div className="w-full lg:max-w-full lg:flex justify-start bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="w-full lg:max-w-full lg:flex justify-start bg-white bg-opacity-90 backdrop-blur-sm shadow-lg rounded-lg overflow-hidden">
         {post.images && (
           <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
             style={{ backgroundImage: `url(${post.images[0]})` }}
             title="Post Image">
           </div>
         )}
-        <div className={`w-full p-4 flex flex-col justify-between leading-normal bg-slate-50 ${post.images ? '' : 'lg:pl-5'}`}>
+        <div className={`w-full p-4 flex flex-col justify-between leading-normal ${post.images ? '' : 'lg:pl-5'}`}>
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-2">
               {!isLoggedIn && (

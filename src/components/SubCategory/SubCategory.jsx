@@ -52,7 +52,7 @@ export default function SubCategory() {
   return (
     <ContentWrapper>
       <div className="flex gap-8">
-        <div>
+        <div style={{ width: '200px' }}>
           <Filter
             filters={filters}
             onChange={(selectedFilters) => {
@@ -61,7 +61,7 @@ export default function SubCategory() {
           />
         </div>
         <div className="flex-1">
-          <div className="flex items-center gap-4 pb-4 text-sm justify-end">
+          <div className="flex items-center gap-4 pb-4 text-sm justify-end text-white">
             <div className="flex-1">
               <Title>{title}</Title>
             </div>
@@ -78,7 +78,6 @@ export default function SubCategory() {
 
           <ul
             role="list"
-            className="divide-y divide-gray-100"
           >
             {(posts || []).map((post) => (
               <PostListItem

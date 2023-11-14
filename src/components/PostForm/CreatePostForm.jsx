@@ -65,7 +65,7 @@ export default function CreatePostForm() {
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
+              <div className="sm:col-span-4 rounded-lg bg-white  backdrop-blur-sm p-6 bg-opacity-90">
                 <label
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -79,7 +79,7 @@ export default function CreatePostForm() {
                       id="title"
                       type="text"
                       name="title"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block flex-1 bg-white border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Post title"
                       onChange={handleChangeTitle}
                     />
@@ -87,7 +87,7 @@ export default function CreatePostForm() {
                 </div>
               </div>
 
-              <div className="col-span-full">
+              <div className="col-span-full p-6 bg-white rounded-lg  backdrop-blur-sm overflow-hidden bg-opacity-90">
                 <label
                   htmlFor="about"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -107,7 +107,6 @@ export default function CreatePostForm() {
               </div>
 
               <FileUploader setImages={setImages} />
-
 
               <div className="col-span-full">
                 <button
