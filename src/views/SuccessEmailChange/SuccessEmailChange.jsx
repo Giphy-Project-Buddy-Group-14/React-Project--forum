@@ -2,24 +2,24 @@ import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState } from 'react';
 import { updateProfileEmail } from '@/services/users.services';
 import { Button } from '@/components/ui/button.jsx';
-import { Link, useParams } from 'react-router-dom';
-import Loader from '@/components/Loader/Loader.jsx';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import LoadingIndicator from '@/components/ui/Loading.jsx';
 
 export default function SuccessEmailChange() {
-  const params = useParams();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams()
 
   useEffect(() => {
     (async () => {
       try {
-        await updateProfileEmail(params.email, params.username);
+        await updateProfileEmail(searchParams.get('email'), searchParams.get('username'));
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
-    })
+    })()
   }, []);
 
   return (
@@ -27,9 +27,9 @@ export default function SuccessEmailChange() {
       <ContentWrapper>
         <div>
           <p className="mt-6 text-lg leading-8 text-black bg-white backdrop-blur-sm bg-opacity-90 rounded-lg overflow-hidden p-8">
-            {loading && (<><Loader /> Loading...</>)}
-            {error ? (<>An error has occurred: {error}</>
-            ) : (
+            {loading && (<><LoadingIndicator /> Loading...</>)}
+            {error && !loading && (<>An error has occurred: {error}</>)}
+            {!error && !loading && (
               <>Your email was updated successfully. Login to continue using our forum.
                 <br />
                 <br />
