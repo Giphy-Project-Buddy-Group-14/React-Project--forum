@@ -1,6 +1,8 @@
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState } from 'react';
 import { getUserByUsername } from '@/services/users.services';
+import { TEAM_LIST } from '@/helpers/consts';
+
 export default function About() {
   const [users, setUsers] = useState([]);
 
@@ -11,13 +13,17 @@ export default function About() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const user1 = await fetchUser('niki');
-      const user2 = await fetchUser('sruchi');
-      const user3 = await fetchUser('koko');
-      // const user4 = await fetchUser('test');
-      const users = [user1, user2, user3]
-      setUsers(users);
+      const usernames = TEAM_LIST;
+      const userPromises = usernames.map(async (username) => {
+        const user = await fetchUser(username);
+        return user;
+      });
+
+      const fetchedUsers = await Promise.all(userPromises);
+
+      setUsers(fetchedUsers);
     };
+
     fetchUsers();
   }, []);
 
@@ -42,17 +48,17 @@ export default function About() {
           className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2 mt-12"
         >
           {users &&
-            users.map((person) => (
-              <li key={person.name}>
+            users.map((user) => (
+              <li key={user.uid}>
                 <div className="flex items-center gap-x-6">
                   <img
                     className="h-16 w-16 rounded-full"
-                    src={person.profilePictureURL}
+                    src={user.profilePictureURL}
                     alt=""
                   />
                   <div>
                     <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">
-                      {person.firstName} {person.lastName}
+                      {user.firstName} {user.lastName}
                     </h3>
                     <p className="text-sm font-semibold leading-6 text-indigo-600">
                       Front-end Developer
