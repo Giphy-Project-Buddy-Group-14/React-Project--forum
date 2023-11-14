@@ -9,4 +9,5 @@ export const INITIAL_POST_COUNT = 0;
 
 export const INITIAL_LIKES_OBJECT = {};
 
-export const TEAM_LIST = ['niki', 'sruchi', 'marco_polo'];
+export const TEAM_LIST = ['niki', 'svilslavev', 'tisho_nik'];
+
