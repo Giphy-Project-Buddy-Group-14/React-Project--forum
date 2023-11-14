@@ -61,6 +61,7 @@ export default function AccountSettings() {
                 await changeEmail(data.email);
                 await logoutUser();
                 setUser({ user: null, userData: {} })
+
                 toast({
                     title: 'You have successfully requested email change',
                     description: 'To finalize the change, verify your email by clicking on the link we sent to your new email address. You are now logged out.'
@@ -75,16 +76,16 @@ export default function AccountSettings() {
             }
 
             if (data.firstName) {
-                await updateProfileFirstName(data.firstName, data.password);
+                await updateProfileFirstName(data.firstName, user);
                 toast({
-                    title: 'You have updated your password successfully',
+                    title: 'You have updated your first name successfully',
                 })
             }
 
             if (data.lastName) {
-                await updateProfileLastName(data.lastName, data.password);
+                await updateProfileLastName(data.lastName, user);
                 toast({
-                    title: 'You have updated your password successfully',
+                    title: 'You have updated your last name successfully',
                 })
             }
 
@@ -125,7 +126,7 @@ export default function AccountSettings() {
                     <div className="p-6">
                         <Form {...form}>
                             <div className='flex'>
-                                <div className='flex flex-col items-center mr-5'>
+                                <div className='flex flex-col items-center mr-10'>
                                     <label htmlFor="photo">&nbsp;</label>
                                     <div className="mt-2">
                                         {!userData?.profilePictureURL && !picture ? (

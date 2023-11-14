@@ -8,7 +8,7 @@ dayjs.extend(relativeTime);
 export default function PostListItem({ post }) {
 
   return (
-    <li key={post.id} className="flex justify-between gap-x-6 py-5">
+    <li key={post.id} className="flex justify-between gap-x-6 py-5 bg-white bg-opacity-90 backdrop-blur-sm p-8 pl-0 rounded-lg mb-2">
       <div className="flex min-w-0 gap-x-4">
         <div className="ml-4 mt-1">
           <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
@@ -21,10 +21,15 @@ export default function PostListItem({ post }) {
               to={`posts/${post.id}`}
               className="text-blue-500 hover:underline"
             >
-              {post.title} ({post.count || 0} likes)
+              {post.title}
             </Link>
           </p>
-          <p className="mt-1 text-sm leading-5 text-gray-500">{post.description}</p>
+          <p
+            className="mt-1 text-sm leading-5 text-gray-500"
+            style={{ maxHeight: '80px', textOverflow: 'ellipsis', overflow: 'hidden' }}
+          >
+            {post.description}
+          </p>
         </div>
       </div>
       <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">

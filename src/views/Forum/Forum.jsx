@@ -16,7 +16,7 @@ export default function Forum() {
 
   return (
     <ContentWrapper>
-      <h1 className='h1-semibold mb-5 mt-2.5'>Categories</h1>
+      <h1 className='h1-semibold mb-5 mt-2.5 text-white'>Categories</h1>
 
       <Category title="Beginning">
         <PreviewSubCategory

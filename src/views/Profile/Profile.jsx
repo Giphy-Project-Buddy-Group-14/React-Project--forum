@@ -8,8 +8,6 @@ import TimeStamp from '@/components/ui/TimeStamp';
 
 export default function Profile() {
   const { userData } = useContext(AuthContext);
-  const { profilePictureURL, firstName, lastName, email, username } = userData;
-  const fullName = `${firstName} ${lastName}`;
   const navigate = useNavigate();
 
   const goToEditProfile = () => {
@@ -21,10 +19,9 @@ export default function Profile() {
       <ContentWrapper>
         <div>
           <div className="font-sans w-full mt-24 flex flex-row justify-center items-center">
-            <div className="card w-96 mx-auto bg-white  shadow-xl hover:shadow rounded-2xl relative">
-
+            <div className="card w-96 mx-auto bg-white bg-opacity-90 backdrop-blur-sm  rounded-2xl shadow-xl relative">
               <img
-                className="inline-block h-20 w-20 rounded-full ring-2 ring-white"
+                className="inline-block h-20 w-20 rounded-full ring-white"
                 style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '-40px' }}
                 src={userData.profilePictureURL}
               />

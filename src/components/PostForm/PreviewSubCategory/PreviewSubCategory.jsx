@@ -18,7 +18,7 @@ export default function PreviewSubCategory({
   }, []);
 
   return (
-    <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg my-4 hover:bg-gray-200 transition-colors duration-200">
+    <div className="flex justify-between items-center bg-gray-100 p-4 rounded-lg my-4 transition-colors duration-200">
       <div>
         <h2 className="text-lg font-semibold">{title}</h2>
         <Link
