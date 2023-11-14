@@ -15,8 +15,8 @@ export default function PostCard(post) {
   useEffect(() => {
     (async () => {
       const result = await getUserByUsername(post.author);
-      setAuthor(result.val());
-
+      setAuthor(result);
+      console.log('post -->', post)
       const likesCount = await getLikesCountByPost(post.id);
       setPostLikesCount(likesCount);
       setShowPostLikes(true);

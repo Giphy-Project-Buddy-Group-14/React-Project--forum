@@ -44,7 +44,7 @@ export default function Post() {
       setPost(post);
       setShowHeart(true);
       const user = await getUserByUsername(post.author);
-      setAuthor(user.val());
+      setAuthor(user);
       setCreatedOnDate(post.createdOn);
       const count = await incrementPostCount(
         postId,
@@ -74,11 +74,10 @@ export default function Post() {
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
-    autoplay: true
+    autoplay: true,
   };
 
   const EditOptions = () => {
-
     if (!userData || userData.username != post.author) {
       return null;
     }
@@ -138,80 +137,75 @@ export default function Post() {
           </Menu.Items>
         </Transition>
       </Menu>
-    )
-  }
+    );
+  };
 
   return (
     <ContentWrapper>
       {loading && <LoadingIndicator />}
 
-      {
-        !loading && (
-          <div className="leading-6">
-            <figure className="relative flex flex-col-reverse bg-slate-100 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
-              <blockquote className="mt-6 text-slate-700 dark:text-slate-300">
+      {!loading && (
+        <div className="leading-6">
+          <figure className="relative flex flex-col-reverse bg-slate-100 rounded-lg p-6 dark:bg-slate-800 dark:highlight-white/5">
+            <blockquote className="mt-6 text-slate-700 dark:text-slate-300">
+              <p>{post.description}</p>
 
-                <p>
-                  {post.description}
-                </p>
+              {post.images && !!post.images.length && (
+                <div className="mt-6 flex items-center justify-center" style={{ maxWidth: '500px', maxHeight: '500px' }}>
+                  <Slider {...settings}>
+                    {post.images.map((img) => {
+                      return (
+                        <img
+                          src={img}
+                          key={img}
+                        />
+                      );
+                    })}
+                  </Slider>
+                </div>
+              )}
+            </blockquote>
+            <figcaption className="flex items-center space-x-4">
+              <img
+                src={author?.profilePictureURL}
+                alt=""
+                className="flex-none w-14 h-14 rounded-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="flex-auto">
+                <div className="text-base text-slate-900 font-semibold dark:text-slate-300">
+                  <div className="flex">
+                    <div className="flex-1 text-lg flex">{post.title}</div>
 
-                {post.images && !!post.images.length && (
-                  <div className="mt-6">
-                    <Slider {...settings}>
-                      {post.images.map(img => {
-                        return (<img src={img} key={img} />)
-                      })}
-                    </Slider>
-                  </div>
-                )}
+                    <div className="flex gap-4">
+                      {createdOnDate && (
+                        <TimeStamp date={createdOnDate}></TimeStamp>
+                      )}
 
-              </blockquote>
-              <figcaption className="flex items-center space-x-4">
-                <img
-                  src={author?.profilePictureURL}
-                  alt=""
-                  className="flex-none w-14 h-14 rounded-full object-cover"
-                  loading="lazy" decoding="async"
-                />
-                <div className="flex-auto">
-                  <div className="text-base text-slate-900 font-semibold dark:text-slate-300">
+                      <div>{showHeart && <Heart post={post} />}</div>
 
-                    <div className='flex'>
-                      <div className='flex-1 text-lg flex'>
-                        {post.title}
+                      <div className="flex gap-1">
+                        <CountView /> {postCount}
                       </div>
-
-                      <div className='flex gap-4'>
-                        {createdOnDate && (
-                          <TimeStamp date={createdOnDate}></TimeStamp>
-                        )}
-
-                        <div>
-                          {showHeart && <Heart post={post} />}
-                        </div>
-
-                        <div className='flex gap-1'>
-                          <CountView /> {postCount}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-0.5 flex">
-                    <div className='flex-1'>
-                      {!!author && <Author author={author} />}
-                    </div>
-                    <div>
-                      <EditOptions />
                     </div>
                   </div>
                 </div>
-              </figcaption>
-            </figure>
-          </div>
-        )
-      }
+                <div className="mt-0.5 flex">
+                  <div className="flex-1">
+                    {!!author && <Author author={author} />}
+                  </div>
+                  <div>
+                    <EditOptions />
+                  </div>
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+      )}
 
       <CommentSection postId={postId} />
-    </ContentWrapper >
+    </ContentWrapper>
   );
 }

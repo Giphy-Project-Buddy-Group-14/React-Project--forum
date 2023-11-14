@@ -3,7 +3,7 @@ import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { EmailAuthProvider, updatePassword, verifyBeforeUpdateEmail } from 'firebase/auth';
 import { updateEmail, reauthenticateWithCredential } from 'firebase/auth';
 import { AuthContext } from '@/context/AuthContext.jsx';
-import { getAllUsers, getUserByUsername, updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
+import { updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
 import { Button } from '../ui/button.jsx';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '../ui/form.jsx';
 import { Input } from '../ui/input.jsx';

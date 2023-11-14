@@ -8,8 +8,10 @@ import TimeStamp from '@/components/ui/TimeStamp';
 
 export default function Profile() {
   const { userData } = useContext(AuthContext);
-
+  const { profilePictureURL, firstName, lastName, email, username } = userData;
+  const fullName = `${firstName} ${lastName}`;
   const navigate = useNavigate();
+
   const goToEditProfile = () => {
     navigate('/settings');
   };

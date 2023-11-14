@@ -16,13 +16,12 @@ export const fromUsersDocument = (snapshot) => {
   });
 };
 
-export const getUserByUsername = (username) => {
-
-  return get(ref(db, `users/${username}`));
+export const getUserByUsername = async (username) => {
+  const result = await get(ref(db, `users/${username}`))
+  return result.val();
 };
 
 export const getUserByEmail = (email) => {
-
   return get(query(ref(db, 'users'), orderByChild('email'), equalTo(email)));
 };
 

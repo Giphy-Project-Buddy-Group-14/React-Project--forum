@@ -11,7 +11,6 @@ import { getAllUsers } from '@/services/users.services';
 import Filter from '@/views/Filter/Filter';
 import DropDown from '@/views/DropDown/DropDown';
 
-
 export default function SubCategory() {
   const { categoryId } = useParams();
   const [posts, setPosts] = useState([]);
@@ -22,19 +21,21 @@ export default function SubCategory() {
   useEffect(() => {
     const fetchPosts = async (categoryId, sortKey) => {
       const posts = await getPostsByCategoryId(categoryId, sortKey, filters);
-      setPosts(posts)
-    }
-    fetchPosts(categoryId, sort)
-  }, [categoryId, sort, filters])
+      setPosts(posts);
+    };
+    fetchPosts(categoryId, sort);
+  }, [categoryId, sort, filters]);
 
   useEffect(() => {
     (async function () {
       try {
         const data = await getAllUsers();
-        const names = data.map(user => ({ label: user.username, checked: undefined }));
+        const names = data.map((user) => ({
+          label: user.username,
+          checked: undefined,
+        }));
 
         setFilters({ Authors: names });
-
       } catch (error) {
         console.log(error);
       }
@@ -50,23 +51,20 @@ export default function SubCategory() {
 
   return (
     <ContentWrapper>
-      <div className='flex gap-8'>
+      <div className="flex gap-8">
         <div>
           <Filter
             filters={filters}
             onChange={(selectedFilters) => {
               setFilters(selectedFilters);
-              console.log(selectedFilters);
             }}
           />
         </div>
-        <div className='flex-1'>
-          <div className='flex items-center gap-4 pb-4 text-sm justify-end'>
-            <div className='flex-1'>
+        <div className="flex-1">
+          <div className="flex items-center gap-4 pb-4 text-sm justify-end">
+            <div className="flex-1">
               <Title>{title}</Title>
             </div>
-
-
             Sorted by:
             <DropDown
               items={['author', 'title', 'createdOn', 'count']}
@@ -77,8 +75,6 @@ export default function SubCategory() {
               placeholder="Select a sort option"
             />
           </div>
-
-
 
           <ul
             role="list"
@@ -97,8 +93,6 @@ export default function SubCategory() {
           )}
         </div>
       </div>
-
-
-    </ContentWrapper >
+    </ContentWrapper>
   );
 }

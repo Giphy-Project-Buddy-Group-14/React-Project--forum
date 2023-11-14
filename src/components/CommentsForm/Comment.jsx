@@ -45,7 +45,7 @@ export default function Comment({ comment, onDelete }) {
   useEffect(() => {
     (async () => {
       const result = await getUserByUsername(comment.username);
-      setAuthor(result.val());
+      setAuthor(result);
       setIsAuthorLoaded(true);
     })();
   }, []);
