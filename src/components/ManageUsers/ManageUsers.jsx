@@ -1,6 +1,5 @@
 import { getAllUsers } from '@/services/users.services.js';
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { Input } from '../ui/input.jsx';
 import UserDetails from './UserDetails.jsx';
 import { useToast } from '../ui/use-toast.js';
@@ -9,18 +8,12 @@ import searchImage from '@/assets/search.svg';
 export default function ManageUsers() {
 
     const [users, setUsers] = useState([]);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState('');
     const initialUsers = useRef([]);
 
     const { toast } = useToast();
 
-    const navigate = useNavigate();
-
     useEffect(() => {
-
-        setLoading(true);
 
         (async function () {
             try {

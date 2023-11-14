@@ -44,10 +44,10 @@ export default function AccountSettings() {
                 password
             );
             try {
+                const settings = { url: `https://react-project--forum.web.app/success-email-change?email:${email}&username:${userData.username}`}
                 await reauthenticateWithCredential(user, credentials);
                 if (email) {
-                    await verifyBeforeUpdateEmail(user, email);
-                    await updateProfileEmail(email, userData.username);
+                    await verifyBeforeUpdateEmail(user, email, settings);
                 }
             } catch (error) {
                 console.error(error);

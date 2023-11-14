@@ -289,10 +289,10 @@ export const getPostsByCategoryId = async (categoryId, sortKey, filters) => {
   }
 };
 
-export const getPostsByAuthor = async (handle) => {
+export const getPostsByAuthor = async (username) => {
   try {
     const snapshot = await get(
-      query(ref(db, 'Posts'), orderByChild('author'), equalTo(handle))
+      query(ref(db, 'posts'), orderByChild('author'), equalTo(username))
     );
 
     if (!snapshot.exists()) {

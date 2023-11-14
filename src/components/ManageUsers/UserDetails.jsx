@@ -1,25 +1,17 @@
-import { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
 import { useToast } from '../ui/use-toast.js';
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import _ from "lodash";
 import moment from 'moment';
 import { blockUser, makeAdminUser, removeAdminUser, unblockUser } from '@/services/users.services.js';
-import { AuthContext } from '@/context/AuthContext.jsx';
+import { getPostsByAuthor } from '@/services/post.services.js';
 
 export default function UserDetails(user) {
 
-    const [error, setError] = useState(null);
     const [postCount, setPostCount] = useState('');
     const [isBlocked, setIsBlocked] = useState(user.isBlocked);
     const [isAdmin, setIsAdmin] = useState(user.role === 'admin');
-    const navigate = useNavigate();
     const { toast } = useToast();
-    const { userData } = useContext(AuthContext);
-
-    useEffect(() => {
-
-    }, [user]);
 
     const handleBlock = async () => {
         try {
@@ -65,13 +57,19 @@ export default function UserDetails(user) {
         }
     }
 
-    if (error) {
-        return toast({
-            title: 'An error has occurred',
-            description: error.message
-        });
-    }
+    useEffect(() => {
 
+       (async () => {
+        try {
+           const countPost = (await getPostsByAuthor(user.username)).length
+           setPostCount(countPost);
+        } catch (error) {
+            toast({
+                title: error.message
+            });
+        }
+       })();
+    });
 
     return (
         <div className="max-w-sm mx-auto bg-white dark:bg-gray-900 rounded-lg overflow-hidden shadow-lg"
@@ -117,7 +115,7 @@ export default function UserDetails(user) {
             </div>
             <div className="px-4 py-4">
                 <div className="flex gap-2 items-center text-gray-800 dark:text-gray-300 mb-4">
-                    <span><strong className="text-black dark:text-white">12</strong> Posts created</span>
+                    <span><strong className="text-black dark:text-white">{postCount}</strong> Posts created</span>
                 </div>
             </div>
         </div>
