@@ -75,7 +75,7 @@ export default function PostCard(post) {
               <UserCircleIcon className="w-10 h-10 rounded-full mr-4 text-gray-300" />
             ) : (
               <img
-                src={author.profilePictureURL}
+                src={author?.profilePictureURL}
                 alt="profile-img"
                 className="w-10 h-10 rounded-full mr-4"
               />

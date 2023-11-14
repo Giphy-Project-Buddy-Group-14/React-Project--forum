@@ -168,7 +168,7 @@ export default function Post() {
               </blockquote>
               <figcaption className="flex items-center space-x-4">
                 <img
-                  src={author.profilePictureURL}
+                  src={author?.profilePictureURL}
                   alt=""
                   className="flex-none w-14 h-14 rounded-full object-cover"
                   loading="lazy" decoding="async"
