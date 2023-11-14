@@ -26,6 +26,7 @@ import EditPost from './views/EditPost/EditPost';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute.jsx';
 import _ from 'lodash';
 import { onValue, ref } from 'firebase/database';
+import SuccessEmailChange from './views/SuccessEmailChange/SuccessEmailChange.jsx';
 
 function App() {
   const { toast } = useToast();
@@ -113,6 +114,10 @@ function App() {
               path="/about"
               element={<About />}
             />
+            <Route
+            path="/success-email-change"
+            element={<SuccessEmailChange />}
+          />
             <Route
               path="/forum"
               element={<AuthenticatedRoute><ForumContainer /></AuthenticatedRoute>}
