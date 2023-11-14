@@ -239,7 +239,7 @@ export const getMostCommentedPosts = async () => {
   }
 };
 
-export const getPostsByCategoryId = async (categoryId, sortKey) => {
+export const getPostsByCategoryId = async (categoryId, sortKey, filters) => {
   const q = query(
     ref(db, 'posts'),
     orderByChild('categoryId'),
@@ -254,13 +254,26 @@ export const getPostsByCategoryId = async (categoryId, sortKey) => {
     }
 
     // Convert snapshot to an array of items
-    const items = [];
+    let items = [];
     snapshot.forEach((childSnapshot) => {
       const item = childSnapshot.val();
       item.id = childSnapshot.key;
       item.count = childSnapshot.count || 0;
       items.push(item);
     });
+
+    // Filter items based on the given filters
+    if (filters && filters.Authors) {
+
+      const authorFilters = filters.Authors.filter((filter) => filter.checked);
+      if (authorFilters.length === 0) return items;
+
+      console.log('authorFilters', authorFilters)
+
+      items = items.filter((item) => {
+        return authorFilters.find(filter => filter.label === item.author);
+      });
+    }
 
     // Sort items by sortKey
     items.sort((a, b) => {

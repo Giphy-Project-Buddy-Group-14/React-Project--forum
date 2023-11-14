@@ -21,18 +21,17 @@ export default function SubCategory() {
 
   useEffect(() => {
     const fetchPosts = async (categoryId, sortKey) => {
-      const posts = await getPostsByCategoryId(categoryId, sortKey);
+      const posts = await getPostsByCategoryId(categoryId, sortKey, filters);
       setPosts(posts)
     }
     fetchPosts(categoryId, sort)
-  }, [categoryId, sort])
+  }, [categoryId, sort, filters])
 
   useEffect(() => {
     (async function () {
       try {
         const data = await getAllUsers();
-        const names = data.map(user => user.firstName);
-        console.log(names);
+        const names = data.map(user => ({ label: user.username, checked: undefined }));
 
         setFilters({ Authors: names });
 
@@ -55,7 +54,10 @@ export default function SubCategory() {
         <div>
           <Filter
             filters={filters}
-            onChange={(selectedFilters) => { setFilters(selectedFilters) }}
+            onChange={(selectedFilters) => {
+              setFilters(selectedFilters);
+              console.log(selectedFilters);
+            }}
           />
         </div>
         <div className='flex-1'>
