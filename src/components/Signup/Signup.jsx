@@ -11,6 +11,7 @@ import { Button } from '../ui/button.jsx';
 import { Link, useNavigate } from "react-router-dom"
 import { useToast } from '../ui/use-toast.js';
 import { AuthContext } from '@/context/AuthContext.jsx';
+import logoImage from '@/assets/logo.png';
 
 export default function Signup() {
 
@@ -57,7 +58,7 @@ export default function Signup() {
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <Link to='/'>
-          <img src="src/assets/logo.png" alt="logo" width={60} height={60} />
+          <img src={logoImage} alt="logo" width={60} height={60} />
         </Link>
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12 shad-form_label">Create a new account</h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">To use Forum, please enter your details</p>

@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone';
 
+import fileUploadImage from '@/assets/file-upload.svg';
+
 const convertFileToUrl = (file) => URL.createObjectURL(file);
 
 export default function FileUploader({setImages, mediaUrl}) {
@@ -38,7 +40,7 @@ export default function FileUploader({setImages, mediaUrl}) {
             ) : (
                 <div className="text-center">
                     <img
-                        src="/src/assets/file-upload.svg"
+                        src={fileUploadImage}
                         width={96}
                         height={77}
                         alt="file upload"

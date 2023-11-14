@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '../ui/input.jsx';
 import UserDetails from './UserDetails.jsx';
 import { useToast } from '../ui/use-toast.js';
+import searchImage from '@/assets/search.svg';
 
 export default function ManageUsers() {
 
@@ -61,7 +62,7 @@ export default function ManageUsers() {
                 <h2 className="h3-bold md:h2-bold w-full">Search and manage users</h2>
                 <div className="flex gap-1 px-4 w-full rounded-lg bg-light-2">
                     <img
-                        src="/src/assets/search.svg"
+                        src={searchImage}
                         width={24}
                         height={24}
                         alt="search"

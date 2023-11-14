@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import Loader from '../Loader/Loader.jsx';
 import { AuthContext } from '@/context/AuthContext.jsx';
 import { loginUser } from '@/services/auth.services.js';
-
+import logoImage from '@/assets/logo.png';
 export default function Signin() {
 
   const { toast } = useToast();
@@ -59,7 +59,7 @@ export default function Signin() {
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <Link to='/'>
-          <img src="src/assets/logo.png" alt="logo" width={60} height={60} />
+          <img src={logoImage} alt="logo" width={60} height={60} />
         </Link>
 
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
