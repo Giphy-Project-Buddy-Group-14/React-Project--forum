@@ -214,7 +214,6 @@ export const getMostCommentedPosts = async () => {
     }
 
     const allPosts = snapshot.val();
-    console.log('allPosts', allPosts);
 
     // Create an array to hold post objects with comment counts
     const postsWithCommentCounts = [];
@@ -267,8 +266,6 @@ export const getPostsByCategoryId = async (categoryId, sortKey, filters) => {
 
       const authorFilters = filters.Authors.filter((filter) => filter.checked);
       if (authorFilters.length === 0) return items;
-
-      console.log('authorFilters', authorFilters)
 
       items = items.filter((item) => {
         return authorFilters.find(filter => filter.label === item.author);
