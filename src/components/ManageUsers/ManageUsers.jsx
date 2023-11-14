@@ -50,8 +50,6 @@ export default function ManageUsers() {
         setUsers(updatedUsers);
     }, [searchValue])
 
-    console.log('here');
-
     const userToShow = users.map(user => {
         return <UserDetails key={user.uid} {...user} />
     })
