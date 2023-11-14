@@ -8,6 +8,7 @@ import { AuthContext } from '@/context/AuthContext.jsx';
 import { logoutUser } from '@/services/auth.services.js';
 import { useToast } from '@/components/ui/use-toast.js';
 import { Button } from '@/components/ui/button.jsx';
+import logoImage from '@/assets/logo.png';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -74,7 +75,7 @@ export default function NavBar() {
                 <div className="flex flex-shrink-0 items-center">
                   <img
                     className="h-8 w-auto"
-                    src="/src/assets/logo.png"
+                    src={logoImage}
                     alt="Your Company"
                   />
                 </div>
