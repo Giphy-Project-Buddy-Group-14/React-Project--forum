@@ -1,8 +1,3 @@
-
-import ContentWrapper from "@/components/ContentWrapper/ContentWrapper";
-import { Link } from "react-router-dom";
-
-
 export default function Footer() {
   return (
     <>

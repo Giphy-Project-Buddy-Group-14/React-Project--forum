@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { AuthContext } from '@/context/AuthContext';
 import { useContext } from 'react';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper';
+import TimeStamp from '@/components/ui/TimeStamp';
 
 export default function Profile() {
   const { userData } = useContext(AuthContext);
@@ -14,26 +15,34 @@ export default function Profile() {
   };
 
   return (
-    <ContentWrapper>
-      <Title>Profile</Title>
-      <div className="flex p-6">
-        <div className="flex -space-x-2 overflow-hidden mr-4">
-          <img
-            className="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-            src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
-        </div>
+    <div id='profile'>
+      <ContentWrapper>
         <div>
-          <dir>{userData.firstName}</dir>
-          <dir>{userData.lastName}</dir>
-          <dir>{userData.email}</dir>
-          <dir>{userData.username}</dir>
-          <div className="mt-6">
-            <Button onClick={goToEditProfile}> Edit profile </Button>
+          <div className="font-sans w-full mt-24 flex flex-row justify-center items-center">
+            <div className="card w-96 mx-auto bg-white  shadow-xl hover:shadow rounded-2xl relative">
+
+              <img
+                className="inline-block h-20 w-20 rounded-full ring-2 ring-white"
+                style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', top: '-40px' }}
+                src={userData.profilePictureURL}
+              />
+
+              <div className="text-center mt-2 text-3xl font-medium pt-12">{userData.firstName} {userData.LastName}</div>
+              <div className="text-center mt-2 font-light text-sm">@{userData.username}</div>
+              <div className="text-center font-normal text-lg">{userData.email}</div>
+              <div className="px-6 text-center pt-8">
+                <Button onClick={goToEditProfile}> Edit profile </Button>
+              </div>
+              <hr className="mt-8" />
+              <div className="flex p-4 justify-center">
+                <div>
+                  <TimeStamp date={userData.createdOn} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </ContentWrapper>
+      </ContentWrapper>
+    </div>
   );
 }

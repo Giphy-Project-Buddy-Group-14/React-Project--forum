@@ -62,6 +62,20 @@ export const updateProfileEmail = async (email, currentUser) => {
   return update(ref(db), updateEmail);
 };
 
+export const updateProfileFirstName = async (firstName, currentUser) => {
+  const updateEmail = {};
+  updateEmail[`/users/${currentUser}/firstName`] = firstName;
+
+  return update(ref(db), updateEmail);
+};
+
+export const updateProfileLastName = async (LastName, currentUser) => {
+  const updateEmail = {};
+  updateEmail[`/users/${currentUser}/lastName`] = LastName;
+
+  return update(ref(db), updateEmail);
+};
+
 export const makeAdminUser = (username) => {
   const updateAdminStatus = {};
 
