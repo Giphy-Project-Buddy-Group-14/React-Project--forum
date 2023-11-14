@@ -265,11 +265,11 @@ export const getPostsByCategoryId = async (categoryId, sortKey, filters) => {
     if (filters && filters.Authors) {
 
       const authorFilters = filters.Authors.filter((filter) => filter.checked);
-      if (authorFilters.length === 0) return items;
-
-      items = items.filter((item) => {
-        return authorFilters.find(filter => filter.label === item.author);
-      });
+      if (authorFilters.length !== 0) {
+        items = items.filter((item) => {
+          return authorFilters.find(filter => filter.label === item.author);
+        });
+      }
     }
 
     // Sort items by sortKey
