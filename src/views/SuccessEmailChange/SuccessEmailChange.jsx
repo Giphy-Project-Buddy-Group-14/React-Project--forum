@@ -19,7 +19,7 @@ export default function SuccessEmailChange() {
       } finally {
         setLoading(false);
       }
-    })
+    })()
   }, []);
 
   return (
