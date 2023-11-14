@@ -61,21 +61,3 @@ export const TITLE_MAP = {
   bg_landmarks: 'BG Landmarks',
   world_landmarks: 'World Landmarks',
 };
-
-export const PEOPLE = [
-  {
-    name: 'Nikolay Hadzhiyski',
-    imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg',
-    role: 'Front-end Developer',
-  },
-  {
-    name: 'Svilena Slavev',
-    imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg',
-    role: 'Front-end Developer',
-  },
-  {
-    name: 'Tihomir Nikolov',
-    imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/001/840/612/small/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg',
-    role: 'Front-end Developer',
-  },
-];
