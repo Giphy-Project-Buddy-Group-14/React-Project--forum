@@ -17,7 +17,6 @@ export default function Home() {
         <h3 className='text-2xl font-semibold text-white mt-8'>Recently added posts</h3>
 
         <PostList />
-
       </ContentWrapper>
     </div>
   );

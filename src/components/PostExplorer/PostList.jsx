@@ -25,25 +25,13 @@ export default function PostList() {
         });
       }
     })();
-
-    (async () => {
-      try {
-        const response = await getMostCommentedPosts();
-        setPosts(response);
-      } catch (error) {
-        toast({
-          title: error.message,
-        });
-      }
-    })();
   }, []);
 
   const postToShow = posts.slice(0, showCount).map((el) => {
     return (
-      <PostCard
-        key={el.title}
-        {...el}
-      />
+      <div key={el.title} style={{ flexBasis: '50%' }} className='px-3'>
+        <PostCard {...el} />
+      </div >
     );
   });
 
@@ -52,16 +40,20 @@ export default function PostList() {
   };
 
   return (
-    <div>
-      {posts && postToShow}
-      {isLoggedIn && showCount < posts.length && (
-        <Button
-          onClick={loadMore}
-          className=""
-        >
-          Load More
-        </Button>
-      )}
-    </div>
+    <>
+      <div className='flex flex-wrap'>
+        {posts && postToShow}
+      </div>
+      <div className='mt-8'>
+        {isLoggedIn && showCount < posts.length && (
+          <Button
+            onClick={loadMore}
+            className=""
+          >
+            Load More
+          </Button>
+        )}
+      </div>
+    </>
   );
 }

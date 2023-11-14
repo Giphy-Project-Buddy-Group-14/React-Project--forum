@@ -59,10 +59,10 @@ export default function Signin() {
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
         <Link to='/'>
-          <img src={logoImage} alt="logo" width={60} height={60} />
+          <img src={logoImage} alt="logo" width={160} height={160} />
         </Link>
 
-        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
+        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-8 text-white">
           Log in to your account
         </h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">

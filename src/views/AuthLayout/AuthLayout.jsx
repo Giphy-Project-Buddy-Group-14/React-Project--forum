@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from 'react-router-dom'
-import sideImage from '@/assets/side-img.svg';
+import sideImage from '@/assets/bg4.jpg';
 
 const AuthLayout = () => {
     const isAuthenticated = false;
@@ -9,7 +9,7 @@ const AuthLayout = () => {
                 <Navigate to='/' />
             ) : (
                 <>
-                    <main className='flex h-screen bg-dark-1'>
+                    <main className='flex h-screen bg-gray-800'>
 
                         <section className='flex flex-1 justify-center items-center flex-col py-10'>
                             <Outlet />

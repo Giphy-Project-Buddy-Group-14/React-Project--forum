@@ -44,7 +44,7 @@ export default function AccountSettings() {
                 password
             );
             try {
-                const settings = { url: `https://react-project--forum.web.app/success-email-change?email=${email}&username=${userData.username}`}
+                const settings = { url: `https://react-project--forum.web.app/success-email-change?email=${email}&username=${userData.username}` }
                 await reauthenticateWithCredential(user, credentials);
                 if (email) {
                     await verifyBeforeUpdateEmail(user, email, settings);
@@ -118,7 +118,7 @@ export default function AccountSettings() {
             <ContentWrapper>
                 <h1 className='h1-semibold mb-5 mt-8 text-white'>Profile</h1>
 
-                <div className='rounded-2xl bg-white shadow-sm bg-opacity-70 backdrop-blur-md overflow-hidden'>
+                <div className='rounded-2xl bg-white shadow-sm bg-opacity-90 backdrop-blur-sm overflow-hidden'>
                     <p className='text-lg font-medium text-white px-6 py-4 bg-slate-600'>
                         You can update your email and password here. This is how others will see you on the site.
                     </p>
@@ -128,7 +128,7 @@ export default function AccountSettings() {
                             <div className='flex'>
                                 <div className='flex flex-col items-center mr-10'>
                                     <label htmlFor="photo">&nbsp;</label>
-                                    <div className="mt-2">
+                                    <div className="mt-2 ml-5">
                                         {!userData?.profilePictureURL && !picture ? (
                                             <UserCircleIcon
                                                 className="h-12 w-12 text-gray-300"
@@ -151,7 +151,7 @@ export default function AccountSettings() {
 
                                         <button
                                             type="button"
-                                            className="rounded-md mt-2 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                            className="rounded-md bg-white mt-2 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                                             onClick={() => document.getElementById('fileInput').click()}
                                         >
                                             edit

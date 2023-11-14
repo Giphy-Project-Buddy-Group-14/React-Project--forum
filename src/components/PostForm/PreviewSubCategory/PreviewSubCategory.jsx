@@ -4,7 +4,6 @@ import { getPostsByCategoryId } from '@/services/post.services';
 export default function PreviewSubCategory({
   title,
   link,
-  lastPost,
   categoryId,
 }) {
   const [posts, setPosts] = useState([]);
@@ -31,9 +30,6 @@ export default function PreviewSubCategory({
       <div className="mt-2 text-gray-600">
         <div>
           <span className="font-semibold">Post Count:</span> {postCount}
-        </div>
-        <div>
-          <span className="font-semibold">Last Post:</span> {lastPost}
         </div>
       </div>
     </div>

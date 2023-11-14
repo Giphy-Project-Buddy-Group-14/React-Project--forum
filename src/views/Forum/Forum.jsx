@@ -23,14 +23,12 @@ export default function Forum() {
           title="Welcome"
           link="/forum/welcome"
           categoryId="welcome"
-          lastPost="Last post from ..."
         />
 
         <PreviewSubCategory
           title="Forum rules"
           link="/forum/forum_rules"
           categoryId="forum_rules"
-          lastPost="Last post from ..."
         />
       </Category>
 
@@ -39,14 +37,12 @@ export default function Forum() {
           title="BG sea"
           link="/forum/bg_sea"
           categoryId="bg_sea"
-          lastPost="Last post from ..."
         />
 
         <PreviewSubCategory
           title="World sea"
           link="/forum/world_sea"
           categoryId="world_sea"
-          lastPost="Last post from ..."
         />
       </Category>
 
@@ -55,14 +51,12 @@ export default function Forum() {
           title="BG mountains"
           link="/forum/bg_mountains"
           categoryId="bg_mountains"
-          lastPost="Last post from ..."
         />
 
         <PreviewSubCategory
           title="World mountains"
           link="/forum/world_mountains"
           categoryId="world_mountains"
-          lastPost="Last post from ..."
         />
       </Category>
 
@@ -71,14 +65,12 @@ export default function Forum() {
           title="BG landmarks"
           link="/forum/bg_landmarks"
           categoryId="bg_landmarks"
-          lastPost="Last post from ..."
         />
 
         <PreviewSubCategory
           title="World landmarks"
           link="/forum/world_landmarks"
           categoryId="world_landmarks"
-          lastPost="Last post from ..."
         />
       </Category>
     </ContentWrapper >

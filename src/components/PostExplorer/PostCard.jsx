@@ -23,8 +23,8 @@ export default function PostCard(post) {
   }, [post.author, post.id, userData]);
 
   return (
-    <div className="mb-5 mt-5">
-      <div className="w-full lg:max-w-full lg:flex justify-start bg-white bg-opacity-90 backdrop-blur-sm shadow-lg rounded-lg overflow-hidden">
+    <div className="mb-5 mt-5 h-full py-3">
+      <div className="w-full h-full lg:max-w-full lg:flex justify-start bg-white bg-opacity-90 backdrop-blur-sm shadow-lg rounded-lg overflow-hidden">
         {post.images && (
           <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
             style={{ backgroundImage: `url(${post.images[0]})` }}

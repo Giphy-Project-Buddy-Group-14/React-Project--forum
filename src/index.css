@@ -4,7 +4,7 @@
 @tailwind utilities;
 
 body {
-  overflow-y: scroll
+  overflow-y: scroll;
 }
 
 @layer base {
