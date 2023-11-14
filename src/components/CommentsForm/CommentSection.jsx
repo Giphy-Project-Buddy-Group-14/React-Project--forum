@@ -31,7 +31,11 @@ export default function CommentSection({ postId }) {
     <>
       {!userData.isBlocked && (<NewCommentForm onSubmit={addCommentHandler} />)}
       {shouldLoadComments
-        ? <Comments postId={postId} />
+        ? (
+          <div className='w-1/2'>
+            <Comments postId={postId} />
+          </div>
+        )
         : <LoadingIndicator />}
     </>
   );

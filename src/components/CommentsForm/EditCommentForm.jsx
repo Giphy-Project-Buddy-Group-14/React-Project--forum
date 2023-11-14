@@ -32,7 +32,7 @@ export default function EditCommentForm({ comment, onSave, onCancel }) {
           >
             Comment
           </label>
-          <div className="mt-2">
+          <div className="mt-2 w-1/2">
             <textarea
               value={content}
               id="comment"

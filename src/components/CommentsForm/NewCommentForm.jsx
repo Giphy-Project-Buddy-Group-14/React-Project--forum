@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { EMPTY_STRING } from '@/helpers/consts';
 import { AuthContext } from '@/context/AuthContext.jsx';
 
-
 export default function NewCommentForm({ onSubmit }) {
   const [content, setContent] = useState(EMPTY_STRING);
   const isContentDisable = content.length === 0;
@@ -20,7 +19,7 @@ export default function NewCommentForm({ onSubmit }) {
   };
 
   return (
-    <>
+    <div>
       <form onSubmit={submitHandler}>
         <div className="col-span-full">
           <label
@@ -29,7 +28,7 @@ export default function NewCommentForm({ onSubmit }) {
           >
             Comment
           </label>
-          <div className="mt-2">
+          <div className="mt-2 w-1/2">
             <textarea
               value={content}
               id="comment"
@@ -40,7 +39,7 @@ export default function NewCommentForm({ onSubmit }) {
             />
           </div>
         </div>
-        <div className="col-span-full flex justify-center py-4">
+        <div className="col-span-full flex py-4">
           {!userData.isBlocked && (<button
             type="submit"
             className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
@@ -50,6 +49,6 @@ export default function NewCommentForm({ onSubmit }) {
           </button>)}
         </div>
       </form>
-    </>
+    </div>
   );
 }

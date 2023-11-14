@@ -61,15 +61,16 @@ export default function UpdatePostForm({ post }) {
   };
 
   return (
-    <>
-      <form>
-        <div className="space-y-12">
+    <div>
+      <h1 className="h1-semibold mb-5 text-white">Edit</h1>
+      <form className='bg-white bg-opacity-90 backdrop-blur-sm p-6 rounded-lg overflow-hidden'>
+        <div>
           <div className="border-b border-gray-900/10 pb-12">
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
               <div className="sm:col-span-4">
                 <label
                   htmlFor="username"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium text-gray-900"
                 >
                   Title
                 </label>
@@ -80,7 +81,7 @@ export default function UpdatePostForm({ post }) {
                       id="title"
                       type="text"
                       name="title"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                      className="block flex-1 px-3 border-0 bg-transparent rounded-md py-1.5 pl-3 bg-white text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                       placeholder="Post title"
                       onChange={handleChangeTitle}
                     />
@@ -113,11 +114,12 @@ export default function UpdatePostForm({ post }) {
                   Update Post
                 </button>
               </div>
+
               <FileUploader setImages={setImages} mediaUrl={post.images?.[0]} />
             </div>
           </div>
         </div>
       </form>
-    </>
+    </div>
   );
 }
