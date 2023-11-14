@@ -54,7 +54,7 @@ export default function FileUploader({ setImages, mediaUrl }) {
                         SVG, PNG, JPG
                     </p>
 
-                    <button type="button" className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+                    <button type="button" className="relative px-4 py-2 mt-5 cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                         Select from computer
                     </button>
                 </div>
