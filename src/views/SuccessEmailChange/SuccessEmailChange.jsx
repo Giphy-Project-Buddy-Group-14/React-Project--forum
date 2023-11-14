@@ -29,7 +29,7 @@ export default function SuccessEmailChange() {
           <p className="mt-6 text-lg leading-8 text-black bg-white backdrop-blur-sm bg-opacity-90 rounded-lg overflow-hidden p-8">
             {loading && (<><LoadingIndicator /> Loading...</>)}
             {error && !loading && (<>An error has occurred: {error}</>)}
-            {error && !loading && (
+            {!error && !loading && (
               <>Your email was updated successfully. Login to continue using our forum.
                 <br />
                 <br />
