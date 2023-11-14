@@ -139,7 +139,6 @@ export default function Comment({ comment, onDelete }) {
             <p className="text-gray-500 dark:text-gray-400">
               {currentComment.content}
             </p>
-
           </article>
         </div>
       )}
