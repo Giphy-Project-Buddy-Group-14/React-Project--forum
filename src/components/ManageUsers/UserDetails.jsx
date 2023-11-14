@@ -39,7 +39,7 @@ export default function UserDetails(user) {
         } catch (error) {
             toast({
                 title: error.message
-            })
+            });
         }
     }
 
@@ -50,7 +50,7 @@ export default function UserDetails(user) {
         } catch (error) {
             toast({
                 title: error.message
-            })
+            });
         }
     }
 
@@ -61,7 +61,7 @@ export default function UserDetails(user) {
         } catch (error) {
             toast({
                 title: error.message
-            })
+            });
         }
     }
 
@@ -69,7 +69,7 @@ export default function UserDetails(user) {
         return toast({
             title: 'An error has occurred',
             description: error.message
-        })
+        });
     }
 
 
@@ -121,5 +121,5 @@ export default function UserDetails(user) {
                 </div>
             </div>
         </div>
-    )
+    );
 }

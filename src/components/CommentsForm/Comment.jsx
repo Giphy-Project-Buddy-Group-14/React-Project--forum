@@ -8,6 +8,8 @@ import EditCommentForm from './EditCommentForm';
 import { updateComment } from '@/services/comments.service';
 import { getUserByUsername } from '@/services/users.services';
 import { AuthContext } from '@/context/AuthContext';
+
+
 export default function Comment({ comment, onDelete }) {
   const [isEditing, setIsEditing] = useState(false);
   const [currentComment, setCurrentComment] = useState(comment);

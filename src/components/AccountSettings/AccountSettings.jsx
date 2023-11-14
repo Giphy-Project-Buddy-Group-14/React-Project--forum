@@ -65,7 +65,7 @@ export default function AccountSettings() {
                 toast({
                     title: 'You have successfully requested email change',
                     description: 'To finalize the change, verify your email by clicking on the link we sent to your new email address. You are now logged out.'
-                })
+                });
             }
 
             if (data.password) {
@@ -93,7 +93,7 @@ export default function AccountSettings() {
             toast({
                 title: 'Error updating your details',
                 description: error.message
-            })
+            });
         }
     }
 
@@ -104,11 +104,11 @@ export default function AccountSettings() {
             setPicture(data);
             toast({
                 title: 'Successfully uploaded profile picture'
-            })
+            });
         } catch (error) {
             toast({
                 title: error.message
-            })
+            });
         }
     }
 

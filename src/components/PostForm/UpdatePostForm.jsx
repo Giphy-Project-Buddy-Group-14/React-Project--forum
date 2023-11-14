@@ -87,7 +87,6 @@ export default function UpdatePostForm({ post }) {
                   </div>
                 </div>
               </div>
-
               <div className="col-span-full">
                 <label
                   htmlFor="about"
@@ -106,7 +105,6 @@ export default function UpdatePostForm({ post }) {
                   />
                 </div>
               </div>
-
               <div className="col-span-full">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -115,9 +113,7 @@ export default function UpdatePostForm({ post }) {
                   Update Post
                 </button>
               </div>
-
               <FileUploader setImages={setImages} mediaUrl={post.images?.[0]} />
-
             </div>
           </div>
         </div>
