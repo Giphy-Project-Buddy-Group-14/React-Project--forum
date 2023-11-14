@@ -53,7 +53,7 @@ export default function PostList() {
 
   return (
     <div>
-      {postToShow}
+      {posts && postToShow}
       {isLoggedIn && showCount < posts.length && (
         <Button
           onClick={loadMore}

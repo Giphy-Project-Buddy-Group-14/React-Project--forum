@@ -151,7 +151,7 @@ export default function Post() {
               <p>{post.description}</p>
 
               {post.images && !!post.images.length && (
-                <div className="mt-6">
+                <div className="mt-6 flex items-center justify-center" style={{ maxWidth: '500px', maxHeight: '500px' }}>
                   <Slider {...settings}>
                     {post.images.map((img) => {
                       return (

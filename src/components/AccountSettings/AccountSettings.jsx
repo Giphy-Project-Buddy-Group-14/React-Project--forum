@@ -10,10 +10,10 @@ import { Input } from '../ui/input.jsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AccountSettingsValidation } from './accountSettings.validation.js';
-import { Separator } from '../ui/separator.jsx';
 import { useToast } from '../ui/use-toast.js';
 import ContentWrapper from '../ContentWrapper/ContentWrapper.jsx';
 import { logoutUser } from '@/services/auth.services.js';
+import { updateProfileFirstName, updateProfileLastName } from '@/services/users.services.js';
 
 export default function AccountSettings() {
 
@@ -60,7 +60,7 @@ export default function AccountSettings() {
             if (data.email && (data.email !== userData.email)) {
                 await changeEmail(data.email);
                 await logoutUser();
-                setUser({user: null, userData: {}});
+                setUser({ user: null, userData: {} })
                 toast({
                     title: 'You have successfully requested email change',
                     description: 'To finalize the change, verify your email by clicking on the link we sent to your new email address. You are now logged out.'
@@ -71,8 +71,21 @@ export default function AccountSettings() {
                 await updatePassword(user, data.password);
                 toast({
                     title: 'You have updated your password successfully',
-                });
+                })
+            }
 
+            if (data.firstName) {
+                await updateProfileFirstName(data.firstName, data.password);
+                toast({
+                    title: 'You have updated your password successfully',
+                })
+            }
+
+            if (data.lastName) {
+                await updateProfileLastName(data.lastName, data.password);
+                toast({
+                    title: 'You have updated your password successfully',
+                })
             }
 
         } catch (error) {
@@ -100,88 +113,121 @@ export default function AccountSettings() {
 
 
     return (
-        <ContentWrapper>
-            <div className="space-y-6 shad-form-light_label mt-100">
-                <div>
-                    <h3 className="text-lg font-medium">Profile</h3>
-                    <p className="text-sm text-muted-foreground">
+        <div id="profile">
+            <ContentWrapper>
+                <h1 className='h1-semibold mb-5 mt-8 text-white'>Profile</h1>
+
+                <div className='rounded-2xl bg-white shadow-sm bg-opacity-70 backdrop-blur-md overflow-hidden'>
+                    <p className='text-lg font-medium text-white px-6 py-4 bg-slate-600'>
                         You can update your email and password here. This is how others will see you on the site.
                     </p>
-                </div>
-            </div>
-            <Separator />
-            <Form {...form}>
-                <div className="col-span-full mt-10">
-                    <label
-                        htmlFor="photo"
-                        className="block text-sm font-medium leading-6 text-gray-900"
-                    >
-                        Photo
-                    </label>
-                    <div className="mt-2 flex items-center gap-x-3">
-                        {!userData?.profilePictureURL && !picture ? (
-                            <UserCircleIcon
-                                className="h-12 w-12 text-gray-300"
-                            />
-                        ) : (
-                            <img src={picture || userData.profilePictureURL} alt="profile-img" style={{
-                                width: '50px',
-                                height: '50px',
-                                borderRadius: '50%',
-                                objectFit: 'cover'
-                            }} />
-                        )}
-                        <input
-                            type="file"
-                            id="fileInput"
-                            style={{ display: 'none' }}
-                            onChange={handleFileChange}
-                        />
-                        <button
-                            type="button"
-                            className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                            onClick={() => document.getElementById('fileInput').click()}
-                        >
-                            Change
-                        </button>
+
+                    <div className="p-6">
+                        <Form {...form}>
+                            <div className='flex'>
+                                <div className='flex flex-col items-center mr-5'>
+                                    <label htmlFor="photo">&nbsp;</label>
+                                    <div className="mt-2">
+                                        {!userData?.profilePictureURL && !picture ? (
+                                            <UserCircleIcon
+                                                className="h-12 w-12 text-gray-300"
+                                            />
+                                        ) : (
+                                            <img src={picture || userData.profilePictureURL} alt="profile-img" style={{
+                                                width: '50px',
+                                                height: '50px',
+                                                borderRadius: '50%',
+                                                objectFit: 'cover'
+                                            }} />
+                                        )}
+
+                                        <input
+                                            type="file"
+                                            id="fileInput"
+                                            style={{ display: 'none' }}
+                                            onChange={handleFileChange}
+                                        />
+
+                                        <button
+                                            type="button"
+                                            className="rounded-md mt-2 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                            onClick={() => document.getElementById('fileInput').click()}
+                                        >
+                                            edit
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='shad-form-light_label'>Email</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder='Type new email' className='shad-input-light' {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Enter a valid unique email. To change your email, we will send you an email with verification link. After confirmation the change will take effect.
+                                                </FormDescription>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='shad-form-light_label'>Password</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Type new password" type="password" className='shad-input-light' {...field} />
+                                                </FormControl>
+                                                <FormDescription>
+                                                    Change your password. Min 8 characters long.
+                                                </FormDescription>
+                                                <FormMessage className='shad-form-light_message' />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="firstName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='shad-form-light_label'>First Name</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Type new First Name" type="text" className='shad-input-light' {...field} />
+                                                </FormControl>
+                                                <FormMessage className='shad-form-light_message' />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <FormField
+                                        control={form.control}
+                                        name="lastName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className='shad-form-light_label'>Last Name</FormLabel>
+                                                <FormControl>
+                                                    <Input placeholder="Type new Last Name" type="text" className='shad-input-light' {...field} />
+                                                </FormControl>
+                                                <FormMessage className='shad-form-light_message' />
+                                            </FormItem>
+                                        )}
+                                    />
+
+                                    <Button type="submit">Update profile</Button>
+                                </form>
+                            </div>
+                        </Form>
                     </div>
                 </div>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <FormField
-                        control={form.control}
-                        name="email"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className='shad-form-light_label'>Email</FormLabel>
-                                <FormControl>
-                                    <Input placeholder='Type new email' className='shad-input-light' {...field} />
-                                </FormControl>
-                                <FormDescription className='shad-textarea-light'>
-                                    Enter a valid unique email. To change your email, we will send you an email with verification link. After confirmation the change will take effect.
-                                </FormDescription>
-                                <FormMessage className='shad-form-light_message' />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="password"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className='shad-form-light_label'>Password</FormLabel>
-                                <FormControl>
-                                    <Input placeholder="Type new password" type="password" className='shad-input-light' {...field} />
-                                </FormControl>
-                                <FormDescription className='shad-textarea-light'>
-                                    Change your password. Min 8 characters long.
-                                </FormDescription>
-                                <FormMessage className='shad-form-light_message' />
-                            </FormItem>
-                        )}
-                    />
-                    <Button type="submit">Update profile</Button>
-                </form>
-            </Form>
-        </ContentWrapper >
-    );
+
+            </ContentWrapper>
+        </div >
+    )
 }

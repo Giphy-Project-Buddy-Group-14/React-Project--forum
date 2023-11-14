@@ -76,7 +76,7 @@ export default function NavBar() {
                   <img
                     className="h-8 w-auto"
                     src={logoImage}
-                    alt="Your Company"
+                    alt="Group 14"
                   />
                 </div>
                 <div className="hidden sm:ml-6 sm:block">

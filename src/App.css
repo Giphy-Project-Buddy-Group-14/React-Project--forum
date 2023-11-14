@@ -42,3 +42,28 @@
 .read-the-docs {
   color: #888;
 } */
+
+body,
+#home,
+#about,
+#profile {
+  background-image: url('/src/assets/bg1.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#home {
+  background-image: url('/src/assets/bg2.jpg');
+}
+
+#about {
+  background-image: url('/src/assets/bg3.jpg');
+}
+
+#profile {
+  background-image: url('/src/assets/bg4.jpg');
+}
