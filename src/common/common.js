@@ -7,4 +7,4 @@ export const categories = {
     world_mountains: "World mountains",
     bg_landmarks: "BG landmarks",
     world_landmarks: "World landmarks",
-}
+};

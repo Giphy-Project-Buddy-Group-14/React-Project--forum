@@ -1,4 +1,3 @@
-import Title from '../Title/Title';
 
 export default function Category({ children, title }) {
   return (

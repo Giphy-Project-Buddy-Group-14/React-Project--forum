@@ -3,7 +3,7 @@ import { EMPTY_STRING } from '@/helpers/consts';
 import { AuthContext } from '@/context/AuthContext.jsx';
 
 
-export default function NewCommentForm({ comment, onSubmit }) {
+export default function NewCommentForm({ onSubmit }) {
   const [content, setContent] = useState(EMPTY_STRING);
   const isContentDisable = content.length === 0;
   const { userData } = useContext(AuthContext);

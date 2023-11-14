@@ -52,7 +52,7 @@ export default function ManageUsers() {
 
     const userToShow = users.map(user => {
         return <UserDetails key={user.uid} {...user} />
-    })
+    });
 
     return (
         <div className="explore-container text-black">
@@ -82,5 +82,5 @@ export default function ManageUsers() {
             </div>
             </div>
         </div>
-    )
+    );
 }

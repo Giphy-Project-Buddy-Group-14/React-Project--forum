@@ -65,7 +65,7 @@ function App() {
         console.log(error);
       }
     })();
-  }, [user, loading]);
+  }, [user, loading, appState.userData?.profilePictureURL]);
 
   useEffect(() => {
     if (appState.userData && user) {

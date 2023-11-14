@@ -60,8 +60,5 @@ export default function FileUploader({setImages, mediaUrl}) {
                 </div>
             )}
         </div>
-    )
-    
-    
-    
+    );   
 }

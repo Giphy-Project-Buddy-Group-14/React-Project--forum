@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { UserCircleIcon } from '@heroicons/react/24/solid';
 import { EmailAuthProvider, updatePassword, verifyBeforeUpdateEmail } from 'firebase/auth';
-import { updateEmail, reauthenticateWithCredential } from 'firebase/auth';
+import { reauthenticateWithCredential } from 'firebase/auth';
 import { AuthContext } from '@/context/AuthContext.jsx';
 import { updateProfileEmail, updateProfilePic } from '@/services/users.services.js';
 import { Button } from '../ui/button.jsx';
@@ -60,18 +60,18 @@ export default function AccountSettings() {
             if (data.email && (data.email !== userData.email)) {
                 await changeEmail(data.email);
                 await logoutUser();
-                setUser({user: null, userData: {}})
+                setUser({user: null, userData: {}});
                 toast({
                     title: 'You have successfully requested email change',
                     description: 'To finalize the change, verify your email by clicking on the link we sent to your new email address. You are now logged out.'
-                })
+                });
             }
 
             if (data.password) {
                 await updatePassword(user, data.password);
                 toast({
                     title: 'You have updated your password successfully',
-                })
+                });
 
             }
 
@@ -79,7 +79,7 @@ export default function AccountSettings() {
             toast({
                 title: 'Error updating your details',
                 description: error.message
-            })
+            });
         }
     }
 
@@ -90,11 +90,11 @@ export default function AccountSettings() {
             setPicture(data);
             toast({
                 title: 'Successfully uploaded profile picture'
-            })
+            });
         } catch (error) {
             toast({
                 title: error.message
-            })
+            });
         }
     }
 
@@ -183,5 +183,5 @@ export default function AccountSettings() {
                 </form>
             </Form>
         </ContentWrapper >
-    )
+    );
 }

@@ -7,4 +7,4 @@ export const AccountSettingsValidation = z.object({
     password: z.string().optional().refine((password) => {
         return !password || password.length >= 8;
     },{ message: 'Password must be at least 8 characters.' })
-})
+});
