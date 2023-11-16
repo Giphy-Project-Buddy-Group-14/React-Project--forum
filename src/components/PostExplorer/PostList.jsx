@@ -1,6 +1,5 @@
 import {
-  getAllPosts,
-  getMostCommentedPosts,
+  getAllPosts
 } from '@/services/post.services.js';
 import { useContext, useEffect, useState } from 'react';
 import { useToast } from '../ui/use-toast.js';

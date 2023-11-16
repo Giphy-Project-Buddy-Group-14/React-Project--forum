@@ -60,7 +60,7 @@ export default function PostCard(post) {
                 </div>
               )}
             </div>
-            <Link to={`/forum/${post.categoryId}/posts/${post.postId}`}>
+            <Link to={`/forum/${post.categoryId}/posts/${post.id}`}>
               <div className="text-gray-900 font-bold text-xl mb-2">
                 {post.title}
               </div>

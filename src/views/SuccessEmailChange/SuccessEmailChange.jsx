@@ -2,7 +2,7 @@ import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState } from 'react';
 import { updateProfileEmail } from '@/services/users.services';
 import { Button } from '@/components/ui/button.jsx';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import LoadingIndicator from '@/components/ui/Loading.jsx';
 
 export default function SuccessEmailChange() {
