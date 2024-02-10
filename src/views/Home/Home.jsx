@@ -1,9 +1,13 @@
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import PostList from '@/components/PostExplorer/PostList.jsx';
+import { Helmet } from 'react-helmet';
 
 export default function Home() {
   return (
     <div id='home'>
+      <Helmet>
+        <link rel="preload" href="../../App.css" as="style" />
+      </Helmet>
       <ContentWrapper>
         <h1 className='h1-semibold mb-5 mt-8 text-white'>Home</h1>
 

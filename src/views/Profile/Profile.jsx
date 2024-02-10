@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import Title from '../../components/Title/Title';
 import { Button } from '@/components/ui/button';
 import { AuthContext } from '@/context/AuthContext';
 import { useContext } from 'react';
 import ContentWrapper from '@/components/ContentWrapper/ContentWrapper';
 import TimeStamp from '@/components/ui/TimeStamp';
+import { Helmet } from 'react-helmet';
 
 export default function Profile() {
   const { userData } = useContext(AuthContext);
@@ -16,6 +16,9 @@ export default function Profile() {
 
   return (
     <div id='profile'>
+      <Helmet>
+        <link rel="preload" href="../../App.css" as="style" />
+      </Helmet>
       <ContentWrapper>
         <div>
           <div className="font-sans w-full mt-24 flex flex-row justify-center items-center">

@@ -2,6 +2,7 @@ import ContentWrapper from '@/components/ContentWrapper/ContentWrapper.jsx';
 import { useEffect, useState } from 'react';
 import { getUserByUsername } from '@/services/users.services';
 import { TEAM_LIST } from '@/helpers/consts';
+import { Helmet } from 'react-helmet';
 
 export default function About() {
   const [users, setUsers] = useState([]);
@@ -29,6 +30,9 @@ export default function About() {
 
   return (
     <div id='about'>
+      <Helmet>
+        <link rel="preload" href="../../index.css" as="style" />
+      </Helmet>
       <ContentWrapper>
         <div>
           <h1 className="h1-semibold mb-5 mt-8 text-white">About</h1>

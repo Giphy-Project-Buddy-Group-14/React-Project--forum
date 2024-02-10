@@ -5,11 +5,7 @@
   object-fit: cover;
 }
 
-body {
-  background-image: url('/src/assets/bg1.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+body, .wrapper {
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -17,7 +13,8 @@ body {
 }
 
 #home {
-  background-image: url('/src/assets/bg2.jpg');
+  background-color: white;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/react-project--forum.appspot.com/o/src%2Fbg2.jpg?alt=media&token=5aae07f5-a8ab-4a26-843b-3181ebb3d9c6');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -27,7 +24,8 @@ body {
 }
 
 #about {
-  background-image: url('/src/assets/bg3.jpg');
+  background-color: white;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/react-project--forum.appspot.com/o/src%2Fbg3.jpg?alt=media&token=878230b6-50f5-47a0-83d1-0a7ae3f74ef0');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -37,11 +35,20 @@ body {
 }
 
 #profile {
-  background-image: url('/src/assets/bg4.jpg');
+  background-color: white;
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/react-project--forum.appspot.com/o/src%2Fbg4.jpg?alt=media&token=d047bf4b-9b94-4a48-82bd-1fe595382d25');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   margin: 0;
   padding: 0;
+}
+
+.wrapper:not(#home, #about, #profile) {
+  background-image: url('https://firebasestorage.googleapis.com/v0/b/react-project--forum.appspot.com/o/src%2Fbg1.jpg?alt=media&token=747c00cc-f77b-4072-bf00-987c36cfea95');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }

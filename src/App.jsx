@@ -27,6 +27,7 @@ import AuthenticatedRoute from './hoc/AuthenticatedRoute.jsx';
 import _ from 'lodash';
 import { onValue, ref } from 'firebase/database';
 import SuccessEmailChange from './views/SuccessEmailChange/SuccessEmailChange.jsx';
+import { Helmet } from 'react-helmet';
 
 function App() {
   const { toast } = useToast();
@@ -71,9 +72,9 @@ function App() {
   useEffect(() => {
     if (appState.userData && user) {
       const userRef = ref(db, `users/${appState.userData.username}`);
-  
+
       const userListener = onValue(userRef, (snapshot) => {
-        setAppState((prev) => ({...prev, userData: snapshot.val()}))
+        setAppState((prev) => ({ ...prev, userData: snapshot.val() }))
       });
       return () => {
         userListener();
@@ -86,7 +87,10 @@ function App() {
   const showNavBar = !authRoutes.includes(location.pathname);
 
   return (
-    <div className='flex flex-col min-h-screen'>
+    <div className='flex flex-col min-h-screen wrapper'>
+      <Helmet>
+        <link rel="preload" href="/App.css" as="style" />
+      </Helmet>
       {((!loading && user && !_.isEmpty(appState.userData)) || (!loading && !user)) && (<AuthContext.Provider value={{ ...appState, setUser: setAppState }}>
         {showNavBar && <NavBar />}
         <div className='flex-1'>
@@ -115,9 +119,9 @@ function App() {
               element={<About />}
             />
             <Route
-            path="/success-email-change"
-            element={<SuccessEmailChange />}
-          />
+              path="/success-email-change"
+              element={<SuccessEmailChange />}
+            />
             <Route
               path="/forum"
               element={<AuthenticatedRoute><ForumContainer /></AuthenticatedRoute>}
