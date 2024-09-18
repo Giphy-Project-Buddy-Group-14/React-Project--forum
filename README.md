@@ -1,21 +1,74 @@
 # Roaming Nomads Forum
 
-Roaming Nomads is a travel forum for people who want to share their experiences, tips or just exciting experiences from memorable destinations from around the world, but especially from our beautiful homeland Bulgaria. 
-The forum is a place where people can ask questions, share their itineraries, and connect with other travelers. It is also a great resource for people who are planning their trips to Bulgaria and want to learn more about the country's culture, history, and attractions.  
+Welcome to the Roaming Nomads Forum! This is a community-driven platform where travel enthusiasts and digital nomads can connect, share experiences, and discuss various topics related to travel and remote work.
 
-***The forum has different sections for different types of travel, such as budget travel, luxury travel, family travel, solo travel, and adventure travel. It also has sections for different regions of Bulgaria, such as the Black Sea Coast, the Rhodope Mountains, and the capital city of Sofia.(NB! We'll change this section!)***
+## Project Overview
 
+Roaming Nomads Forum is a web application designed to facilitate discussions and interactions among travelers and digital nomads. It includes features for posting threads, commenting, and engaging with other users.
 
-## Functional Requirements
+## Technologies Used
+
+### Frontend:
+
+- JavaScript (for interactivity and dynamic content)
+- CSS (for styling and layout)
+- HTML (for structure and content)
+
+### Getting Started
+
+To get started with the Roaming Nomads Forum, follow these steps:
+
+1. Clone the Repository:
+
+```rust
+  git clone https://github.com/Giphy-Project-Buddy-Group-14/React-Project--forum
+```
+
+2. Navigate to the Project Directory:
+
+```rust
+  cd React-Project--forum
+```
+
+3. Open the Project in a Browser:
+   Simply open the index.html file in your preferred web browser.
+
+## Contributing
+
+We welcome contributions to the Roaming Nomads Forum! To contribute:
+
+1. Fork the Repository
+2. Create a New Branch:
+
+```rust
+git checkout -b feature/your-feature
+```
+
+3. Make Your Changes
+4. Commit Your Changes:
+
+```rust
+git commit -am 'Add new feature'
+```
+
+5. Push to the Branch:
+
+```rust
+git push origin feature/your-feature
+```
+
+6. Create a Pull Request
 
 ### Entities (documents)
 
 - **User:**
+
   - Each user must have a first and last name, email, and/or username.
   - First name and last name must be between 4 and 32 symbols.
   - Email must be a valid email and unique in the system.
 
 - **Admin:**
+
   - Each admin must have a first and last name, email, and may have a phone number.
   - First name and last name must be between 4 and 32 symbols.
   - Email must be a valid email and unique in the system.
@@ -43,4 +96,6 @@ The private part is accessible only if the user is authenticated.
 - Users can browse posts created by other users with an option to sort and filter them.
 - Users can view a single post including its title, content, comments.
 
+## License
 
+This project is licensed under the MIT License. See the LICENSE file for details.
